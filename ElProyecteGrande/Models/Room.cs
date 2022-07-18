@@ -1,10 +1,14 @@
-﻿namespace ElProyecteGrande.Models;
+﻿using System;
+using System.Text.Json.Serialization;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
+
+namespace ElProyecteGrande.Models;
 
 public enum RoomType
 {
-    Apartman = 4,
-    Standard = 2,
-    Superior = 3
+    Apartman,
+    Standard,
+    Superior
 }
 
 public enum RoomStatus
@@ -15,11 +19,17 @@ public enum RoomStatus
 
 public class Room
 {
-    public Guid Id { get; set; }
+    public int Id { get; set; }
     public string Name { get; set; }
     public decimal Price { get; set; }
     public RoomType RoomType { get; set; }
     public RoomStatus RoomStatus { get; set; }
     public int Floor { get; set; }
     public string Comment { get; set; }
+
+    public string GetEnumValue(Enum myValue)
+    {
+        Enum myEnum = myValue;
+        return myEnum.ToString();
+    }
 }

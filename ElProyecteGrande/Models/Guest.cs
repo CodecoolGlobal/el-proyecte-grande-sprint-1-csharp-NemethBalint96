@@ -2,7 +2,7 @@
 
 public class Guest
 {
-    public Guid ID { get; set; }
+    public int ID { get; set; }
     public string FullName { get; set; }
     public DateOnly BirthDate { get; set; }
     public string BirthPlace { get; set; }
