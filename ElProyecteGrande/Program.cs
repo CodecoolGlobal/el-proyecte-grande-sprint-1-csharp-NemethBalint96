@@ -31,7 +31,16 @@ void SetupInMemoryDatabase()
         Guests = new List<Guest>{
             new Guest
             {
+                FullName = "Németh Bálint",
                 BirthDate = DateOnly.Parse("1996.01.01"),
+                BirthPlace = "Eger",
+                Email = "nemeth.balint1996@gmail.com",
+                Phone = "00000000",
+                Country = "Hungary",
+                City = "Füzesabony",
+                Adress = "",
+                PostalCode = 3390,
+                Citizenship = "Hungary",
             },
             new Guest
             {

@@ -1,0 +1,43 @@
+﻿@model IEnumerable<Guest>
+@{
+    ViewData["Title"] = "Guests";
+}
+<h1 class="display-5">@ViewData["Title"]</h1>
+
+<div class="text-center">
+    <table class="table-responsive table-bordered">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Full Name</th>
+            <th>Birth Date</th>
+            <th>Birth Place</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Country</th>
+            <th>City</th>
+            <th>Address</th>
+            <th>Postal code</th>
+            <th>Citizenship</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var guest in Model)
+        {
+            <tr>
+                <td>@guest.ID</td>
+                <td>@guest.FullName</td>
+                <td>@guest.BirthDate</td>
+                <td>@guest.BirthPlace</td>
+                <td>@guest.Email</td>
+                <td>@guest.Phone</td>
+                <td>@guest.Country</td>
+                <td>@guest.City</td>
+                <td>@guest.Adress</td>
+                <td>@guest.PostalCode</td>
+                <td>@guest.Citizenship</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
