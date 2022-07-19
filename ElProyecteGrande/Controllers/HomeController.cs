@@ -46,4 +46,10 @@ public class HomeController : Controller
         _bookingDaoMemory.Add(booking);
         return RedirectToAction("Bookings");
     }
+    [HttpGet("delete/{id}")]
+    public RedirectToActionResult  DeleteBooking(int id)
+    {
+        _bookingDaoMemory.Delete(id);
+        return RedirectToAction("Bookings");
+    }
 }

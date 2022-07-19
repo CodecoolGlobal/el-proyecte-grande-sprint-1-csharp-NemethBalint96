@@ -30,5 +30,11 @@ namespace ElProyecteGrande.Dao
         {
             return _bookings;
         }
+
+        public void Delete(int Id)
+        {
+            var booking = _bookings.FirstOrDefault(x => x.ID == Id);
+            _bookings.Remove(booking);
+        }
     }
 }

@@ -5,7 +5,7 @@
 <h1 class="display-5">@ViewData["Title"]</h1>
 <br/>
 <div>
-    <a asp-controller="Home" asp-action="NewBooking"> <button>Add New Booking</button></a>
+    <a  asp-controller="Home" asp-action="NewBooking"> <button class="btn-primary">Add New Booking</button></a>
 </div>
 <br/>
 <div class="text-center">
@@ -27,6 +27,7 @@
             <th>Status</th>
             <th>Created</th>
             <th>Modification Date</th>
+            <th>Delete Booking</th>
         </tr>
         </thead>
         <tbody>
@@ -55,6 +56,7 @@
                 {
                     <td></td>
                 }
+                <td><a  href="delete/@booking.ID" ><button>Delete</button></a></td>
             </tr>
         }
         </tbody>
