@@ -13,11 +13,25 @@ public class Booking
     public List<Guest> Guests { get; set; }
     public string Email { get; set; }
     public Room Room { get; set; }
-    
-    public int Adults { get; set; }
-    public int Children { get; set; }
-    public int Infants { get; set; }
-    public decimal Total { get; set; }
+
+    public int Adults => Guests.Count(
+        guest => guest.BirthDate.AddYears(18)
+                 <= DateOnly.FromDateTime(DateTime.Now)
+    );
+
+    public int Children => Guests.Count(
+        guest => guest.BirthDate.AddYears(2)
+                 <= DateOnly.FromDateTime(DateTime.Now)
+                 && guest.BirthDate.AddYears(18)
+                 > DateOnly.FromDateTime(DateTime.Now)
+    );
+
+    public int Infants => Guests.Count(
+        guest => guest.BirthDate.AddYears(2)
+                 > DateOnly.FromDateTime(DateTime.Now)
+    );
+
+    public decimal Total => Nights * Room.Price;
     public string Country { get; set; }
     public DateOnly ArrivalDate { get; set; }
     public DateOnly DepartureDate { get; set; }

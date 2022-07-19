@@ -14,7 +14,7 @@ namespace ElProyecteGrande.Dao
         public static BookingDaoMemory GetInstance()
         {
             if (_instance == null)
-            {  
+            {
                 _instance = new BookingDaoMemory();
             }
 
