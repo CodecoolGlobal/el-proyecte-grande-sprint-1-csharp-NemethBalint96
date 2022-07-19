@@ -1,4 +1,7 @@
-﻿namespace ElProyecteGrande.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
+
+namespace ElProyecteGrande.Models;
 
 public enum Status
 {
@@ -13,31 +16,18 @@ public class Booking
     public List<Guest> Guests { get; set; }
     public string Email { get; set; }
     public Room Room { get; set; }
-
-    public int Adults => Guests.Count(
-        guest => guest.BirthDate.AddYears(18)
-                 <= DateOnly.FromDateTime(DateTime.Now)
-    );
-
-    public int Children => Guests.Count(
-        guest => guest.BirthDate.AddYears(2)
-                 <= DateOnly.FromDateTime(DateTime.Now)
-                 && guest.BirthDate.AddYears(18)
-                 > DateOnly.FromDateTime(DateTime.Now)
-    );
-
-    public int Infants => Guests.Count(
-        guest => guest.BirthDate.AddYears(2)
-                 > DateOnly.FromDateTime(DateTime.Now)
-    );
-
+    public int Adults { get; set; }
+    public int Children { get; set; }
+    public int Infants { get; set; }
     public decimal Total => Nights * Room.Price;
     public string Country { get; set; }
-    public DateOnly ArrivalDate { get; set; }
-    public DateOnly DepartureDate { get; set; }
-    public int Nights => DepartureDate.Day - ArrivalDate.Day;
+    [BindProperty, DataType(DataType.Date)]
+    public DateTime ArrivalDate { get; set; }
+    [BindProperty, DataType(DataType.Date)]
+    public DateTime DepartureDate { get; set; }
+    public int Nights => (DepartureDate - ArrivalDate).Days;
     public Status Status { get; set; }
-    public DateTime Created { get; set; }
+    public DateTime Created => DateTime.Now;
     public DateTime ModificationDate { get; set; }
 
     public string GetEnumValue(Enum myValue)

@@ -1,0 +1,82 @@
+﻿@model ElProyecteGrande.Models.Booking
+
+@{
+    ViewBag.Title = "Add New Guest";
+    Layout = "_Layout";
+}
+
+<h2>Add New Booking</h2><br/>
+<div class="container h-50">
+    @using (var form = Html.BeginForm("AddNewBooking","Home",FormMethod.Post))
+    {
+        @Html.ValidationSummary()
+
+        <div class="booking">
+            @Html.LabelFor(m => m.BookersName) <br/>
+            @Html.TextBoxFor(m => m.BookersName)
+        </div>
+
+        <div class="booking">
+            @Html.LabelFor(m => m.Email) <br/>
+            @Html.TextBoxFor(m => m.Email)
+        </div>
+
+        <div class="booking">
+            @Html.LabelFor(m => m.Adults) <br/>
+            <input type="number" asp-for="Adults"/>
+        </div>
+
+        <div class="booking">
+            @Html.LabelFor(m => m.Children) <br/>
+            <input type="number" asp-for="Children"/>
+        </div>
+
+        <div class="booking">
+            @Html.LabelFor(m => m.Infants) <br/>
+            <input type="number" asp-for="Infants"/>
+        </div>
+
+        <div class="booking">
+            @Html.LabelFor(m => m.ArrivalDate) <br/>
+            <input type="date" asp-for="ArrivalDate"/>
+        </div>
+
+        <div class="booking">
+            @Html.LabelFor(m => m.DepartureDate) <br/>
+            <input type="date" asp-for="DepartureDate" />
+        </div>
+        
+        <div>
+            <p>The Room</p>
+        </div>
+
+        <div class="booking">
+            @Html.LabelFor(m =>m.Room.Floor) <br/>
+            <input type="number" asp-for="Room.Floor"/>
+        </div>
+
+        <div class="booking">
+            @Html.LabelFor(m => m.Room.DoorNumber) <br/>
+            <input type="number" asp-for="Room.DoorNumber"/>
+        </div>
+
+        <div class="booking">
+            @Html.LabelFor(m => m.Room.Price) <br/>
+            <input type="number" asp-for="Room.Price"/>
+        </div>
+        <div><br/>
+            @Html.LabelFor(m=>m.Room.RoomType)<br/>
+            <select asp-for="Room.RoomType" asp-items="Html.GetEnumSelectList<RoomType>()"></select>
+        </div>
+        <br/>
+
+        <div class="booking">
+            @Html.LabelFor(m => m.Room.Comment) <br/>
+            @Html.TextBoxFor(m => m.Room.Comment)
+        </div>
+        <br/>
+        <div>
+            <input type="submit" value="Submit Form" />
+        </div>
+    }
+</div>

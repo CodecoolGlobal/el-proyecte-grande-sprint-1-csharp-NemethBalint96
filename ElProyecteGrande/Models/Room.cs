@@ -16,7 +16,7 @@ public enum RoomStatus
 public class Room
 {
     public int ID { get; set; }
-    public string Name { get; set; }
+    public int DoorNumber { get; set; }
     public decimal Price { get; set; }
     public RoomType RoomType { get; set; }
     public RoomStatus RoomStatus { get; set; }
