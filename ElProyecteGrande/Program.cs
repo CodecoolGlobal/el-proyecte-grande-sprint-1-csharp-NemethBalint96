@@ -1,8 +1,6 @@
 using ElProyecteGrande.Dao;
 using ElProyecteGrande.Models;
 
-
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -44,11 +42,10 @@ void SetupInMemoryDatabase()
             },
             new Guest
             {
-                
+
                 BirthDate = DateOnly.Parse("2022.01.01"),
             }
         },
-        
         Room = new Room
         {
             Comment = "  ",
@@ -59,7 +56,6 @@ void SetupInMemoryDatabase()
         },
         Status = Status.Confirmed,
     });
-
 }
 
 SetupInMemoryDatabase();
