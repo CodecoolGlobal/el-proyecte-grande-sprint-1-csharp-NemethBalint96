@@ -1,8 +1,22 @@
 ﻿namespace ElProyecteGrande.Models;
 
+public enum Age
+{
+    Adult,
+    Child,
+    Infant
+}
+
 public class Guest
 {
-    public int ID { get; set; }
+    private static int _nextId = 1;
+    public Guest(Age age)
+    {
+        Age = age;
+        ID = _nextId++;
+    }
+
+    public int ID { get; }
     public string FullName { get; set; }
     public DateOnly BirthDate { get; set; }
     public string BirthPlace { get; set; }
@@ -13,6 +27,6 @@ public class Guest
     public string Adress { get; set; }
     public int PostalCode { get; set; }
     public string Citizenship { get; set; }
-    public string MothersName { get; set; }
     public string Comment { get; set; }
+    public Age Age { get; set; }
 }

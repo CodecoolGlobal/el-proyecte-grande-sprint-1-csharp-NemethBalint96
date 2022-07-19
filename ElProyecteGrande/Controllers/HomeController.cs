@@ -42,14 +42,23 @@ public class HomeController : Controller
     [HttpPost]
     public RedirectToActionResult AddNewBooking(Booking booking)
     {
-        booking.ID = _bookingDaoMemory.GetAll().Last().ID + 1;
         _bookingDaoMemory.Add(booking);
         return RedirectToAction("Bookings");
     }
-    [HttpGet("delete/{id}")]
-    public RedirectToActionResult  DeleteBooking(int id)
+
+    public RedirectToActionResult DeleteBooking(int id)
     {
         _bookingDaoMemory.Delete(id);
-        return RedirectToAction("Bookings");
+        return RedirectToAction("Reservation", new { id });
+    }
+
+    public IActionResult Reservation(int id)
+    {
+        var booking = _bookingDaoMemory.Get(id);
+        if (booking == null)
+        {
+            return RedirectToAction("Bookings");
+        }
+        return View(booking);
     }
 }

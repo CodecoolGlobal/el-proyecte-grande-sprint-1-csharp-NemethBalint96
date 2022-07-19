@@ -26,9 +26,8 @@ void SetupInMemoryDatabase()
         Country = "Hungary",
         Email = "nemeth.balint1996@gmail.com",
         Guests = new List<Guest>{
-            new Guest
+            new Guest(Age.Adult)
             {
-                ID = 1,
                 FullName = "Németh Bálint",
                 BirthDate = DateOnly.Parse("1996.01.01"),
                 BirthPlace = "Eger",
@@ -40,9 +39,8 @@ void SetupInMemoryDatabase()
                 PostalCode = 3390,
                 Citizenship = "Hungary",
             },
-            new Guest
+            new Guest(Age.Infant)
             {
-
                 BirthDate = DateOnly.Parse("2022.01.01"),
             }
         },
@@ -51,7 +49,6 @@ void SetupInMemoryDatabase()
             Comment = "  ",
             Floor = 1,
             DoorNumber = 2,
-            ID = 1,
             Price = 20
         },
         Status = Status.Confirmed,
