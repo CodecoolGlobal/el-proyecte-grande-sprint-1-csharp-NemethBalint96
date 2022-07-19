@@ -1,0 +1,73 @@
+﻿@model Booking
+@{
+    ViewData["Title"] = "Reservation";
+}
+<h1 class="display-5">@ViewData["Title"]</h1>
+
+@*<a  href="delete/@Model.ID" ><button>Delete</button></a>*@
+<a asp-controller="Home" asp-action="DeleteBooking" asp-route-id="@Model.ID" ><button>Delete</button></a>
+
+<div>
+    <p>Reservation ID: @Model.ID</p>
+    <p>Status: @Model.Status</p>
+    <p>Booker's Name: @Model.BookersName</p>
+    <p>Booker's Email: @Model.Email</p>
+    <p>Country: @Model.Country</p>
+    <p>Night(s): @Model.Nights</p>
+    <p>Number of Guest(s): @Model.Guests.Count <br/>
+        Adult(s): @Model.Guests.Count(guest => guest.Age == Age.Adult)
+        Child(ren): @Model.Guests.Count(guest => guest.Age == Age.Child)
+        Infant(s): @Model.Guests.Count(guest => guest.Age == Age.Infant)
+    </p>
+    <p>Arrival Date: @Model.ArrivalDate.ToShortDateString()</p>
+    <p>Departure Date: @Model.DepartureDate.ToShortDateString()</p>
+    <p>Created: @Model.Created</p>
+    @if (Model.ModificationDate != DateTime.MinValue)
+    {
+        <p>Modification Date: @Model.ModificationDate</p>
+    }
+</div>
+<h1 class="display-5">Guests</h1>
+<div>
+    <table class="table-responsive table-bordered">
+        <thead>
+        <tr>
+            <th>Full Name</th>
+            <th>Birth Date</th>
+            <th>Birth Place</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Country</th>
+            <th>City</th>
+            <th>Address</th>
+            <th>Postal code</th>
+            <th>Citizenship</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var guest in @Model.Guests)
+        {
+            <tr>
+                <td>@guest.FullName</td>
+                <td>@guest.BirthDate</td>
+                <td>@guest.BirthPlace</td>
+                <td>@guest.Email</td>
+                <td>@guest.Phone</td>
+                <td>@guest.Country</td>
+                <td>@guest.City</td>
+                <td>@guest.Adress</td>
+                <td>@guest.PostalCode</td>
+                <td>@guest.Citizenship</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+<h1 class="display-5">Room</h1>
+<div>
+    <p>Room Type: @Model.Room.RoomType</p>
+    <p>Floor: @Model.Room.Floor</p>
+    <p>DoorNumber: @Model.Room.DoorNumber</p>
+    <p>Comment: @Model.Room.Comment</p>
+    <p>Price: @Model.Room.Price</p>
+</div>

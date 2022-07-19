@@ -11,7 +11,15 @@ public enum Status
 
 public class Booking
 {
-    public int ID { get; set; }
+    private static int _nextId = 1;
+    public Booking()
+    {
+        Guests = new List<Guest>();
+        Created = DateTime.Now;
+        ID = _nextId++;
+    }
+
+    public int ID { get; }
     public string BookersName { get; set; }
     public List<Guest> Guests { get; set; }
     public string Email { get; set; }
@@ -19,7 +27,7 @@ public class Booking
     public int Adults { get; set; }
     public int Children { get; set; }
     public int Infants { get; set; }
-    public decimal Total => Nights * Room.Price;
+    public decimal Total => Nights * Room.Price * Adults;
     public string Country { get; set; }
     [BindProperty, DataType(DataType.Date)]
     public DateTime ArrivalDate { get; set; }
@@ -27,12 +35,6 @@ public class Booking
     public DateTime DepartureDate { get; set; }
     public int Nights => (DepartureDate - ArrivalDate).Days;
     public Status Status { get; set; }
-    public DateTime Created => DateTime.Now;
+    public DateTime Created { get; }
     public DateTime ModificationDate { get; set; }
-
-    public string GetEnumValue(Enum myValue)
-    {
-        Enum myEnum = myValue;
-        return myEnum.ToString();
-    }
 }
