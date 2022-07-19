@@ -1,6 +1,5 @@
 using ElProyecteGrande.Dao;
 using ElProyecteGrande.Models;
-using Microsoft.EntityFrameworkCore;
 
 
 
@@ -23,25 +22,31 @@ void SetupInMemoryDatabase()
 {
     BookingDaoMemory.GetInstance().Add(new Booking
     {
-        Adults = 1,
         ArrivalDate = DateOnly.FromDateTime(DateTime.Now),
         DepartureDate = DateOnly.Parse("2022.07.23"),
         BookersName = "Németh Bálint",
-        Children = 2,
         Country = "Hungary",
         Created = DateTime.Now,
         Email = "nemeth.balint1996@gmail.com",
-        Guests = new List<Guest>(),
+        Guests = new List<Guest>{
+            new Guest
+            {
+                BirthDate = DateOnly.Parse("1996.01.01"),
+            },
+            new Guest
+            {
+                BirthDate = DateOnly.Parse("2022.01.01"),
+            }
+        },
         ID = 1,
         Room = new Room
         {
             Comment = "  ",
             Floor = 1,
             Name = "Hehe",
-            Id = 1
+            ID = 1,
+            Price = 20
         },
-        Total =5000,
-        Infants = 0,
         Status = Status.Confirmed,
     });
 
@@ -57,6 +62,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Bookings}/{id?}");
 
 app.Run();

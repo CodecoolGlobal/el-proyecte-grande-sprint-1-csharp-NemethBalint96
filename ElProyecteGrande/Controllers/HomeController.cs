@@ -1,7 +1,7 @@
-﻿using ElProyecteGrande.Models;
+﻿using ElProyecteGrande.Dao;
+using ElProyecteGrande.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using ElProyecteGrande.Dao;
 
 namespace ElProyecteGrande.Controllers;
 
@@ -10,21 +10,22 @@ public class HomeController : Controller
     private readonly ILogger<HomeController> _logger;
     private readonly BookingDaoMemory _bookingDaoMemory;
 
-    public HomeController(ILogger<HomeController> logger,BookingDaoMemory booking)
+    public HomeController(ILogger<HomeController> logger, BookingDaoMemory booking)
     {
         _logger = logger;
-        _bookingDaoMemory= booking;
+        _bookingDaoMemory = booking;
     }
 
-    public IActionResult Index()
+    public IActionResult Bookings()
     {
         var books = _bookingDaoMemory.GetAll();
         return View(books);
     }
 
-    public IActionResult Privacy()
+    public IActionResult Guests()
     {
-        return View();
+        var guests = _bookingDaoMemory.GetAll().SelectMany(booking => booking.Guests);
+        return View(guests);
     }
 
 

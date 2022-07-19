@@ -1,0 +1,58 @@
+﻿@model IEnumerable<Booking>
+@{
+    ViewData["Title"] = "Bookings";
+}
+<h1 class="display-5">@ViewData["Title"]</h1>
+
+<div class="text-center">
+    <table class="table-responsive table-bordered">
+        <thead>
+        <tr>
+            <th>Reservation ID</th>
+            <th>Booker's Name</th>
+            <th>Booker's Email</th>
+            <th>Room Name</th>
+            <th>Nights</th>
+            <th>Adults</th>
+            <th>Children</th>
+            <th>Infant(s)</th>
+            <th>Total</th>
+            <th>Country</th>
+            <th>Arrival Date</th>
+            <th>Departure Date</th>
+            <th>Status</th>
+            <th>Created</th>
+            <th>Modification Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var booking in Model)
+        {
+            <tr>
+                <td>@booking.ID</td>
+                <td>@booking.BookersName</td>
+                <td>@booking.Email</td>
+                <td>@booking.Room.Name</td>
+                <td>@booking.Nights</td>
+                <td>@booking.Adults</td>
+                <td>@booking.Children</td>
+                <td>@booking.Infants</td>
+                <td>@booking.Total</td>
+                <td>@booking.Country</td>
+                <td>@booking.ArrivalDate</td>
+                <td>@booking.DepartureDate</td>
+                <td>@booking.Status</td>
+                <td>@booking.Created</td>
+                @if (booking.ModificationDate != DateTime.MinValue)
+                {
+                    <td>@booking.ModificationDate</td>
+                }
+                else
+                {
+                    <td></td>
+                }
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

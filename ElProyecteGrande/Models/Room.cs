@@ -1,8 +1,4 @@
-﻿using System;
-using System.Text.Json.Serialization;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
-
-namespace ElProyecteGrande.Models;
+﻿namespace ElProyecteGrande.Models;
 
 public enum RoomType
 {
@@ -19,7 +15,7 @@ public enum RoomStatus
 
 public class Room
 {
-    public int Id { get; set; }
+    public int ID { get; set; }
     public string Name { get; set; }
     public decimal Price { get; set; }
     public RoomType RoomType { get; set; }
