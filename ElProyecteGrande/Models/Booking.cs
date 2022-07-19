@@ -28,7 +28,7 @@ public class Booking
     public DateTime ArrivalDate { get; set; }
     [BindProperty, DataType(DataType.Date), DisplayFormat(DataFormatString = "{yyyy.MM.dd}", ApplyFormatInEditMode = true)]
     public DateTime DepartureDate { get; set; }
-    public int Nights => Math.Abs(DepartureDate.Day - ArrivalDate.Day);
+    public int Nights => (DepartureDate - ArrivalDate).Days;
     public Status Status { get; set; }
     public DateTime Created =>DateTime.Now;
     public DateTime ModificationDate { get; set; }
