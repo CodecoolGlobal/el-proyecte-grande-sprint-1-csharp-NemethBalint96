@@ -34,4 +34,18 @@ public class HomeController : Controller
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
+
+    
+    public IActionResult NewBooking()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public RedirectToActionResult AddNewBooking(Booking booking)
+    {
+        booking.ID = _bookingDaoMemory.GetAll().Last().ID + 1;
+        _bookingDaoMemory.Add(booking);
+        return RedirectToAction("Bookings");
+    }
 }

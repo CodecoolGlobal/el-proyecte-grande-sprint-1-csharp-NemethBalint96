@@ -3,7 +3,11 @@
     ViewData["Title"] = "Bookings";
 }
 <h1 class="display-5">@ViewData["Title"]</h1>
-
+<br/>
+<div>
+    <a  asp-controller="Home" asp-action="NewBooking"> <button>Add New Booking</button></a>
+</div>
+<br/>
 <div class="text-center">
     <table class="table-responsive table-bordered">
         <thead>
@@ -32,15 +36,15 @@
                 <td>@booking.ID</td>
                 <td>@booking.BookersName</td>
                 <td>@booking.Email</td>
-                <td>@booking.Room.Name</td>
+                <td>@booking.Room.DoorNumber</td>
                 <td>@booking.Nights</td>
                 <td>@booking.Adults</td>
                 <td>@booking.Children</td>
                 <td>@booking.Infants</td>
                 <td>@booking.Total</td>
                 <td>@booking.Country</td>
-                <td>@booking.ArrivalDate</td>
-                <td>@booking.DepartureDate</td>
+                <td>@booking.ArrivalDate.ToShortDateString()</td>
+                <td>@booking.DepartureDate.ToShortDateString()</td>
                 <td>@booking.Status</td>
                 <td>@booking.Created</td>
                 @if (booking.ModificationDate != DateTime.MinValue)

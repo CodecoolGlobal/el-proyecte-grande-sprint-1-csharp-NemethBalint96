@@ -22,15 +22,15 @@ void SetupInMemoryDatabase()
 {
     BookingDaoMemory.GetInstance().Add(new Booking
     {
-        ArrivalDate = DateOnly.FromDateTime(DateTime.Now),
-        DepartureDate = DateOnly.Parse("2022.07.23"),
+        ArrivalDate = DateTime.Now,
+        DepartureDate = DateTime.Parse("2022.07.23"),
         BookersName = "Németh Bálint",
         Country = "Hungary",
-        Created = DateTime.Now,
         Email = "nemeth.balint1996@gmail.com",
         Guests = new List<Guest>{
             new Guest
             {
+                ID = 1,
                 FullName = "Németh Bálint",
                 BirthDate = DateOnly.Parse("1996.01.01"),
                 BirthPlace = "Eger",
@@ -44,15 +44,16 @@ void SetupInMemoryDatabase()
             },
             new Guest
             {
+                
                 BirthDate = DateOnly.Parse("2022.01.01"),
             }
         },
-        ID = 1,
+        
         Room = new Room
         {
             Comment = "  ",
             Floor = 1,
-            Name = "Hehe",
+            DoorNumber = 2,
             ID = 1,
             Price = 20
         },
