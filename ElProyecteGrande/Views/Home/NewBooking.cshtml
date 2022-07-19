@@ -1,5 +1,4 @@
-﻿@using ElProyecteGrande.Dao
-@model ElProyecteGrande.Models.Booking
+﻿@model ElProyecteGrande.Models.Booking
 
 @{
     ViewBag.Title = "Add New Guest";
@@ -24,45 +23,46 @@
 
         <div class="booking">
             @Html.LabelFor(m => m.Adults) <br/>
-            @Html.TextBoxFor(m => m.Adults)
+            <input type="number" asp-for="Adults"/>
         </div>
 
         <div class="booking">
             @Html.LabelFor(m => m.Children) <br/>
-            @Html.TextBoxFor(m => m.Children)
+            <input type="number" asp-for="Children"/>
         </div>
 
         <div class="booking">
             @Html.LabelFor(m => m.Infants) <br/>
-            @Html.TextBoxFor(m => m.Infants)
+            <input type="number" asp-for="Infants"/>
         </div>
 
         <div class="booking">
             @Html.LabelFor(m => m.ArrivalDate) <br/>
-            <input type="date" class="form-control" asp-for="ArrivalDate"/>
+            <input type="date" asp-for="ArrivalDate"/>
         </div>
 
         <div class="booking">
             @Html.LabelFor(m => m.DepartureDate) <br/>
-            <input type="date" class="form-control" asp-for="DepartureDate"/>
+            <input type="date" asp-for="DepartureDate" />
         </div>
         
         <div>
             <p>The Room</p>
         </div>
+
         <div class="booking">
             @Html.LabelFor(m =>m.Room.Floor) <br/>
-            @Html.TextBoxFor(m => m.Room.Floor)
+            <input type="number" asp-for="Room.Floor"/>
         </div>
 
         <div class="booking">
             @Html.LabelFor(m => m.Room.DoorNumber) <br/>
-            @Html.TextBoxFor(m => m.Room.DoorNumber)
+            <input type="number" asp-for="Room.DoorNumber"/>
         </div>
 
         <div class="booking">
             @Html.LabelFor(m => m.Room.Price) <br/>
-            @Html.TextBoxFor(m => m.Room.Price)
+            <input type="number" asp-for="Room.Price"/>
         </div>
         <div><br/>
             @Html.LabelFor(m=>m.Room.RoomType)<br/>
