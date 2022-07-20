@@ -25,7 +25,7 @@ public class HomeController : Controller
 
     public IActionResult Guests()
     {
-        var guests = _bookingDaoMemory.GetAll().SelectMany(booking => booking.Guests.Where(x => x.FullName != "Accompanying Guest"));
+        var guests = _bookingDaoMemory.GetAll();
         return View(guests);
     }
 

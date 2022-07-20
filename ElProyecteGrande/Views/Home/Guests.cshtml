@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Guest>
+﻿@model IEnumerable<Booking>
 @{
     ViewData["Title"] = "Guests";
 }
@@ -22,21 +22,24 @@
             </tr>
         </thead>
         <tbody>
-        @foreach (var guest in Model)
+        @foreach (var booking in Model)
         {
-            <tr>
-                <td>@guest.ID</td>
-                <td>@guest.FullName</td>
-                <td>@guest.BirthDate</td>
-                <td>@guest.BirthPlace</td>
-                <td>@guest.Email</td>
-                <td>@guest.Phone</td>
-                <td>@guest.Country</td>
-                <td>@guest.City</td>
-                <td>@guest.Adress</td>
-                <td>@guest.PostalCode</td>
-                <td>@guest.Citizenship</td>
-            </tr>
+            @foreach (var guest in booking.Guests.Where(guest=>guest.FullName!="Accompanying Guest"))
+            {
+                <tr onclick="location.href = '@(Url.Action("Reservation", "Home", new { id = booking.ID }))'">
+                    <td>@guest.ID</td>
+                    <td>@guest.FullName</td>
+                    <td>@guest.BirthDate</td>
+                    <td>@guest.BirthPlace</td>
+                    <td>@guest.Email</td>
+                    <td>@guest.Phone</td>
+                    <td>@guest.Country</td>
+                    <td>@guest.City</td>
+                    <td>@guest.Adress</td>
+                    <td>@guest.PostalCode</td>
+                    <td>@guest.Citizenship</td>
+                </tr>
+            }
         }
         </tbody>
     </table>
