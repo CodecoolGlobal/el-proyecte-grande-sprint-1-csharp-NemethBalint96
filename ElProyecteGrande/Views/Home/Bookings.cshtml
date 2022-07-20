@@ -9,25 +9,27 @@
     <a asp-controller="Home" asp-action="BookingForm"><button class="btn btn-primary">Add New Booking</button></a>
 </div>
 <br/>
+<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Start typing a name...">
+<br/><br/>
 <div class="text-center">
-    <table class="table-responsive table-bordered">
+    <table class="table-responsive table-bordered" id="myTable">
         <thead>
         <tr>
-            <th>Reservation ID</th>
-            <th>Booker's Name</th>
-            <th>Booker's Email</th>
-            <th>Room Name</th>
-            <th>Night(s)</th>
-            <th>Adult(s)</th>
-            <th>Child(ren)</th>
-            <th>Infant(s)</th>
-            <th>Total</th>
-            <th>Country</th>
-            <th>Arrival Date</th>
-            <th>Departure Date</th>
-            <th>Status</th>
-            <th>Created</th>
-            <th>Modification Date</th>
+            <th onclick="sortTable(1)">Reservation ID</th>
+            <th onclick="sortTable(2)">Booker's Name</th>
+            <th onclick="sortTable(3)">Booker's Email</th>
+            <th onclick="sortTable(4)">Room Name</th>
+            <th onclick="sortTable(5)">Night(s)</th>
+            <th onclick="sortTable(6)">Adult(s)</th>
+            <th onclick="sortTable(7)">Child(ren)</th>
+            <th onclick="sortTable(8)">Infant(s)</th>
+            <th onclick="sortTable(9)">Total</th>
+            <th onclick="sortTable(10)">Country</th>
+            <th onclick="sortTable(11)">Arrival Date</th>
+            <th onclick="sortTable(12)">Departure Date</th>
+            <th onclick="sortTable(13)">Status</th>
+            <th onclick="sortTable(14)">Created</th>
+            <th onclick="sortTable(15)">Modification Date</th>
         </tr>
         </thead>
         <tbody>
@@ -35,7 +37,7 @@
         {
             <tr onclick="location.href = '@(Url.Action("Reservation", "Home", new { id = booking.ID }))'">
                 <td>@booking.ID</td>
-                <td>@booking.BookersName</td>
+                <td id="booker-name">@booking.BookersName</td>
                 <td>@booking.Email</td>
                 <td>@booking.Room.DoorNumber</td>
                 <td>@booking.Nights</td>
@@ -47,7 +49,7 @@
                 <td>@booking.ArrivalDate.ToShortDateString()</td>
                 <td>@booking.DepartureDate.ToShortDateString()</td>
                 <td>@booking.Status</td>
-                <td>@booking.Created</td>
+                <td>@booking.Created.ToShortDateString()</td>
                 @if (booking.ModificationDate != DateTime.MinValue)
                 {
                     <td>@booking.ModificationDate</td>
