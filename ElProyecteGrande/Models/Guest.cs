@@ -17,7 +17,7 @@ public class Guest
     }
 
     public int ID { get; }
-    public string FullName { get; set; }
+    public string FullName { get; set; } = "Accompanying Guest";
     public DateOnly BirthDate { get; set; }
     public string BirthPlace { get; set; }
     public string Email { get; set; }

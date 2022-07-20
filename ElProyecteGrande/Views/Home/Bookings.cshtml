@@ -39,9 +39,9 @@
                 <td>@booking.Email</td>
                 <td>@booking.Room.DoorNumber</td>
                 <td>@booking.Nights</td>
-                <td>@booking.Guests.Count(guest => guest.Age == Age.Adult)</td>
-                <td>@booking.Guests.Count(guest => guest.Age == Age.Child)</td>
-                <td>@booking.Guests.Count(guest => guest.Age == Age.Infant)</td>
+                <td>@booking.Adults</td>
+                <td>@booking.Children</td>
+                <td>@booking.Infants</td>
                 <td>@booking.Total</td>
                 <td>@booking.Country</td>
                 <td>@booking.ArrivalDate.ToShortDateString()</td>
