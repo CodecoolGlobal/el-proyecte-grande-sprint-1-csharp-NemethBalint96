@@ -11,15 +11,14 @@ public enum Status
 
 public class Booking
 {
-    private static int _nextId = 1;
+    public static int NextId = 0;
     public Booking()
     {
         Guests = new List<Guest>();
         Created = DateTime.Now;
-        ID = _nextId++;
     }
 
-    public int ID { get; }
+    public int ID { get; set; }
     public string BookersName { get; set; }
     public List<Guest> Guests { get; set; }
     public string Email { get; set; }
@@ -27,7 +26,12 @@ public class Booking
     public int Adults { get; set; }
     public int Children { get; set; }
     public int Infants { get; set; }
-    public decimal Total => Nights * Room.Price * Adults;
+
+    public decimal Total { get; set; }
+    //{
+    //    get { return Nights * Room.Price * Adults; }
+    //}
+
     public string Country { get; set; }
     [BindProperty, DataType(DataType.Date)]
     public DateTime ArrivalDate { get; set; }

@@ -23,6 +23,7 @@ public class BookingDaoMemory
 
     public void Add(Booking booking)
     {
+        booking.ID = ++Booking.NextId;
         for (var i = 0; i < booking.Adults; i++)
         {
             var adult = new Guest(Age.Adult);
@@ -53,9 +54,25 @@ public class BookingDaoMemory
         return booking ?? null;
     }
 
-    public void Delete(int Id)
+    public void SetStatusCancelled(int Id)
     {
         var booking = _bookings.FirstOrDefault(x => x.ID == Id);
         booking.Status = Status.Cancelled;
+    }
+
+    public void Edit(Booking booking)
+    {
+        var editableBooking = Get(booking.ID);
+        //editableBooking = booking;
+        editableBooking.BookersName = booking.BookersName;
+        editableBooking.Email = booking.Email;
+        editableBooking.Country = booking.Country;
+        editableBooking.Adults = booking.Adults;
+        editableBooking.Children = booking.Children;
+        editableBooking.Infants = booking.Infants;
+        editableBooking.ArrivalDate = booking.ArrivalDate;
+        editableBooking.DepartureDate = booking.DepartureDate;
+        editableBooking.Room.Comment = booking.Room.Comment;
+        editableBooking.ModificationDate = DateTime.Now;
     }
 }

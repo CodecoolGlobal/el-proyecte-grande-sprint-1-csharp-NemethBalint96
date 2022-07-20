@@ -4,6 +4,7 @@ using ElProyecteGrande.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddSession();
 builder.Services.AddControllersWithViews();
 builder.Services.AddSingleton<BookingDaoMemory>(BookingDaoMemory.GetInstance());
 var app = builder.Build();
@@ -57,6 +58,9 @@ void SetupInMemoryDatabase()
 
 SetupInMemoryDatabase();
 app.UseHttpsRedirection();
+
+app.UseSession();
+
 app.UseStaticFiles();
 
 app.UseRouting();

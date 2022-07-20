@@ -18,6 +18,7 @@ public class HomeController : Controller
 
     public IActionResult Bookings()
     {
+        
         var books = _bookingDaoMemory.GetAll();
         return View(books);
     }
@@ -34,8 +35,14 @@ public class HomeController : Controller
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 
-    public IActionResult NewBooking()
+    public IActionResult BookingForm(int id)
     {
+        if (id != 0)
+        {
+            var booking = _bookingDaoMemory.Get(id);
+            return View(booking);
+        }
+
         return View();
     }
 
@@ -46,19 +53,27 @@ public class HomeController : Controller
         return RedirectToAction("Bookings");
     }
 
-    public RedirectToActionResult DeleteBooking(int id)
+    public RedirectToActionResult CancelBooking(int id)
     {
-        _bookingDaoMemory.Delete(id);
+        _bookingDaoMemory.SetStatusCancelled(id);
         return RedirectToAction("Reservation", new { id });
     }
 
     public IActionResult Reservation(int id)
     {
+        
         var booking = _bookingDaoMemory.Get(id);
         if (booking == null)
         {
             return RedirectToAction("Bookings");
         }
         return View(booking);
+    }
+
+    [HttpPost]
+    public RedirectToActionResult EditBooking(Booking booking)
+    {
+        _bookingDaoMemory.Edit(booking);
+        return RedirectToAction("Reservation", new { booking.ID });
     }
 }
