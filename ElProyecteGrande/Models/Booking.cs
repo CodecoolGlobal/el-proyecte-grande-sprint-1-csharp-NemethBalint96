@@ -11,15 +11,14 @@ public enum Status
 
 public class Booking
 {
-    private static int _nextId = 1;
+    public static int NextId = 0;
     public Booking()
     {
         Guests = new List<Guest>();
         Created = DateTime.Now;
-        ID = _nextId++;
     }
 
-    public int ID { get; }
+    public int ID { get; set; }
     public string BookersName { get; set; }
     public List<Guest> Guests { get; set; }
     public string Email { get; set; }

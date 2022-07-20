@@ -80,7 +80,10 @@
             @Html.TextBoxFor(m => m.Room.Comment)
         </div>
         <br/>
-
+        @if (Model.ID != 0)
+        {
+            <input type="hidden" asp-for="ID" value="@Model.ID">
+        }
         <div>
             <input class="btn-primary" type="submit" value="Submit Form"/>
         </div>

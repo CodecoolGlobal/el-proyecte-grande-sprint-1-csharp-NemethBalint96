@@ -71,8 +71,9 @@ public class HomeController : Controller
     }
 
     [HttpPost]
-    public IActionResult EditBooking(int id)
+    public RedirectToActionResult EditBooking(Booking booking)
     {
-        throw new NotImplementedException();
+        _bookingDaoMemory.Edit(booking);
+        return RedirectToAction("Reservation", new { booking.ID });
     }
 }

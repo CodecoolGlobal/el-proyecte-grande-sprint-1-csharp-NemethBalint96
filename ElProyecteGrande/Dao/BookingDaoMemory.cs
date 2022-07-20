@@ -23,6 +23,7 @@ public class BookingDaoMemory
 
     public void Add(Booking booking)
     {
+        booking.ID = ++Booking.NextId;
         for (var i = 0; i < booking.Adults; i++)
         {
             var adult = new Guest(Age.Adult);
@@ -57,5 +58,13 @@ public class BookingDaoMemory
     {
         var booking = _bookings.FirstOrDefault(x => x.ID == Id);
         booking.Status = Status.Cancelled;
+    }
+
+    public void Edit(Booking booking)
+    {
+        var editableBooking = Get(booking.ID);
+        //editableBooking = booking;
+        
+        editableBooking.ModificationDate = DateTime.Now;
     }
 }
