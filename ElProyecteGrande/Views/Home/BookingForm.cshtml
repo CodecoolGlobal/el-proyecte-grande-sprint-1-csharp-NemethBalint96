@@ -1,11 +1,18 @@
 ﻿@model ElProyecteGrande.Models.Booking
 
 @{
-    ViewBag.Title = "Add New Guest";
+    if (Context.Session.GetString("BookingForm") == "AddNewBooking")
+    {
+        ViewBag.Title = "Add New Booking";
+    }
+    else
+    {
+        ViewBag.Title = "Edit Booking";
+    }
     Layout = "_Layout";
 }
 
-<h2>Add New Booking</h2><br/>
+<h2>@ViewBag.Title</h2><br/>
 <div class="container h-50">
     @using (var form = Html.BeginForm(Context.Session.GetString("BookingForm"), "Home", FormMethod.Post))
     {
@@ -50,7 +57,6 @@
             @Html.LabelFor(m => m.DepartureDate) <br/>
             <input type="date" asp-for="DepartureDate"/>
         </div>
-
         <div>
             <p>The Room</p>
         </div>
@@ -74,13 +80,13 @@
             <select asp-for="Room.RoomType" asp-items="Html.GetEnumSelectList<RoomType>()"></select>
         </div>
         <br/>
-
+    
         <div class="booking">
             @Html.LabelFor(m => m.Room.Comment) <br/>
             @Html.TextBoxFor(m => m.Room.Comment)
         </div>
         <br/>
-        @if (Model.ID != 0)
+        @if (Context.Session.GetString("BookingForm")=="EditBooking")
         {
             <input type="hidden" asp-for="ID" value="@Model.ID">
         }

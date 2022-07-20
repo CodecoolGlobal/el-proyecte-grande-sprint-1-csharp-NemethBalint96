@@ -1,6 +1,7 @@
 ﻿@model IEnumerable<Booking>
 @{
     ViewData["Title"] = "Bookings";
+    Context.Session.SetString("BookingForm", "AddNewBooking");
 }
 <h1 class="display-5">@ViewData["Title"]</h1>
 <br/>

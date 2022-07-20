@@ -1,6 +1,7 @@
 ﻿@model Booking
 @{
     ViewData["Title"] = "Reservation";
+    Context.Session.SetString("BookingForm", "EditBooking");
 }
 <h1 class="display-5">@ViewData["Title"]</h1>
 

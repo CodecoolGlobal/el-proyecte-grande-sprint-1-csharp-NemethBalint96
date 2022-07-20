@@ -18,7 +18,7 @@ public class HomeController : Controller
 
     public IActionResult Bookings()
     {
-        HttpContext.Session.SetString("BookingForm", "AddNewBooking");
+        
         var books = _bookingDaoMemory.GetAll();
         return View(books);
     }
@@ -61,7 +61,7 @@ public class HomeController : Controller
 
     public IActionResult Reservation(int id)
     {
-        HttpContext.Session.SetString("BookingForm", "EditBooking");
+        
         var booking = _bookingDaoMemory.Get(id);
         if (booking == null)
         {

@@ -64,7 +64,15 @@ public class BookingDaoMemory
     {
         var editableBooking = Get(booking.ID);
         //editableBooking = booking;
-        
+        editableBooking.BookersName = booking.BookersName;
+        editableBooking.Email = booking.Email;
+        editableBooking.Country = booking.Country;
+        editableBooking.Adults = booking.Adults;
+        editableBooking.Children = booking.Children;
+        editableBooking.Infants = booking.Infants;
+        editableBooking.ArrivalDate = booking.ArrivalDate;
+        editableBooking.DepartureDate = booking.DepartureDate;
+        editableBooking.Room.Comment = booking.Room.Comment;
         editableBooking.ModificationDate = DateTime.Now;
     }
 }
