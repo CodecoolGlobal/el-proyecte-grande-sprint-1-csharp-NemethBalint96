@@ -53,7 +53,7 @@ public class BookingDaoMemory
         return booking ?? null;
     }
 
-    public void Delete(int Id)
+    public void SetStatusCancelled(int Id)
     {
         var booking = _bookings.FirstOrDefault(x => x.ID == Id);
         booking.Status = Status.Cancelled;

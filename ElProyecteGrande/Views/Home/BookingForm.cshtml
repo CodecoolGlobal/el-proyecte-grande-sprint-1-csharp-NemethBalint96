@@ -7,7 +7,7 @@
 
 <h2>Add New Booking</h2><br/>
 <div class="container h-50">
-    @using (var form = Html.BeginForm("AddNewBooking","Home",FormMethod.Post))
+    @using (var form = Html.BeginForm(Context.Session.GetString("BookingForm"), "Home", FormMethod.Post))
     {
         @Html.ValidationSummary()
 
@@ -48,15 +48,15 @@
 
         <div class="booking">
             @Html.LabelFor(m => m.DepartureDate) <br/>
-            <input type="date" asp-for="DepartureDate" />
+            <input type="date" asp-for="DepartureDate"/>
         </div>
-        
+
         <div>
             <p>The Room</p>
         </div>
 
         <div class="booking">
-            @Html.LabelFor(m =>m.Room.Floor) <br/>
+            @Html.LabelFor(m => m.Room.Floor) <br/>
             <input type="number" asp-for="Room.Floor"/>
         </div>
 
@@ -70,7 +70,7 @@
             <input type="number" asp-for="Room.Price"/>
         </div>
         <div><br/>
-            @Html.LabelFor(m=>m.Room.RoomType)<br/>
+            @Html.LabelFor(m => m.Room.RoomType)<br/>
             <select asp-for="Room.RoomType" asp-items="Html.GetEnumSelectList<RoomType>()"></select>
         </div>
         <br/>
@@ -80,8 +80,9 @@
             @Html.TextBoxFor(m => m.Room.Comment)
         </div>
         <br/>
+
         <div>
-            <input class="btn-primary" type="submit" value="Submit Form" />
+            <input class="btn-primary" type="submit" value="Submit Form"/>
         </div>
     }
 </div>

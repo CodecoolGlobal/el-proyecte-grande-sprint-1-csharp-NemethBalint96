@@ -4,9 +4,8 @@
 }
 <h1 class="display-5">@ViewData["Title"]</h1>
 
-@*<a  href="delete/@Model.ID" ><button>Delete</button></a>*@
-<a asp-controller="Home" asp-action="DeleteBooking" asp-route-id="@Model.ID" ><button>Delete</button></a>
-
+<a asp-controller="Home" asp-action="CancelBooking" asp-route-id="@Model.ID" ><button class="btn btn-primary btn-danger">Cancel</button></a>
+<a asp-controller="Home" asp-action="BookingForm" asp-route-id="@Model.ID" ><button class="btn btn-primary">Edit</button></a>
 <div>
     <p>Reservation ID: @Model.ID</p>
     <p>Status: @Model.Status</p>
