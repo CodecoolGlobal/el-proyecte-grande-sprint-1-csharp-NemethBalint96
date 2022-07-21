@@ -49,8 +49,11 @@
             <th>Address</th>
             <th>Postal code</th>
             <th>Citizenship</th>
-            <th>Edit</th>
-            <th>Delete</th>
+            @if (Model.Status != Status.Cancelled)
+            {
+                <th>Edit</th>
+                <th>Delete</th>
+            }
         </tr>
         </thead>
         <tbody>
@@ -83,10 +86,6 @@
                     </svg>
                 </a></td>
                   
-                }
-                else
-                {
-                    <td></td>
                 }
 
             </tr>
