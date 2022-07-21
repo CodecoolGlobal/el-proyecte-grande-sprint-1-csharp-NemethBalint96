@@ -33,20 +33,45 @@
             @Html.TextBoxFor(m => m.Country)
         </div>
 
-        <div class="booking">
-            @Html.LabelFor(m => m.Adults) <br/>
-            <input type="number" asp-for="Adults"/>
-        </div>
+        
+            @if (Model != null)
+            {
+                <div class="booking">
+                    @Html.LabelFor(m => m.Adults) <br/>
+                <input asp-for="Adults" min="@Model.Adults" type="number" />
+            
+                </div>
 
-        <div class="booking">
-            @Html.LabelFor(m => m.Children) <br/>
-            <input type="number" asp-for="Children"/>
-        </div>
+                <div class="booking">
+                           @Html.LabelFor(m => m.Children) <br/>
+                <input type="number" asp-for="Children"  min="@Model.Children"/>
+                </div>
 
-        <div class="booking">
-            @Html.LabelFor(m => m.Infants) <br/>
-            <input type="number" asp-for="Infants"/>
-        </div>
+                <div class="booking">
+                           @Html.LabelFor(m => m.Infants) <br/>
+                <input type="number" asp-for="Infants"  min="@Model.Infants"/>
+                 </div>
+
+            }
+            else
+            {
+                <div class="booking">
+                    @Html.LabelFor(m => m.Adults) <br/>
+                    <input asp-for="Adults" min="0" type="number" />
+            
+                </div>
+
+                <div class="booking">
+                    @Html.LabelFor(m => m.Children) <br/>
+                    <input type="number" asp-for="Children"  min="0"/>
+                </div>
+
+                <div class="booking">
+                    @Html.LabelFor(m => m.Infants) <br/>
+                    <input type="number" asp-for="Infants"  min="0"/>
+                </div>
+            }
+           
 
         <div class="booking">
             @Html.LabelFor(m => m.ArrivalDate) <br/>
@@ -91,7 +116,7 @@
             <input type="hidden" asp-for="ID" value="@Model.ID">
         }
         <div>
-            <input class="btn-primary" type="submit" value="Submit Form"/>
+            <input class="btn btn-primary" type="submit" value="Submit Form"/>
         </div>
     }
 </div>

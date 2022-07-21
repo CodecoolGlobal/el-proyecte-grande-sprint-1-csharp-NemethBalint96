@@ -2,11 +2,14 @@
 @{
     ViewData["Title"] = "Reservation";
     Context.Session.SetString("BookingForm", "EditBooking");
+    Context.Session.SetString("BookingForm", "EditBooking");
 }
 <h1 class="display-5">@ViewData["Title"]</h1>
 
 <a asp-controller="Home" asp-action="CancelBooking" asp-route-id="@Model.ID" ><button class="btn btn-primary btn-danger">Cancel</button></a>
+@if(Model.Status!=Status.Cancelled){
 <a asp-controller="Home" asp-action="BookingForm" asp-route-id="@Model.ID" ><button class="btn btn-primary">Edit</button></a>
+}
 <div>
     <p>Reservation ID: @Model.ID</p>
     <p>Status: @Model.Status</p>
@@ -15,9 +18,9 @@
     <p>Country: @Model.Country</p>
     <p>Night(s): @Model.Nights</p>
     <p>Number of Guest(s): @Model.Guests.Count <br/>
-        Adult(s): @Model.Guests.Count(guest => guest.Age == Age.Adult)
-        Child(ren): @Model.Guests.Count(guest => guest.Age == Age.Child)
-        Infant(s): @Model.Guests.Count(guest => guest.Age == Age.Infant)
+        Adult(s): @Model.Adults
+        Child(ren): @Model.Children
+        Infant(s): @Model.Infants
     </p>
     <p>Arrival Date: @Model.ArrivalDate.ToShortDateString()</p>
     <p>Departure Date: @Model.DepartureDate.ToShortDateString()</p>
@@ -33,6 +36,7 @@
         <thead>
         <tr>
             <th>Full Name</th>
+            <th>Age</th>
             <th>Birth Date</th>
             <th>Birth Place</th>
             <th>Email</th>
@@ -42,6 +46,7 @@
             <th>Address</th>
             <th>Postal code</th>
             <th>Citizenship</th>
+            <th>Delete Guest</th>
         </tr>
         </thead>
         <tbody>
@@ -49,6 +54,7 @@
         {
             <tr>
                 <td>@guest.FullName</td>
+                <td>@guest.Age</td>
                 <td>@guest.BirthDate</td>
                 <td>@guest.BirthPlace</td>
                 <td>@guest.Email</td>
@@ -58,6 +64,10 @@
                 <td>@guest.Adress</td>
                 <td>@guest.PostalCode</td>
                 <td>@guest.Citizenship</td>
+                <td><a  asp-action="DeleteGuestFromBooking" asp-route-bookingId="@Model.ID" asp-route-guestId="@guest.ID"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                    <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                </svg></a></td>
             </tr>
         }
         </tbody>

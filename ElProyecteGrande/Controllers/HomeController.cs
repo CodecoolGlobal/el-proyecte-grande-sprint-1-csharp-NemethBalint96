@@ -25,7 +25,7 @@ public class HomeController : Controller
 
     public IActionResult Guests()
     {
-        var guests = _bookingDaoMemory.GetAll().SelectMany(booking => booking.Guests);
+        var guests = _bookingDaoMemory.GetAll();
         return View(guests);
     }
 
@@ -75,5 +75,14 @@ public class HomeController : Controller
     {
         _bookingDaoMemory.Edit(booking);
         return RedirectToAction("Reservation", new { booking.ID });
+    }
+
+    [HttpGet]
+    public IActionResult DeleteGuestFromBooking(int bookingId, int guestId)
+    {
+        _bookingDaoMemory.DeleteGuestFromBooking(bookingId, guestId);
+        var booking = _bookingDaoMemory.Get(bookingId);
+        return View("Reservation", booking);
+
     }
 }

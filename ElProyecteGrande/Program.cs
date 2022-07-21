@@ -26,6 +26,9 @@ void SetupInMemoryDatabase()
         BookersName = "Németh Bálint",
         Country = "Hungary",
         Email = "nemeth.balint1996@gmail.com",
+        Adults = 4,
+        Infants = 2,
+        Children = 3,
         Guests = new List<Guest>{
             new Guest(Age.Adult)
             {
