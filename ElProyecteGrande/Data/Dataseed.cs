@@ -1,5 +1,7 @@
-﻿using ElProyecteGrande.Dao;
+﻿using System.Text.Json.Serialization;
+using ElProyecteGrande.Dao;
 using ElProyecteGrande.Models;
+using Newtonsoft.Json;
 
 namespace ElProyecteGrande.Data
 {
@@ -85,5 +87,21 @@ namespace ElProyecteGrande.Data
             }
 
         }
+
+        public static void CreateBookings(BookingDaoMemory bookingDao)
+        {
+            string json = File.ReadAllText(@"c:\booking.json");
+            List <Booking> bookings = JsonConvert.DeserializeObject<List<Booking>>(json);
+            foreach (var booking in bookings)
+            {
+                var random = new Random();
+                booking.DepartureDate = booking.ArrivalDate.AddDays(random.Next(1,7));
+                booking.Created = booking.ArrivalDate.Subtract(TimeSpan.FromDays(random.Next(1, 7)));
+                bookingDao.Add(booking);
+            }
+
+        }
     }
+
+    
 }

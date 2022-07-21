@@ -27,7 +27,7 @@
     </p>
     <p>Arrival Date: @Model.ArrivalDate.ToShortDateString()</p>
     <p>Departure Date: @Model.DepartureDate.ToShortDateString()</p>
-    <p>Created: @Model.Created</p>
+    <p>Created: @Model.Created.ToShortDateString()</p>
     @if (Model.ModificationDate != DateTime.MinValue)
     {
         <p>Modification Date: @Model.ModificationDate</p>
@@ -94,10 +94,10 @@
     </table>
 </div>
 <h1 class="display-5">Room</h1>
-<div>
+@*<div>
     <p>Room Type: @Model.Room.RoomType</p>
     <p>Floor: @Model.Room.Floor</p>
     <p>DoorNumber: @Model.Room.DoorNumber</p>
     <p>Comment: @Model.Room.Comment</p>
     <p>Price: @Model.Room.Price</p>
-</div>
+</div>*@
