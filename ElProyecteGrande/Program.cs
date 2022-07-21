@@ -7,6 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSession();
 builder.Services.AddControllersWithViews();
 builder.Services.AddSingleton<BookingDaoMemory>(BookingDaoMemory.GetInstance());
+builder.Services.AddSingleton<RoomDaoMemory>(RoomDaoMemory.GetInstance());
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

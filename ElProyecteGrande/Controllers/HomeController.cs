@@ -9,11 +9,13 @@ public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
     private readonly BookingDaoMemory _bookingDaoMemory;
+    private readonly RoomDaoMemory _roomDaoMemory;
 
-    public HomeController(ILogger<HomeController> logger, BookingDaoMemory booking)
+    public HomeController(ILogger<HomeController> logger, BookingDaoMemory booking, RoomDaoMemory room)
     {
         _logger = logger;
         _bookingDaoMemory = booking;
+        _roomDaoMemory = room;
     }
 
     public IActionResult Bookings()
