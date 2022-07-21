@@ -17,32 +17,28 @@ public class BookingDaoMemory
         {
             _instance = new BookingDaoMemory();
         }
-
         return _instance;
     }
 
     public void Add(Booking booking)
     {
         booking.ID = ++Booking.NextId;
-        CreateGuests(booking.Adults,booking.Children,booking.Infants,booking.Guests);
-
+        CreateGuests(booking.Adults, booking.Children, booking.Infants, booking.Guests);
         _bookings.Add(booking);
     }
 
-    private void CreateGuests(int adults,int children,int infants,List<Guest> guests)
+    private void CreateGuests(int adults, int children, int infants, List<Guest> guests)
     {
         for (var i = 0; i < adults; i++)
         {
             var adult = new Guest(Age.Adult);
             guests.Add(adult);
         }
-
         for (var i = 0; i < children; i++)
         {
             var child = new Guest(Age.Child);
             guests.Add(child);
         }
-
         for (var i = 0; i < infants; i++)
         {
             var infant = new Guest(Age.Infant);
@@ -82,13 +78,11 @@ public class BookingDaoMemory
         editableBooking.DepartureDate = booking.DepartureDate;
         editableBooking.Room.Comment = booking.Room.Comment;
         editableBooking.ModificationDate = DateTime.Now;
-
-       
     }
 
     private void CreatePlusGuests(Booking booking, Booking? editableBooking)
     {
-        var adultsnumber = booking.Adults -editableBooking.Adults;
+        var adultsnumber = booking.Adults - editableBooking.Adults;
         var childrennumber = booking.Children - editableBooking.Children;
         var infantsnumber = booking.Infants - editableBooking.Infants;
         CreateGuests(adultsnumber, childrennumber,
