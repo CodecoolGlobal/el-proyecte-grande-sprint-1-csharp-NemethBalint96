@@ -39,7 +39,7 @@ void SetupInMemoryDatabase()
                 Phone = "00000000",
                 Country = "Hungary",
                 City = "Füzesabony",
-                Adress = "",
+                Address = "",
                 PostalCode = 3390,
                 Citizenship = "Hungary",
             },
