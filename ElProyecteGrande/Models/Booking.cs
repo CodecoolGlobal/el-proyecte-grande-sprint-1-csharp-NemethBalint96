@@ -36,4 +36,9 @@ public class Booking
     public Status Status { get; set; }
     public DateTime Created { get; set; }
     public DateTime ModificationDate { get; set; }
+
+    public string CalculatePrice()
+    {
+        return ((Adults + Children + Infants) * Room.Price * Nights).ToString();
+    }
 }

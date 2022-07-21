@@ -141,6 +141,10 @@ public class BookingDaoMemory
     public Booking AddRoomToBooking(int id, Room room)
     {
         var booking = Get(id);
+        if (booking.Room == null)
+        {
+            booking.Room = new Room();
+        }
         booking.Room.ID = room.ID;
         booking.Room.Floor = room.Floor;
         booking.Room.DoorNumber = room.DoorNumber;
