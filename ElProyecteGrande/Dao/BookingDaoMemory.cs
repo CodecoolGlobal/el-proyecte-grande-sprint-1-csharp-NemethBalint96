@@ -99,6 +99,26 @@ public class BookingDaoMemory
     {
         var guests = _bookings.Find(id => id.ID == bookingId).Guests;
         var guest = guests.Find(x => x.ID == guestId);
+        DecreaseGuestNumber(bookingId, guest);
+
         guests.Remove(guest);
+       
+    }
+
+    private void DecreaseGuestNumber(int bookingId, Guest guest)
+    {
+        var booking = _bookings.Find(id => id.ID == bookingId);
+        switch (guest.Age)
+        {
+            case Age.Adult:
+                booking.Adults--;
+                break;
+            case Age.Child:
+                booking.Children--;
+                break;
+            case Age.Infant: 
+                booking.Infants--;
+                break;
+        }
     }
 }
