@@ -70,7 +70,8 @@ public class HomeController : Controller
     public RedirectToActionResult EditBooking(Booking booking)
     {
         _bookingDaoMemory.Edit(booking);
-        return RedirectToAction("Reservation", new { booking.ID });
+        HttpContext.Session.SetString("BookingId", $"{booking.ID}");
+        return RedirectToAction("SelectRoom");
     }
 
     [HttpGet]
@@ -94,10 +95,32 @@ public class HomeController : Controller
         return View("Reservation", booking);
     }
 
-    [HttpGet]
-    public IActionResult ShowRooms()
+    public IActionResult Rooms()
     {
         var rooms = _roomDaoMemory.GetAll();
         return View(rooms);
+    }
+
+    [HttpGet]
+    public IActionResult SelectRoom()
+    {
+        var id = HttpContext.Session.GetString("BookingId");
+        var booking = _bookingDaoMemory.Get(int.Parse(id));
+        var rooms = _roomDaoMemory.GetAvailable(booking);
+        rooms = rooms.OrderBy(room => room.Floor).ThenBy(room => room.DoorNumber);
+        return View(rooms);
+    }
+
+    [HttpPost]
+    public IActionResult Select()
+    {
+        var id = int.Parse(HttpContext.Session.GetString("BookingId"));
+        var roomId = int.Parse(Request.Form["rooms"]);
+        var room = _roomDaoMemory.Get(roomId);
+        var reservation = _bookingDaoMemory.Get(id);
+        _roomDaoMemory.ChangeRoom(reservation);
+
+        var booking = _bookingDaoMemory.AddRoomToBooking(id, room);
+        return View("Reservation", booking);
     }
 }

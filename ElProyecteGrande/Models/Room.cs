@@ -13,6 +13,7 @@ public class Room
     public Room()
     {
         ID = _nextId++;
+        Bookings = new List<Booking>();
     }
 
     public int ID { get; set; }
@@ -21,4 +22,5 @@ public class Room
     public RoomType RoomType { get; set; }
     public int Floor { get; set; }
     public string Comment { get; set; }
+    public List<Booking> Bookings { get; set; }
 }
