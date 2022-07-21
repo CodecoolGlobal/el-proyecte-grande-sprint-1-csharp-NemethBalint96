@@ -85,10 +85,10 @@ public class HomeController : Controller
         return View(guest);
     }
 
-    //[HttpPost]
-    //public RedirectToActionResult EditGuest(Guest guest)
-    //{
-    //    var bookingId = _bookingDaoMemory.EditGuestFromBooking(guest);
-    //    return RedirectToAction("Reservation", new { bookingID = bookingId });
-    //}
+    [HttpPost]
+    public IActionResult EditGuest(Guest guest)
+    {
+        var booking = _bookingDaoMemory.EditGuestReturnBooking(guest);
+        return View("Reservation", booking);
+    }
 }

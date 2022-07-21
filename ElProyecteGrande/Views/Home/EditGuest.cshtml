@@ -7,7 +7,7 @@
 <h2>@ViewBag.Title</h2><br/>
 <div class="container h-50">
     <form asp-controller="Home" asp-action="EditGuest" method="post">
-        <input asp-for="ID" type="hidden">
+        @*<input asp-for="ID" type="hidden">*@
         <div>
             <label asp-for="FullName">Full Name</label><br/>
             <input asp-for="FullName"/>

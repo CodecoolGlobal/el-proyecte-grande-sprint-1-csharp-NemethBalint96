@@ -63,7 +63,6 @@ public class BookingDaoMemory
         booking.Status = Status.Cancelled;
     }
 
-
     public void Edit(Booking booking)
     {
         var editableBooking = Get(booking.ID);
@@ -101,9 +100,11 @@ public class BookingDaoMemory
         return _bookings.SelectMany(booking => booking.Guests).First(guest => guest.ID == guestId);
     }
 
-    public void EditGuestFromBooking(Guest newGuest)
+    public Booking EditGuestReturnBooking(Guest newGuest)
     {
         var editableGuest = GetGuest(newGuest.ID);
-        throw new NotImplementedException();
+        editableGuest.FullName = newGuest.FullName;
+        
+        return _bookings.First(booking => booking.Guests.Any(guest => guest.ID == newGuest.ID));
     }
 }

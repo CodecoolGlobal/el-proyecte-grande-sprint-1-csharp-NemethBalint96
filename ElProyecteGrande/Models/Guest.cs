@@ -13,13 +13,19 @@ public enum Age
 public class Guest
 {
     private static int _nextId = 1;
+
+    public Guest()
+    {
+
+    }
+
     public Guest(Age age)
     {
         Age = age;
         ID = _nextId++;
     }
 
-    public int ID { get; }
+    public int ID { get; set; }
     public string FullName { get; set; } = "Accompanying Guest";
     [BindProperty, DataType(DataType.Date)]
     public DateOnly BirthDate { get; set; }
