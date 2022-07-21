@@ -15,7 +15,7 @@ public class Room
         ID = _nextId++;
     }
 
-    public int ID { get; }
+    public int ID { get; set; }
     public int DoorNumber { get; set; }
     public decimal Price { get; set; }
     public RoomType RoomType { get; set; }
