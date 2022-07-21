@@ -34,7 +34,7 @@ public class Guest
     public string Phone { get; set; }
     public string Country { get; set; }
     public string City { get; set; }
-    public string Adress { get; set; }
+    public string Address { get; set; }
     public int PostalCode { get; set; }
     public string Citizenship { get; set; }
     public string Comment { get; set; }

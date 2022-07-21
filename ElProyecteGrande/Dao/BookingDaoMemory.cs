@@ -103,8 +103,19 @@ public class BookingDaoMemory
     public Booking EditGuestReturnBooking(Guest newGuest)
     {
         var editableGuest = GetGuest(newGuest.ID);
+        editableGuest.ID = newGuest.ID;
         editableGuest.FullName = newGuest.FullName;
-        
+        editableGuest.BirthDate = newGuest.BirthDate;
+        editableGuest.BirthPlace = newGuest.BirthPlace;
+        editableGuest.Email = newGuest.Email;
+        editableGuest.Phone = newGuest.Phone;
+        editableGuest.Country = newGuest.Country;
+        editableGuest.City = newGuest.City;
+        editableGuest.Address = newGuest.Address;
+        editableGuest.PostalCode = newGuest.PostalCode;
+        editableGuest.Citizenship = newGuest.Citizenship;
+        editableGuest.Comment = newGuest.Comment;
+        editableGuest.Age = newGuest.Age;
         return _bookings.First(booking => booking.Guests.Any(guest => guest.ID == newGuest.ID));
     }
 }
