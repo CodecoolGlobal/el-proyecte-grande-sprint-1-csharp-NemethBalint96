@@ -33,7 +33,6 @@
             @Html.TextBoxFor(m => m.Country)
         </div>
 
-        
             @if (Model != null)
             {
                 <div class="booking">
@@ -71,7 +70,6 @@
                     <input type="number" asp-for="Infants"  min="0"/>
                 </div>
             }
-           
 
         <div class="booking">
             @Html.LabelFor(m => m.ArrivalDate) <br/>
@@ -81,34 +79,6 @@
         <div class="booking">
             @Html.LabelFor(m => m.DepartureDate) <br/>
             <input type="date" asp-for="DepartureDate"/>
-        </div>
-        <div>
-            <p>The Room</p>
-        </div>
-
-        <div class="booking">
-            @Html.LabelFor(m => m.Room.Floor) <br/>
-            <input type="number" asp-for="Room.Floor"/>
-        </div>
-
-        <div class="booking">
-            @Html.LabelFor(m => m.Room.DoorNumber) <br/>
-            <input type="number" asp-for="Room.DoorNumber"/>
-        </div>
-
-        <div class="booking">
-            @Html.LabelFor(m => m.Room.Price) <br/>
-            <input type="number" asp-for="Room.Price"/>
-        </div>
-        <div><br/>
-            @Html.LabelFor(m => m.Room.RoomType)<br/>
-            <select asp-for="Room.RoomType" asp-items="Html.GetEnumSelectList<RoomType>()"></select>
-        </div>
-        <br/>
-    
-        <div class="booking">
-            @Html.LabelFor(m => m.Room.Comment) <br/>
-            @Html.TextBoxFor(m => m.Room.Comment)
         </div>
         <br/>
         @if (Context.Session.GetString("BookingForm")=="EditBooking")

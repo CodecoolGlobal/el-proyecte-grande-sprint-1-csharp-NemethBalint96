@@ -1,0 +1,21 @@
+﻿@model System.Collections.Generic.IEnumerable<ElProyecteGrande.Models.Room>
+
+@{
+    ViewBag.Title = "Edit Guest";
+}
+
+<h2>@ViewBag.Title</h2><br/>
+<div class="container h-50">
+    <form asp-controller="Home" asp-action="Select" method="post">
+        <label for="rooms">Select Room</label>
+        <select name="rooms">
+            @foreach (var room in Model)
+            {
+                <option value="@room.ID">Fl:@room.Floor No:@room.DoorNumber T:@room.RoomType</option>
+            }
+            
+        </select>
+        <br/>
+        <button class="btn btn-primary" type="submit">Submit</button>
+    </form>
+</div>

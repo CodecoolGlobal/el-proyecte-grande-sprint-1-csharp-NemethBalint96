@@ -26,7 +26,7 @@ public class Booking
     public int Adults { get; set; }
     public int Children { get; set; }
     public int Infants { get; set; }
-    public decimal Total => Nights * Room.Price * Adults;
+    public decimal Total { get; set; }
     public string Country { get; set; }
     [BindProperty, DataType(DataType.Date)]
     public DateTime ArrivalDate { get; set; }

@@ -75,7 +75,6 @@ public class BookingDaoMemory
         editableBooking.Infants = booking.Infants;
         editableBooking.ArrivalDate = booking.ArrivalDate;
         editableBooking.DepartureDate = booking.DepartureDate;
-        editableBooking.Room.Comment = booking.Room.Comment;
         editableBooking.ModificationDate = DateTime.Now;
     }
 
@@ -137,5 +136,18 @@ public class BookingDaoMemory
         editableGuest.Comment = newGuest.Comment;
         editableGuest.Age = newGuest.Age;
         return _bookings.First(booking => booking.Guests.Any(guest => guest.ID == newGuest.ID));
+    }
+
+    public Booking AddRoomToBooking(int id, Room room)
+    {
+        var booking = Get(id);
+        booking.Room.ID = room.ID;
+        booking.Room.Floor = room.Floor;
+        booking.Room.DoorNumber = room.DoorNumber;
+        booking.Room.RoomType = room.RoomType;
+        booking.Room.Price = room.Price;
+        booking.Room.Comment = room.Comment;
+        room.Bookings.Add(booking);
+        return booking;
     }
 }
