@@ -5,8 +5,8 @@
 <h1 class="display-5">@ViewData["Title"]</h1>
 
 <div class="text-center">
-    <table class="table-responsive table-bordered">
-        <thead>
+    <table class="table table-sm table-responsive table-striped table-success table-hover align-middle">
+        <thead class="text-center align-middle">
         <tr>
             <th>ID</th>
             <th>Full Name</th>
@@ -26,7 +26,7 @@
         {
             @foreach (var guest in booking.Guests.Where(guest=>guest.FullName!="Accompanying Guest"))
             {
-                <tr onclick="location.href = '@(Url.Action("Reservation", "Home", new { id = booking.ID }))'">
+                <tr class="text-center align-middle" onclick="location.href = '@(Url.Action("Reservation", "Home", new { id = booking.ID }))'">
                     <td>@guest.ID</td>
                     <td>@guest.FullName</td>
                     <td>@guest.BirthDate</td>
