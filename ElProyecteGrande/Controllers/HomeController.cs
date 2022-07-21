@@ -93,4 +93,11 @@ public class HomeController : Controller
         var booking = _bookingDaoMemory.EditGuestReturnBooking(guest);
         return View("Reservation", booking);
     }
+
+    [HttpGet]
+    public IActionResult ShowRooms()
+    {
+        var rooms = _roomDaoMemory.GetAll();
+        return View(rooms);
+    }
 }

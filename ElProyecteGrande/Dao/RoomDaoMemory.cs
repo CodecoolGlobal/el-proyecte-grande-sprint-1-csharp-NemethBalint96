@@ -20,4 +20,14 @@ public class RoomDaoMemory
         }
         return _instance;
     }
+
+    public void Add(Room room)
+    {
+        _rooms.Add(room);
+    }
+
+    public IEnumerable<Room> GetAll()
+    {
+        return _rooms;
+    }
 }

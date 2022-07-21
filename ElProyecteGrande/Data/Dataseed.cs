@@ -47,5 +47,43 @@ namespace ElProyecteGrande.Data
             });
         }
 
+        public static void SetupInMemoryRooms(RoomDaoMemory rooms)
+        {
+            for (var i = 1; i < 6; i++)
+            {
+                var room = new Room
+                {
+                    DoorNumber = i,
+                    Floor = 1,
+                    RoomType = RoomType.Standard,
+                    Price = 80
+                };
+               rooms.Add(room);
+            }
+            for (var i = 1; i < 6; i++)
+            {
+                var room = new Room
+                {
+                    DoorNumber = i,
+                    Floor = 2,
+                    RoomType = RoomType.Superior,
+                    Price = 100
+                };
+                rooms.Add(room);
+            }
+
+            for (var i = 1; i < 6; i++)
+            {
+                var room = new Room
+                {
+                    DoorNumber = i,
+                    Floor = 3,
+                    RoomType = RoomType.Apartman,
+                    Price = 150
+                };
+                rooms.Add(room);
+            }
+
+        }
     }
 }

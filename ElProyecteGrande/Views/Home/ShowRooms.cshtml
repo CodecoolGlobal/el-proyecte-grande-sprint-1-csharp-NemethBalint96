@@ -1,0 +1,17 @@
+﻿@model IEnumerable<ElProyecteGrande.Models.Room>
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h2>title</h2>
+<ul>
+    @foreach (var room in Model)
+    {
+        <li>Id: @room.ID</li>
+        <li>RoomType: @room.RoomType</li>
+        <li>Floor: @room.Floor</li>
+        <li>Door: @room.DoorNumber</li>
+    }
+</ul>

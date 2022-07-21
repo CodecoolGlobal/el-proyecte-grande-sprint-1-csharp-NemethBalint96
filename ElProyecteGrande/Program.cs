@@ -22,6 +22,7 @@ if (!app.Environment.IsDevelopment())
 
 
 Dataseed.SetupInMemoryDatabase(BookingDaoMemory.GetInstance());
+Dataseed.SetupInMemoryRooms(RoomDaoMemory.GetInstance());
 
 app.UseHttpsRedirection();
 
