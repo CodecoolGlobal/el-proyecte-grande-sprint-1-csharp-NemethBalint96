@@ -18,7 +18,6 @@ public class HomeController : Controller
 
     public IActionResult Bookings()
     {
-        
         var books = _bookingDaoMemory.GetAll();
         return View(books);
     }
@@ -37,13 +36,9 @@ public class HomeController : Controller
 
     public IActionResult BookingForm(int id)
     {
-        if (id != 0)
-        {
-            var booking = _bookingDaoMemory.Get(id);
-            return View(booking);
-        }
-
-        return View();
+        if (id == 0) return View();
+        var booking = _bookingDaoMemory.Get(id);
+        return View(booking);
     }
 
     [HttpPost]
@@ -61,7 +56,6 @@ public class HomeController : Controller
 
     public IActionResult Reservation(int id)
     {
-        
         var booking = _bookingDaoMemory.Get(id);
         if (booking == null)
         {
@@ -83,6 +77,18 @@ public class HomeController : Controller
         _bookingDaoMemory.DeleteGuestFromBooking(bookingId, guestId);
         var booking = _bookingDaoMemory.Get(bookingId);
         return View("Reservation", booking);
+    }
 
+    public IActionResult EditGuest(int id)
+    {
+        var guest = _bookingDaoMemory.GetGuest(id);
+        return View(guest);
+    }
+
+    [HttpPost]
+    public IActionResult EditGuest(Guest guest)
+    {
+        var booking = _bookingDaoMemory.EditGuestReturnBooking(guest);
+        return View("Reservation", booking);
     }
 }

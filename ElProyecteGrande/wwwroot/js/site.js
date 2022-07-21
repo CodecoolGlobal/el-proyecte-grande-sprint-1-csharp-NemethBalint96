@@ -1,6 +1,6 @@
 ﻿function sortTable(n) {
-    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-    table = document.getElementById("myTable");
+    var rows, switching, i, x, y, shouldSwitch, dir, switchCount = 0;
+    var table = document.getElementById("myTable");
     switching = true;
     // Set the sorting direction to ascending:
     dir = "asc";
@@ -41,11 +41,11 @@
             rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
             switching = true;
             // Each time a switch is done, increase this count by 1:
-            switchcount++;
+            switchCount++;
         } else {
             /* If no switching has been done AND the direction is "asc",
             set the direction to "desc" and run the while loop again. */
-            if (switchcount == 0 && dir == "asc") {
+            if (switchCount == 0 && dir == "asc") {
                 dir = "desc";
                 switching = true;
             }
@@ -53,21 +53,23 @@
     }
 }
 
-
-function myFunction() {
+function searchForBookerByName() {
     // Declare variables
-    var input, filter, ul, li, a, i, txtValue;
-    input = document.getElementById('myInput');
-    filter = input.value.toUpperCase();
-    var collection = document.querySelectorAll('#booker-name'); 
-
+    var text, i;
+    var input = document.getElementById('myInput');
+    var filter = input.value.toUpperCase();
+    var collection = document.querySelectorAll('#booker-name');
     // Loop through all list items, and hide those who don't match the search query
     for (i = 0; i < collection.length; i++) {
-        a = collection[i].innerText;
-        if (a.toUpperCase().indexOf(filter) > -1) {
+        text = collection[i].innerText;
+        if (isContains(text, filter)) {
             collection[i].parentNode.style.visibility = "";
         } else {
             collection[i].parentNode.style.visibility = "collapse";
         }
     }
+}
+
+function isContains(container, contained) {
+    return container.toUpperCase().indexOf(contained) > -1;
 }

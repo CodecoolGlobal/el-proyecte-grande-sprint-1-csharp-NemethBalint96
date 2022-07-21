@@ -17,32 +17,28 @@ public class BookingDaoMemory
         {
             _instance = new BookingDaoMemory();
         }
-
         return _instance;
     }
 
     public void Add(Booking booking)
     {
         booking.ID = ++Booking.NextId;
-        CreateGuests(booking.Adults,booking.Children,booking.Infants,booking.Guests);
-
+        CreateGuests(booking.Adults, booking.Children, booking.Infants, booking.Guests);
         _bookings.Add(booking);
     }
 
-    private void CreateGuests(int adults,int children,int infants,List<Guest> guests)
+    private void CreateGuests(int adults, int children, int infants, List<Guest> guests)
     {
         for (var i = 0; i < adults; i++)
         {
             var adult = new Guest(Age.Adult);
             guests.Add(adult);
         }
-
         for (var i = 0; i < children; i++)
         {
             var child = new Guest(Age.Child);
             guests.Add(child);
         }
-
         for (var i = 0; i < infants; i++)
         {
             var infant = new Guest(Age.Infant);
@@ -67,7 +63,6 @@ public class BookingDaoMemory
         booking.Status = Status.Cancelled;
     }
 
-
     public void Edit(Booking booking)
     {
         var editableBooking = Get(booking.ID);
@@ -82,17 +77,15 @@ public class BookingDaoMemory
         editableBooking.DepartureDate = booking.DepartureDate;
         editableBooking.Room.Comment = booking.Room.Comment;
         editableBooking.ModificationDate = DateTime.Now;
-
-       
     }
 
     private void CreatePlusGuests(Booking booking, Booking? editableBooking)
     {
-        var adultsnumber = booking.Adults -editableBooking.Adults;
-        var childrennumber = booking.Children - editableBooking.Children;
-        var infantsnumber = booking.Infants - editableBooking.Infants;
-        CreateGuests(adultsnumber, childrennumber,
-            infantsnumber, editableBooking.Guests);
+        var adultsNumber = booking.Adults - editableBooking.Adults;
+        var childrenNumber = booking.Children - editableBooking.Children;
+        var infantsNumber = booking.Infants - editableBooking.Infants;
+        CreateGuests(adultsNumber, childrenNumber,
+            infantsNumber, editableBooking.Guests);
     }
 
     public void DeleteGuestFromBooking(int bookingId, int guestId)
@@ -120,5 +113,29 @@ public class BookingDaoMemory
                 booking.Infants--;
                 break;
         }
+    }
+
+    public Guest GetGuest(int guestId)
+    {
+        return _bookings.SelectMany(booking => booking.Guests).First(guest => guest.ID == guestId);
+    }
+
+    public Booking EditGuestReturnBooking(Guest newGuest)
+    {
+        var editableGuest = GetGuest(newGuest.ID);
+        editableGuest.ID = newGuest.ID;
+        editableGuest.FullName = newGuest.FullName;
+        editableGuest.BirthDate = newGuest.BirthDate;
+        editableGuest.BirthPlace = newGuest.BirthPlace;
+        editableGuest.Email = newGuest.Email;
+        editableGuest.Phone = newGuest.Phone;
+        editableGuest.Country = newGuest.Country;
+        editableGuest.City = newGuest.City;
+        editableGuest.Address = newGuest.Address;
+        editableGuest.PostalCode = newGuest.PostalCode;
+        editableGuest.Citizenship = newGuest.Citizenship;
+        editableGuest.Comment = newGuest.Comment;
+        editableGuest.Age = newGuest.Age;
+        return _bookings.First(booking => booking.Guests.Any(guest => guest.ID == newGuest.ID));
     }
 }

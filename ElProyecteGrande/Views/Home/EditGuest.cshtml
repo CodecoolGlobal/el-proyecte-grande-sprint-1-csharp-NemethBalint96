@@ -1,0 +1,62 @@
+﻿@model ElProyecteGrande.Models.Guest;
+
+@{
+    ViewBag.Title = "Edit Guest";
+}
+
+<h2>@ViewBag.Title</h2><br/>
+<div class="container h-50">
+    <form asp-controller="Home" asp-action="EditGuest" method="post">
+        @*<input asp-for="ID" type="hidden">*@
+        <div>
+            <label asp-for="FullName">Full Name</label><br/>
+            <input asp-for="FullName"/>
+        </div>
+        <div>
+            <label asp-for="BirthDate">Birth Date</label><br/>
+            <input asp-for="BirthDate"/>
+        </div>
+        <div>
+            <label asp-for="BirthPlace">Birth Place</label><br/>
+            <input asp-for="BirthPlace"/>
+        </div>
+        <div>
+            <label asp-for="Email"></label><br/>
+            <input asp-for="Email"/>
+        </div>
+        <div>
+            <label asp-for="Phone"></label><br/>
+            <input asp-for="Phone"/>
+        </div>
+        <div>
+            <label asp-for="Country"></label><br/>
+            <input asp-for="Country"/>
+        </div>
+        <div>
+            <label asp-for="City"></label><br/>
+            <input asp-for="City"/>
+        </div>
+        <div>
+            <label asp-for="Address"></label><br/>
+            <input asp-for="Address"/>
+        </div>
+        <div>
+            <label asp-for="PostalCode">Postal Code</label><br/>
+            <input asp-for="PostalCode"/>
+        </div>
+        <div>
+            <label asp-for="Citizenship"></label><br/>
+            <input asp-for="Citizenship"/>
+        </div>
+        <div>
+            <label asp-for="Comment"></label><br/>
+            <input asp-for="Comment"/>
+        </div>
+        <div>
+            <label asp-for="Age"></label><br/>
+            <select asp-for="Age" asp-items="Html.GetEnumSelectList<Age>()"></select>
+        </div>
+        <br/>
+        <button class="btn btn-primary" type="submit">Submit</button>
+    </form>
+</div>
