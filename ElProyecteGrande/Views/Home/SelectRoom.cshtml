@@ -4,16 +4,15 @@
     ViewBag.Title = "Edit Guest";
 }
 
-<h2>@ViewBag.Title</h2><br/>
-<div class="container h-50">
+<div class="container h-50 form-control">
+    <h2>@ViewBag.Title</h2><br/>
     <form asp-controller="Home" asp-action="Select" method="post">
         <label for="rooms">Select Room</label>
-        <select name="rooms" onChange="myFunction(this.options[this.selectedIndex].dataset.price)">
+        <select class="form-select" name="rooms" onChange="myFunction(this.options[this.selectedIndex].dataset.price)">
             @foreach (var room in Model)
             {
-                <option  value="@room.ID" id="room" data-price="@room.Price">Fl:@room.Floor No:@room.DoorNumber T:@room.RoomType</option>
+                <option value="@room.ID" id="room" data-price="@room.Price">Floor:@room.Floor; Room Number:@room.DoorNumber; Room Type:@room.RoomType</option>
             }
-            
         </select>
 
         <p id="price">The price of this room: 80 $</p>
