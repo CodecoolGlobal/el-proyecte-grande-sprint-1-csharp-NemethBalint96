@@ -88,7 +88,7 @@ namespace ElProyecteGrande.Data
 
         }
 
-        public static void CreateBookings(BookingDaoMemory bookingDao)
+        public static void CreateBookings(BookingDaoMemory bookingDao,RoomDaoMemory roomDao)
         {
             string json = File.ReadAllText(@"c:\booking.json");
             List <Booking> bookings = JsonConvert.DeserializeObject<List<Booking>>(json);
@@ -97,6 +97,9 @@ namespace ElProyecteGrande.Data
                 var random = new Random();
                 booking.DepartureDate = booking.ArrivalDate.AddDays(random.Next(1,7));
                 booking.Created = booking.ArrivalDate.Subtract(TimeSpan.FromDays(random.Next(1, 7)));
+                var rooms = roomDao.GetAll().ToList();
+                booking.Room = rooms[random.Next(1, rooms.Count)];
+                booking.Room.Bookings.Add(booking);
                 bookingDao.Add(booking);
             }
 
