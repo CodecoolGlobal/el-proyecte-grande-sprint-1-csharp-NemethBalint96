@@ -8,13 +8,17 @@
 <div class="container h-50">
     <form asp-controller="Home" asp-action="Select" method="post">
         <label for="rooms">Select Room</label>
-        <select name="rooms">
+        <select name="rooms" onChange="myFunction(this.options[this.selectedIndex].dataset.price)">
             @foreach (var room in Model)
             {
-                <option value="@room.ID">Fl:@room.Floor No:@room.DoorNumber T:@room.RoomType</option>
+                <option  value="@room.ID" id="room" data-price="@room.Price">Fl:@room.Floor No:@room.DoorNumber T:@room.RoomType</option>
             }
             
         </select>
+        
+        <div>
+            <p id="price"></p>
+        </div>
         <br/>
         <button class="btn btn-primary" type="submit">Submit</button>
     </form>

@@ -73,3 +73,10 @@ function searchForBookerByName() {
 function isContains(container, contained) {
     return container.toUpperCase().indexOf(contained) > -1;
 }
+
+
+function myFunction(chosen) {
+    var parag = document.getElementById("price");
+    parag.innerText=`The price of this room: ${chosen} $`;
+
+}
