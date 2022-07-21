@@ -90,7 +90,7 @@ namespace ElProyecteGrande.Data
 
         public static void CreateBookings(BookingDaoMemory bookingDao,RoomDaoMemory roomDao)
         {
-            string json = File.ReadAllText(@"c:\booking.json");
+            string json = File.ReadAllText(@"wwwroot\booking.json");
             List <Booking> bookings = JsonConvert.DeserializeObject<List<Booking>>(json);
             foreach (var booking in bookings)
             {
