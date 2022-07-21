@@ -1,4 +1,7 @@
-﻿namespace ElProyecteGrande.Models;
+﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc;
+
+namespace ElProyecteGrande.Models;
 
 public enum Age
 {
@@ -18,6 +21,7 @@ public class Guest
 
     public int ID { get; }
     public string FullName { get; set; } = "Accompanying Guest";
+    [BindProperty, DataType(DataType.Date)]
     public DateOnly BirthDate { get; set; }
     public string BirthPlace { get; set; }
     public string Email { get; set; }

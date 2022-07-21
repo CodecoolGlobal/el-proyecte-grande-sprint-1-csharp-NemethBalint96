@@ -82,11 +82,11 @@ public class BookingDaoMemory
 
     private void CreatePlusGuests(Booking booking, Booking? editableBooking)
     {
-        var adultsnumber = booking.Adults - editableBooking.Adults;
-        var childrennumber = booking.Children - editableBooking.Children;
-        var infantsnumber = booking.Infants - editableBooking.Infants;
-        CreateGuests(adultsnumber, childrennumber,
-            infantsnumber, editableBooking.Guests);
+        var adultsNumber = booking.Adults - editableBooking.Adults;
+        var childrenNumber = booking.Children - editableBooking.Children;
+        var infantsNumber = booking.Infants - editableBooking.Infants;
+        CreateGuests(adultsNumber, childrenNumber,
+            infantsNumber, editableBooking.Guests);
     }
 
     public void DeleteGuestFromBooking(int bookingId, int guestId)
@@ -94,5 +94,16 @@ public class BookingDaoMemory
         var guests = _bookings.Find(id => id.ID == bookingId).Guests;
         var guest = guests.Find(x => x.ID == guestId);
         guests.Remove(guest);
+    }
+
+    public Guest GetGuest(int guestId)
+    {
+        return _bookings.SelectMany(booking => booking.Guests).First(guest => guest.ID == guestId);
+    }
+
+    public void EditGuestFromBooking(Guest newGuest)
+    {
+        var editableGuest = GetGuest(newGuest.ID);
+        throw new NotImplementedException();
     }
 }
