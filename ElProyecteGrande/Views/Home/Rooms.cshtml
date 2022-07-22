@@ -1,17 +1,29 @@
-﻿@model IEnumerable<ElProyecteGrande.Models.Room>
-
+﻿@model IEnumerable<Room>
 @{
-    ViewBag.Title = "title";
-    Layout = "_Layout";
+    ViewData["Title"] = "Rooms";
 }
 
-<h2>title</h2>
-<ul>
-    @foreach (var room in Model)
-    {
-        <li>Id: @room.ID</li>
-        <li>RoomType: @room.RoomType</li>
-        <li>Floor: @room.Floor</li>
-        <li>Door: @room.DoorNumber</li>
-    }
-</ul>
+<div class="container">
+    <h1 class="display-5">@ViewData["Title"]</h1>
+    <table class="table table-sm table-responsive table-striped table-success table-hover align-middle">
+        <thead class="text-center align-middle">
+        <tr>
+            <th>Id</th>
+            <th>Room Type</th>
+            <th>Floor</th>
+            <th>Room Number</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var room in Model)
+        {
+            <tr class="text-center align-middle">
+                <td>@room.ID</td>
+                <td>@room.RoomType</td>
+                <td>@room.Floor</td>
+                <td>@room.DoorNumber</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

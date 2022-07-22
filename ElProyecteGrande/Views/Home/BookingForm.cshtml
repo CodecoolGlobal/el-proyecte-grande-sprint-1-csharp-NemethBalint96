@@ -12,76 +12,71 @@
     Layout = "_Layout";
 }
 
-<h2>@ViewBag.Title</h2><br/>
-<div class="container h-50">
+<div class="container form-control">
+    <h2>@ViewBag.Title</h2><br/>
     @using (var form = Html.BeginForm(Context.Session.GetString("BookingForm"), "Home", FormMethod.Post))
     {
         @Html.ValidationSummary()
+        <div class="row">
+            <div class="col">
+                @Html.LabelFor(m => m.BookersName) <br/>
+                @Html.TextBoxFor(m => m.BookersName, new { Class = "form-control" })
+            </div>
 
-        <div class="booking">
-            @Html.LabelFor(m => m.BookersName) <br/>
-            @Html.TextBoxFor(m => m.BookersName)
+            <div class="col">
+                @Html.LabelFor(m => m.Email) <br/>
+                @Html.TextBoxFor(m => m.Email, new { Class = "form-control" })
+            </div>
+
+            <div class="col">
+                @Html.LabelFor(m => m.Country) <br/>
+                @Html.TextBoxFor(m => m.Country, new { Class = "form-control" })
+            </div>
         </div>
-
-        <div class="booking">
-            @Html.LabelFor(m => m.Email) <br/>
-            @Html.TextBoxFor(m => m.Email)
-        </div>
-
-        <div class="booking">
-            @Html.LabelFor(m => m.Country) <br/>
-            @Html.TextBoxFor(m => m.Country)
-        </div>
-
+        <div class="row">
             @if (Model != null)
             {
-                <div class="booking">
+                <div class="col">
                     @Html.LabelFor(m => m.Adults) <br/>
-                <input asp-for="Adults" min="@Model.Adults" type="number" />
-            
+                    <input class="form-control" asp-for="Adults" min="@Model.Adults" type="number"/>
                 </div>
-
-                <div class="booking">
-                           @Html.LabelFor(m => m.Children) <br/>
-                <input type="number" asp-for="Children"  min="@Model.Children"/>
+                <div class="col">
+                    @Html.LabelFor(m => m.Children) <br/>
+                    <input class="form-control" type="number" asp-for="Children" min="@Model.Children"/>
                 </div>
-
-                <div class="booking">
-                           @Html.LabelFor(m => m.Infants) <br/>
-                <input type="number" asp-for="Infants"  min="@Model.Infants"/>
-                 </div>
-
+                <div class="col">
+                    @Html.LabelFor(m => m.Infants) <br/>
+                    <input class="form-control" type="number" asp-for="Infants" min="@Model.Infants"/>
+                </div>
             }
             else
             {
-                <div class="booking">
+                <div class="col">
                     @Html.LabelFor(m => m.Adults) <br/>
-                    <input asp-for="Adults" min="0" type="number" />
-            
+                    <input class="form-control" asp-for="Adults" min="0" type="number"/>
                 </div>
-
-                <div class="booking">
+                <div class="col">
                     @Html.LabelFor(m => m.Children) <br/>
-                    <input type="number" asp-for="Children"  min="0"/>
+                    <input class="form-control" type="number" asp-for="Children" min="0"/>
                 </div>
-
-                <div class="booking">
+                <div class="col">
                     @Html.LabelFor(m => m.Infants) <br/>
-                    <input type="number" asp-for="Infants"  min="0"/>
+                    <input class="form-control" type="number" asp-for="Infants" min="0"/>
                 </div>
             }
-
-        <div class="booking">
-            @Html.LabelFor(m => m.ArrivalDate) <br/>
-            <input type="date" asp-for="ArrivalDate"/>
         </div>
-
-        <div class="booking">
-            @Html.LabelFor(m => m.DepartureDate) <br/>
-            <input type="date" asp-for="DepartureDate"/>
+        <div class="row">
+            <div class="col">
+                @Html.LabelFor(m => m.ArrivalDate) <br/>
+                <input class="form-control" type="date" asp-for="ArrivalDate"/>
+            </div>
+            <div class="col">
+                @Html.LabelFor(m => m.DepartureDate) <br/>
+                <input class="form-control" type="date" asp-for="DepartureDate"/>
+            </div>
         </div>
         <br/>
-        @if (Context.Session.GetString("BookingForm")=="EditBooking")
+        @if (Context.Session.GetString("BookingForm") == "EditBooking")
         {
             <input type="hidden" asp-for="ID" value="@Model.ID">
         }

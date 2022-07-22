@@ -94,7 +94,6 @@ public class BookingDaoMemory
         DecreaseGuestNumber(bookingId, guest);
 
         guests.Remove(guest);
-       
     }
 
     private void DecreaseGuestNumber(int bookingId, Guest guest)
@@ -108,7 +107,7 @@ public class BookingDaoMemory
             case Age.Child:
                 booking.Children--;
                 break;
-            case Age.Infant: 
+            case Age.Infant:
                 booking.Infants--;
                 break;
         }
