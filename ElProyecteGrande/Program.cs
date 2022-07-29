@@ -1,6 +1,5 @@
 using ElProyecteGrande.Dao;
 using ElProyecteGrande.Data;
-using ElProyecteGrande.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,7 +21,7 @@ if (!app.Environment.IsDevelopment())
 
 
 Dataseed.SetupInMemoryRooms(RoomDaoMemory.GetInstance());
-Dataseed.CreateBookings(BookingDaoMemory.GetInstance(),RoomDaoMemory.GetInstance());
+Dataseed.CreateBookings(BookingDaoMemory.GetInstance(), RoomDaoMemory.GetInstance());
 
 app.UseHttpsRedirection();
 
