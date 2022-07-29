@@ -21,7 +21,6 @@ if (!app.Environment.IsDevelopment())
 }
 
 
-Dataseed.SetupInMemoryDatabase(BookingDaoMemory.GetInstance());
 Dataseed.SetupInMemoryRooms(RoomDaoMemory.GetInstance());
 Dataseed.CreateBookings(BookingDaoMemory.GetInstance(),RoomDaoMemory.GetInstance());
 

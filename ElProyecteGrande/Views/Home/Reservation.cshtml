@@ -13,34 +13,53 @@
         <button class="btn btn-primary">Edit</button>
     </a>
 }
-<div>
-    <p>Reservation ID: @Model.ID</p>
-    <p>Status: @Model.Status</p>
-    <p>Booker's Name: @Model.BookersName</p>
-    <p>Booker's Email: @Model.Email</p>
-    <p>Country: @Model.Country</p>
-    <p>Night(s): @Model.Nights</p>
-    <p>Number of Guest(s): @Model.Guests.Count <br/>
-        Adult(s): @Model.Adults
-        Child(ren): @Model.Children
-        Infant(s): @Model.Infants
-    </p>
-    <p>Arrival Date: @Model.ArrivalDate.ToShortDateString()</p>
-    <p>Departure Date: @Model.DepartureDate.ToShortDateString()</p>
-    <p>Created: @Model.Created.ToShortDateString()</p>
-    @if (Model.Room != null)
-    {
-        <p>Price: @Model.CalculatePrice()$</p>
-    }
-    @if (Model.ModificationDate != DateTime.MinValue)
-    {
-        <p>Modification Date: @Model.ModificationDate</p>
-    }
+<div class="row">
+    <div class="card col">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Reservation Number: @Model.ID</li>
+            <li class="list-group-item">Status: @Model.Status</li>
+            <li class="list-group-item">Night(s): @Model.Nights</li>
+            <li class="list-group-item">Number of Guest(s): @Model.Guests.Count</li>
+            <li class="list-group-item">Adult(s): @Model.Adults</li>
+            <li class="list-group-item">Child(ren): @Model.Children</li>
+            <li class="list-group-item">Infant(s): @Model.Infants</li>
+        </ul>
+    </div>
+    <div class="card col">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Booker's Name: @Model.BookersName</li>
+            <li class="list-group-item">Booker's Email: @Model.Email</li>
+            <li class="list-group-item">Country: @Model.Country</li>
+            <li class="list-group-item">Arrival Date: @Model.ArrivalDate.ToShortDateString()</li>
+            <li class="list-group-item">Departure Date: @Model.DepartureDate.ToShortDateString()</li>
+            <li class="list-group-item">Created: @Model.Created.ToShortDateString()</li>
+            @if (Model.ModificationDate != DateTime.MinValue)
+            {
+                <li class="list-group-item">Modification Date: @Model.ModificationDate.ToShortDateString()</li>
+            }
+        </ul>
+    </div>
+    <div class="card col">
+        @if (Model.Room != null)
+        {
+            <div class="card-header">
+                Room details
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Room Type: @Model.Room.RoomType</li>
+                <li class="list-group-item">Floor: @Model.Room.Floor</li>
+                <li class="list-group-item">DoorNumber: @Model.Room.DoorNumber</li>
+                <li class="list-group-item">Comment: @Model.Room.Comment</li>
+                <li class="list-group-item">Room Price: @Model.Room.Price$</li>
+                <li class="list-group-item">Total Price: @Model.CalculatePrice()$</li>
+            </ul>
+        }
+    </div>
 </div>
 <h1 class="display-5">Guests</h1>
 <div>
-    <table class="table-responsive table-bordered">
-        <thead>
+    <table class="table table-sm table-responsive table-striped table-success table-hover align-middle">
+        <thead class="text-center align-middle">
         <tr>
             <th>Full Name</th>
             <th>Age</th>
@@ -89,23 +108,9 @@
                             <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
                         </svg>
                     </a></td>
-                  
                 }
-
             </tr>
         }
         </tbody>
     </table>
 </div>
-@if (Model.Room != null)
-{
-<h1 class="display-5">Room</h1>
-
-    <div>
-        <p>Room Type: @Model.Room.RoomType</p>
-        <p>Floor: @Model.Room.Floor</p>
-        <p>DoorNumber: @Model.Room.DoorNumber</p>
-        <p>Comment: @Model.Room.Comment</p>
-        <p>Price: @Model.Room.Price$</p>
-    </div>
-}
