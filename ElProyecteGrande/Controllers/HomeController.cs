@@ -47,7 +47,8 @@ public class HomeController : Controller
     public RedirectToActionResult AddNewBooking(Booking booking)
     {
         _bookingDaoMemory.Add(booking);
-        return RedirectToAction("Bookings");
+        HttpContext.Session.SetString("BookingId", $"{booking.ID}");
+        return RedirectToAction("SelectRoom");
     }
 
     public RedirectToActionResult CancelBooking(int id)

@@ -32,10 +32,10 @@
             <li class="list-group-item">Country: @Model.Country</li>
             <li class="list-group-item">Arrival Date: @Model.ArrivalDate.ToShortDateString()</li>
             <li class="list-group-item">Departure Date: @Model.DepartureDate.ToShortDateString()</li>
-            <li class="list-group-item">Created: @Model.Created</li>
+            <li class="list-group-item">Created: @Model.Created.ToShortDateString()</li>
             @if (Model.ModificationDate != DateTime.MinValue)
             {
-                <li class="list-group-item">Modification Date: @Model.ModificationDate</li>
+                <li class="list-group-item">Modification Date: @Model.ModificationDate.ToShortDateString()</li>
             }
         </ul>
     </div>
