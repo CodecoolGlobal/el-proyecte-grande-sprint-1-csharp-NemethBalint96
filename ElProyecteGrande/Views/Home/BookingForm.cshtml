@@ -78,7 +78,7 @@
         <br/>
         @if (Context.Session.GetString("BookingForm") == "EditBooking")
         {
-            <input type="hidden" asp-for="ID" value="@Model.ID">
+            <input type="hidden" asp-for="Id" value="@Model.Id">
         }
         <div>
             <input class="btn btn-primary" type="submit" value="Submit Form"/>

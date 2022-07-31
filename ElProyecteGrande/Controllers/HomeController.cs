@@ -1,8 +1,7 @@
-﻿using ElProyecteGrande.Dao;
+﻿using ElProyecteGrande.Dal;
 using ElProyecteGrande.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using ElProyecteGrande.Dal;
 
 namespace ElProyecteGrande.Controllers;
 
@@ -10,13 +9,13 @@ public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
     private readonly IBookingService _bookingService;
-    private readonly RoomDaoMemory _roomDaoMemory;
+    private readonly IRoomService _roomService;
 
-    public HomeController(ILogger<HomeController> logger, IBookingService bookingService, RoomDaoMemory room)
+    public HomeController(ILogger<HomeController> logger, IBookingService bookingService, IRoomService roomService)
     {
         _logger = logger;
         _bookingService = bookingService;
-        _roomDaoMemory = room;
+        _roomService = roomService;
     }
 
     public IActionResult Bookings()
@@ -48,7 +47,7 @@ public class HomeController : Controller
     public RedirectToActionResult AddNewBooking(Booking booking)
     {
         _bookingService.Add(booking);
-        HttpContext.Session.SetString("BookingId", $"{booking.ID}");
+        HttpContext.Session.SetString("BookingId", $"{booking.Id}");
         return RedirectToAction("SelectRoom");
     }
 
@@ -72,7 +71,7 @@ public class HomeController : Controller
     public RedirectToActionResult EditBooking(Booking booking)
     {
         _bookingService.Update(booking);
-        HttpContext.Session.SetString("BookingId", $"{booking.ID}");
+        HttpContext.Session.SetString("BookingId", $"{booking.Id}");
         return RedirectToAction("SelectRoom");
     }
 
@@ -99,16 +98,15 @@ public class HomeController : Controller
 
     public IActionResult Rooms()
     {
-        var rooms = _roomDaoMemory.GetAll();
+        var rooms = _roomService.GetAll();
         return View(rooms);
     }
 
     [HttpGet]
     public IActionResult SelectRoom()
     {
-        var id = HttpContext.Session.GetString("BookingId");
-        var booking = _bookingService.Get(int.Parse(id));
-        var rooms = _roomDaoMemory.GetAvailable(booking);
+        var bookingId = int.Parse(HttpContext.Session.GetString("BookingId"));
+        var rooms = _bookingService.FilterRoomsByBookingDate(bookingId, _roomService.GetAll());
         rooms = rooms.OrderBy(room => room.Floor).ThenBy(room => room.DoorNumber);
         return View(rooms);
     }
@@ -118,9 +116,7 @@ public class HomeController : Controller
     {
         var id = int.Parse(HttpContext.Session.GetString("BookingId"));
         var roomId = int.Parse(Request.Form["rooms"]);
-        var room = _roomDaoMemory.Get(roomId);
-        var reservation = _bookingService.Get(id);
-        _roomDaoMemory.ChangeRoom(reservation);
+        var room = _roomService.Get(roomId);
 
         var booking = _bookingService.AddRoomToBooking(id, room);
         return View("Reservation", booking);

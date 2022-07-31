@@ -12,4 +12,5 @@ public interface IBookingService
     Guest? GetGuest(int id);
     Booking EditGuestReturnBooking(Guest guest);
     Booking AddRoomToBooking(int id, Room room);
+    IEnumerable<Room> FilterRoomsByBookingDate(int bookingId, IEnumerable<Room> rooms);
 }
