@@ -1,11 +1,13 @@
-﻿using ElProyecteGrande.Models;
+﻿using ElProyecteGrande.Dal;
+using ElProyecteGrande.Models;
 
 namespace ElProyecteGrande.Dao;
 
-public class BookingDaoMemory
+public class BookingDaoMemory : IBookingService
 {
     private List<Booking> _bookings;
     private static BookingDaoMemory _instance;
+
     private BookingDaoMemory()
     {
         _bookings = new List<Booking>();
@@ -18,6 +20,16 @@ public class BookingDaoMemory
             _instance = new BookingDaoMemory();
         }
         return _instance;
+    }
+
+    public IEnumerable<Booking> GetAll()
+    {
+        return _bookings;
+    }
+
+    public Booking? Get(int id)
+    {
+        return _bookings.FirstOrDefault(booking => booking.ID == id);
     }
 
     public void Add(Booking booking)
@@ -46,24 +58,13 @@ public class BookingDaoMemory
         }
     }
 
-    public IEnumerable<Booking> GetAll()
+    public void SetStatusCancelled(int id)
     {
-        return _bookings;
-    }
-
-    public Booking? Get(int id)
-    {
-        var booking = _bookings.FirstOrDefault(booking => booking.ID == id);
-        return booking ?? null;
-    }
-
-    public void SetStatusCancelled(int Id)
-    {
-        var booking = _bookings.FirstOrDefault(x => x.ID == Id);
+        var booking = _bookings.FirstOrDefault(x => x.ID == id);
         booking.Status = Status.Cancelled;
     }
 
-    public void Edit(Booking booking)
+    public void Update(Booking booking)
     {
         var editableBooking = Get(booking.ID);
         CreatePlusGuests(booking, editableBooking);

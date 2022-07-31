@@ -1,4 +1,5 @@
-﻿using ElProyecteGrande.Dao;
+﻿using ElProyecteGrande.Dal;
+using ElProyecteGrande.Dao;
 using ElProyecteGrande.Models;
 using Newtonsoft.Json;
 
@@ -43,7 +44,7 @@ public class Dataseed
         }
     }
 
-    public static void CreateBookings(BookingDaoMemory bookingDao, RoomDaoMemory roomDao)
+    public static void CreateBookings(IBookingService bookingService, RoomDaoMemory roomDao)
     {
         string json = File.ReadAllText(@"wwwroot\booking.json");
         List<Booking> bookings = JsonConvert.DeserializeObject<List<Booking>>(json);
@@ -65,7 +66,7 @@ public class Dataseed
                     Citizenship = booking.Country,
                 },
             };
-            bookingDao.Add(booking);
+            bookingService.Add(booking);
         }
     }
 }

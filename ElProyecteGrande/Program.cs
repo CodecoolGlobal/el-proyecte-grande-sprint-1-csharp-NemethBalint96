@@ -1,12 +1,14 @@
+using ElProyecteGrande.Dal;
 using ElProyecteGrande.Dao;
 using ElProyecteGrande.Data;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddSession();
 builder.Services.AddControllersWithViews();
-builder.Services.AddSingleton<BookingDaoMemory>(BookingDaoMemory.GetInstance());
+builder.Services.AddSingleton<IBookingService>(BookingDaoMemory.GetInstance());
 builder.Services.AddSingleton<RoomDaoMemory>(RoomDaoMemory.GetInstance());
 
 var app = builder.Build();
