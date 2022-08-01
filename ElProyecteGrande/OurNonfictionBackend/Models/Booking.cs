@@ -8,7 +8,7 @@ public enum Status
     Confirmed,
     Cancelled
 }
-
+[System.Serializable]
 public class Booking
 {
     private static int NextId = 1;

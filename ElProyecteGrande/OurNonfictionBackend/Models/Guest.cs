@@ -9,7 +9,7 @@ public enum Age
     Child,
     Infant
 }
-
+[System.Serializable]
 public class Guest
 {
     private static int _nextId = 1;
@@ -27,8 +27,8 @@ public class Guest
 
     public int ID { get; set; }
     public string FullName { get; set; } = "Accompanying Guest";
-    [BindProperty, DataType(DataType.Date)]
-    public DateOnly BirthDate { get; set; }
+    [BindProperty, DataType(DataType.DateTime)]
+    public DateTime BirthDate { get; set; }
     public string BirthPlace { get; set; }
     public string Email { get; set; }
     public string Phone { get; set; }

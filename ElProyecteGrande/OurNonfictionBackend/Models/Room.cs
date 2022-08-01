@@ -6,7 +6,7 @@ public enum RoomType
     Standard,
     Superior
 }
-
+[System.Serializable]
 public class Room
 {
     private static int _nextId = 1;

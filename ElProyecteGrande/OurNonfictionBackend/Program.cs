@@ -1,3 +1,6 @@
+using ElProyecteGrande.Dal;
+using ElProyecteGrande.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +9,10 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddSingleton<IRepository<Room>>(new RoomRepository());
+builder.Services.AddSingleton<IRepository<Booking>>(x => new BookingRepository(x.GetRequiredService<IRepository<Room>>()));
+builder.Services.AddSingleton<IBookingService>(x => new BookingService(x.GetRequiredService<IRepository<Booking>>()));
+builder.Services.AddSingleton<IRoomService>(x => new RoomService(x.GetRequiredService<IRepository<Room>>()));
 
 var app = builder.Build();
 
