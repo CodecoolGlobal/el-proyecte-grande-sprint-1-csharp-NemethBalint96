@@ -19,6 +19,12 @@ public class GuestController : Controller
         return Ok(_bookingService.GetAllNamedGuests());
     }
 
+    [HttpGet("{guestId}")]
+    public IActionResult GetGuest(int guestId)
+    {
+        return Ok(_bookingService.GetGuest(guestId));
+    }
+
     [HttpDelete("{guestId}")]
     public IActionResult DeleteGuestFromBooking(int guestId)
     {
