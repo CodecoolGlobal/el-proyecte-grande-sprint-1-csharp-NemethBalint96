@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace OurNonfictionBackend.Controllers;
 [ApiController, Route("[controller]")]
-public class BookingController : Controller
+public class BookingController : ControllerBase
 {
     private readonly IBookingService _bookingService;
 
@@ -26,14 +26,14 @@ public class BookingController : Controller
     }
 
     [HttpPost]
-    public IActionResult AddNewBooking(Booking booking)
+    public ActionResult AddNewBooking(Booking booking)
     {
         _bookingService.Add(booking);
         return CreatedAtAction(nameof(AddNewBooking), new { id = booking.Id },booking);
     }
 
     [HttpPut("{bookingId}")]
-    public IActionResult EditBooking(int bookingId, Booking booking)
+    public ActionResult EditBooking(int bookingId, Booking booking)
     {
         if (bookingId != booking.Id)
             return BadRequest();

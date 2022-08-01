@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace OurNonfictionBackend.Controllers;
 [ApiController, Route("[controller]")]
-public class GuestController : Controller
+public class GuestController : ControllerBase
 {
     private readonly IBookingService _bookingService;
 
@@ -20,20 +20,20 @@ public class GuestController : Controller
     }
 
     [HttpGet("{guestId}")]
-    public IActionResult GetGuest(int guestId)
+    public ActionResult GetGuest(int guestId)
     {
         return Ok(_bookingService.GetGuest(guestId));
     }
 
     [HttpDelete("{guestId}")]
-    public IActionResult DeleteGuestFromBooking(int guestId)
+    public ActionResult DeleteGuestFromBooking(int guestId)
     {
         _bookingService.DeleteGuestFromBooking(guestId);
         return NoContent();
     }
 
     [HttpPut("{guestId}")]
-    public IActionResult EditGuest(int guestId, Guest guest)
+    public ActionResult EditGuest(int guestId, Guest guest)
     {
         if (guestId != guest.ID)
             return BadRequest();
