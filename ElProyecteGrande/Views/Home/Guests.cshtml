@@ -26,7 +26,7 @@
         {
             @foreach (var guest in booking.Guests.Where(guest=>guest.FullName!="Accompanying Guest"))
             {
-                <tr class="text-center align-middle" onclick="location.href = '@(Url.Action("Reservation", "Home", new { id = booking.ID }))'">
+                <tr class="text-center align-middle" onclick="location.href = '@(Url.Action("Reservation", "Home", new { id = booking.Id }))'">
                     <td>@guest.ID</td>
                     <td>@guest.FullName</td>
                     <td>@guest.BirthDate</td>

@@ -34,8 +34,8 @@
         <tbody>
         @foreach (var booking in Model)
         {
-            <tr class="text-center align-middle" onclick="location.href = '@(Url.Action("Reservation", "Home", new { id = booking.ID }))'">
-                <td>@booking.ID</td>
+            <tr class="text-center align-middle" onclick="location.href = '@(Url.Action("Reservation", "Home", new { id = booking.Id }))'">
+                <td>@booking.Id</td>
                 <td id="booker-name">@booking.BookersName</td>
                 <td>@booking.Email</td>
                 <td>@booking.Nights</td>

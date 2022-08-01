@@ -11,7 +11,7 @@
         <select class="form-select" name="rooms" onChange="myFunction(this.options[this.selectedIndex].dataset.price)">
             @foreach (var room in Model)
             {
-                <option value="@room.ID" id="room" data-price="@room.Price">Floor:@room.Floor; Room Number:@room.DoorNumber; Room Type:@room.RoomType</option>
+                <option value="@room.Id" id="room" data-price="@room.Price">Floor:@room.Floor; Room Number:@room.DoorNumber; Room Type:@room.RoomType</option>
             }
         </select>
 
