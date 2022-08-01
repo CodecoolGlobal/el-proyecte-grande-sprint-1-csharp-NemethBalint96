@@ -38,5 +38,17 @@ public class BookingController : Controller
         return CreatedAtAction(nameof(AddNewBooking), new { id = booking.Id },booking);
     }
 
+    [HttpPut("{bookingId}")]
+    public IActionResult EditBooking(int bookingId, Booking booking)
+    {
+        if (bookingId != booking.Id)
+            return BadRequest();
 
+        var existingBooking = _bookingService.Get(bookingId);
+        if (existingBooking is null)
+            return NotFound();
+
+        _bookingService.Update(booking);
+        return NoContent();
+    }
 }
