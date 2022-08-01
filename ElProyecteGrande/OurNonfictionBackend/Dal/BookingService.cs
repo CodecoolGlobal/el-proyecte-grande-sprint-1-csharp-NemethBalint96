@@ -110,7 +110,7 @@ public class BookingService : IBookingService
         return _bookingRepository.GetAll().SelectMany(booking => booking.Guests).First(guest => guest.ID == guestId);
     }
 
-    public Booking EditGuestReturnBooking(Guest newGuest)
+    public void EditGuest(Guest newGuest)
     {
         var editableGuest = GetGuest(newGuest.ID);
         editableGuest.ID = newGuest.ID;
@@ -126,7 +126,6 @@ public class BookingService : IBookingService
         editableGuest.Citizenship = newGuest.Citizenship;
         editableGuest.Comment = newGuest.Comment;
         editableGuest.Age = newGuest.Age;
-        return _bookingRepository.GetAll().First(booking => booking.Guests.Any(guest => guest.ID == newGuest.ID));
     }
 
     public Booking AddRoomToBooking(int id, Room room)

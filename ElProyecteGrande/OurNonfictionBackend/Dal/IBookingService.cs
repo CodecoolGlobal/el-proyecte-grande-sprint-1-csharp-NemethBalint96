@@ -10,7 +10,7 @@ public interface IBookingService
     void SetStatusCancelled(int id);
     void DeleteGuestFromBooking(int guestId);
     Guest? GetGuest(int id);
-    Booking EditGuestReturnBooking(Guest guest);
+    void EditGuest(Guest guest);
     Booking AddRoomToBooking(int id, Room room);
     IEnumerable<Room> FilterRoomsByBookingDate(int bookingId, IEnumerable<Room> rooms);
     IEnumerable<Guest> GetAllNamedGuests();

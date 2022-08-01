@@ -25,12 +25,6 @@ public class BookingController : Controller
         return Ok(_bookingService.Get(id));
     }
 
-    [HttpGet("guests")]
-    public ActionResult<IEnumerable<Guest>> GetAllNamedGuests()
-    {
-        return Ok(_bookingService.GetAllNamedGuests());
-    }
-
     [HttpPost]
     public IActionResult AddNewBooking(Booking booking)
     {
@@ -49,13 +43,6 @@ public class BookingController : Controller
             return NotFound();
 
         _bookingService.Update(booking);
-        return NoContent();
-    }
-
-    [HttpDelete("guest/{guestId}")]
-    public IActionResult DeleteGuestFromBooking(int guestId)
-    {
-        _bookingService.DeleteGuestFromBooking(guestId);
         return NoContent();
     }
 }
