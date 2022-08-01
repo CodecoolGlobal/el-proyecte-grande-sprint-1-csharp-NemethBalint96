@@ -164,4 +164,10 @@ public class BookingService : IBookingService
         }
         return available;
     }
+
+    public IEnumerable<Guest> GetAllNamedGuests()
+    {
+        return _bookingRepository.GetAll()
+            .SelectMany(b => b.Guests.Where(guest => guest.FullName != "Accompanying Guest"));
+    }
 }
