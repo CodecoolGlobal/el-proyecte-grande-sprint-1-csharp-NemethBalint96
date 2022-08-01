@@ -8,7 +8,7 @@ public interface IBookingService
     void Add(Booking booking);
     void Update(Booking booking);
     void SetStatusCancelled(int id);
-    void DeleteGuestFromBooking(int bookingId, int guestId);
+    void DeleteGuestFromBooking(int guestId);
     Guest? GetGuest(int id);
     Booking EditGuestReturnBooking(Guest guest);
     Booking AddRoomToBooking(int id, Room room);

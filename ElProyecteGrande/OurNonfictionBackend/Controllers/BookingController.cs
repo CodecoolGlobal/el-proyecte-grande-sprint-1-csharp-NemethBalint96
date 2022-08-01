@@ -51,4 +51,11 @@ public class BookingController : Controller
         _bookingService.Update(booking);
         return NoContent();
     }
+
+    [HttpDelete("guest/{guestId}")]
+    public IActionResult DeleteGuestFromBooking(int guestId)
+    {
+        _bookingService.DeleteGuestFromBooking(guestId);
+        return NoContent();
+    }
 }

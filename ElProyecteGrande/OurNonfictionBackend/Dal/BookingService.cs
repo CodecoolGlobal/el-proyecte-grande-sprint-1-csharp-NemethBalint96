@@ -77,11 +77,13 @@ public class BookingService : IBookingService
             infantsNumber, editableBooking.Guests);
     }
 
-    public void DeleteGuestFromBooking(int bookingId, int guestId)
+    public void DeleteGuestFromBooking(int guestId)
     {
-        var guests = _bookingRepository.Get(bookingId).Guests;
+        var booking = _bookingRepository.GetAll()
+            .FirstOrDefault(booking => booking.Guests.Any(guest => guest.ID == guestId));
+        var guests = _bookingRepository.Get(booking.Id).Guests;
         var guest = guests.Find(x => x.ID == guestId);
-        DecreaseGuestNumber(bookingId, guest);
+        DecreaseGuestNumber(booking.Id, guest);
 
         guests.Remove(guest);
     }
