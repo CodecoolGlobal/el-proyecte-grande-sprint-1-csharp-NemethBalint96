@@ -1,4 +1,4 @@
-import {useParams} from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
 import { useState,useEffect } from 'react';
 import { getApi } from '../Clients/requests';
 
@@ -15,7 +15,13 @@ const BookingDetails = () => {
         }
       ,[url]);
 
+      console.log(booking);
+
     return (
+<div>
+  <div>
+    <Link to={`/available/${booking.id}`}>Add room to Booking</Link>
+  </div>
         <table>
             <thead>
                 <th>Id</th>
@@ -45,14 +51,15 @@ const BookingDetails = () => {
           <td>{booking.infants}</td>
           <td>{booking.total}</td>
           <td>{booking.country}</td>
-          <td>{booking.arrivalDate}</td>
-          <td>{booking.departureDate}</td>
+          <td>{booking.arrivalDate===undefined?"":booking.arrivalDate.slice(0,10)}</td>
+          <td>{booking.departureDate===undefined?"":booking.departureDate.slice(0,10)}</td>
           <td>{booking.status===0?"Confirmed":"Cancelled"}</td>
-          <td>{booking.created}</td>
-          <td>{booking.modificationDate}</td>
+          <td>{booking.created===undefined?"":booking.created.slice(0,10)}</td>
+          <td>{booking.modificationDate===undefined?"":booking.modificationDate.slice(0,10)}</td>
           </tr>
           </tbody>
         </table>
+        </div>
       )
 }
 

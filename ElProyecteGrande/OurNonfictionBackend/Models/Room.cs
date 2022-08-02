@@ -1,10 +1,14 @@
-﻿namespace ElProyecteGrande.Models;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
+namespace ElProyecteGrande.Models;
+
+[JsonConverter(typeof(StringEnumConverter))]
 public enum RoomType
 {
-    Apartman,
-    Standard,
-    Superior
+    Apartman=1,
+    Standard=2,
+    Superior=3
 }
 [System.Serializable]
 public class Room

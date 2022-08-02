@@ -11,13 +11,16 @@ const App = () => {
         }}
       >
         <Link to="/">Bookings</Link>{"     "}          
-        <Link to="/guests">Guests</Link>
+        <Link to="/guests">Guests</Link>{" "}
+        <Link to="/newbooking">Add New Booking</Link>
       </nav>
       <Outlet/>
 
-      <di>
-        <p>Hello Footer!</p>
-      </di>
+      <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2022 - El Proyecte Grande - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
     </div>
   )
 }

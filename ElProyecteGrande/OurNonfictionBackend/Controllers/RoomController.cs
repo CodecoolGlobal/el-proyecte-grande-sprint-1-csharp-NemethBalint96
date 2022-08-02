@@ -28,7 +28,7 @@ public class RoomController : ControllerBase
         return Ok(_bookingDetailsServiceService.FilterRoomsByBookingDate(bookingId));
     }
 
-    [HttpPost("{roomId}/{bookingId}")]
+    [HttpGet("{roomId}/{bookingId}")]
     public ActionResult AddRoomToBooking(int roomId, int bookingId)
     {
         var isAdded = _bookingDetailsServiceService.AddRoomToBooking(roomId, bookingId);
