@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { postApi } from "../Clients/requests";
-import { Navigate, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 
 
 const NewBookingForm = () => {
@@ -26,8 +26,10 @@ const NewBookingForm = () => {
 
   const onclick=(e)=>{
     e.preventDefault();
-    postApi("booking",body);
-    navigate('/');
+    postApi("booking",body).then(data=>{
+        navigate(`/available/${data.id}`);
+    });
+    
 }
 
   return (
