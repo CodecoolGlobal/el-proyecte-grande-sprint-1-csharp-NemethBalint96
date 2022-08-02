@@ -15,6 +15,8 @@ const BookingDetails = () => {
         }
       ,[url]);
 
+      
+
     return (
         <table>
             <thead>
@@ -45,11 +47,11 @@ const BookingDetails = () => {
           <td>{booking.infants}</td>
           <td>{booking.total}</td>
           <td>{booking.country}</td>
-          <td>{booking.arrivalDate}</td>
-          <td>{booking.departureDate}</td>
+          <td>{booking.arrivalDate===undefined?"":booking.arrivalDate.slice(0,10)}</td>
+          <td>{booking.departureDate===undefined?"":booking.departureDate.slice(0,10)}</td>
           <td>{booking.status===0?"Confirmed":"Cancelled"}</td>
-          <td>{booking.created}</td>
-          <td>{booking.modificationDate}</td>
+          <td>{booking.created===undefined?"":booking.created.slice(0,10)}</td>
+          <td>{booking.modificationDate===undefined?"":booking.modificationDate.slice(0,10)}</td>
           </tr>
           </tbody>
         </table>

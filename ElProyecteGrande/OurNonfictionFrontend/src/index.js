@@ -11,6 +11,7 @@ import {
 import GuestTable from './Components/GuestTable';
 import BookingDetails from './Components/BookingDetails';
 import BookingTable from './Components/BookingTable';
+import NewBookingForm from './Components/NewBookingForm';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -20,6 +21,7 @@ root.render(
     <Route path='/' element={<BookingTable/>}/>
     <Route path='/guests' element={<GuestTable/>}/>
     <Route path='/booking/:bookingId' element={<BookingDetails/>}/>
+    <Route path='/newbooking' element={<NewBookingForm/>}/>
     </Route>
   </Routes>
   </BrowserRouter>
