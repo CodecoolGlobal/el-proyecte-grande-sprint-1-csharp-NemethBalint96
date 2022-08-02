@@ -15,9 +15,9 @@ public class BookingService : IBookingService
         return _bookingRepository.GetAll();
     }
 
-    public Booking? Get(int id)
+    public Booking? Get(int bookingId)
     {
-        return _bookingRepository.Get(id);
+        return _bookingRepository.Get(bookingId);
     }
 
     public void Add(Booking booking)
@@ -45,9 +45,9 @@ public class BookingService : IBookingService
         }
     }
 
-    public void SetStatusCancelled(int id)
+    public void SetStatusCancelled(int bookingId)
     {
-        var booking = _bookingRepository.Get(id);
+        var booking = _bookingRepository.Get(bookingId);
         booking.Status = Status.Cancelled;
         _bookingRepository.Update(booking);
     }
@@ -56,15 +56,6 @@ public class BookingService : IBookingService
     {
         var oldBooking = _bookingRepository.Get(booking.Id);
         CreatePlusGuests(oldBooking, booking);
-        //editableBooking.BookersName = booking.BookersName;
-        //editableBooking.Email = booking.Email;
-        //editableBooking.Country = booking.Country;
-        //editableBooking.Adults = booking.Adults;
-        //editableBooking.Children = booking.Children;
-        //editableBooking.Infants = booking.Infants;
-        //editableBooking.ArrivalDate = booking.ArrivalDate;
-        //editableBooking.DepartureDate = booking.DepartureDate;
-        //editableBooking.ModificationDate = DateTime.Now;
         _bookingRepository.Update(booking);
     }
 
@@ -80,9 +71,9 @@ public class BookingService : IBookingService
     public void DeleteGuestFromBooking(int guestId)
     {
         var booking = _bookingRepository.GetAll()
-            .FirstOrDefault(booking => booking.Guests.Any(guest => guest.ID == guestId));
+            .FirstOrDefault(booking => booking.Guests.Any(guest => guest.Id == guestId));
         var guests = _bookingRepository.Get(booking.Id).Guests;
-        var guest = guests.Find(x => x.ID == guestId);
+        var guest = guests.Find(x => x.Id == guestId);
         DecreaseGuestNumber(booking.Id, guest);
 
         guests.Remove(guest);
@@ -107,13 +98,13 @@ public class BookingService : IBookingService
 
     public Guest GetGuest(int guestId)
     {
-        return _bookingRepository.GetAll().SelectMany(booking => booking.Guests).First(guest => guest.ID == guestId);
+        return _bookingRepository.GetAll().SelectMany(booking => booking.Guests).First(guest => guest.Id == guestId);
     }
 
     public void EditGuest(Guest newGuest)
     {
-        var editableGuest = GetGuest(newGuest.ID);
-        editableGuest.ID = newGuest.ID;
+        var editableGuest = GetGuest(newGuest.Id);
+        editableGuest.Id = newGuest.Id;
         editableGuest.FullName = newGuest.FullName;
         editableGuest.BirthDate = newGuest.BirthDate;
         editableGuest.BirthPlace = newGuest.BirthPlace;
@@ -126,44 +117,6 @@ public class BookingService : IBookingService
         editableGuest.Citizenship = newGuest.Citizenship;
         editableGuest.Comment = newGuest.Comment;
         editableGuest.Age = newGuest.Age;
-    }
-
-    public Booking AddRoomToBooking(int id, Room room)
-    {
-        var booking = Get(id);
-        if (booking.Room == null)
-        {
-            booking.Room = new Room();
-        }
-        booking.Room.Id = room.Id;
-        booking.Room.Floor = room.Floor;
-        booking.Room.DoorNumber = room.DoorNumber;
-        booking.Room.RoomType = room.RoomType;
-        booking.Room.Price = room.Price;
-        booking.Room.Comment = room.Comment;
-        return booking;
-    }
-
-    public IEnumerable<Room> FilterRoomsByBookingDate(int bookingId, IEnumerable<Room> rooms)
-    {
-        var booking = Get(bookingId);
-        var notCancelledBookings = GetAll().Where(b => b.Status != Status.Cancelled);
-        var available = rooms.ToList();
-        foreach (var room in rooms)
-        {
-            foreach (var reservation in notCancelledBookings)
-            {
-                if (reservation.Room?.Id == room.Id &&
-                    (reservation.ArrivalDate.Date < booking.DepartureDate.Date ||
-                     reservation.ArrivalDate.Date <= booking.ArrivalDate.Date) &&
-                    (reservation.DepartureDate.Date > booking.ArrivalDate.Date ||
-                     reservation.DepartureDate.Date >= booking.DepartureDate.Date))
-                {
-                    available.Remove(room);
-                }
-            }
-        }
-        return available;
     }
 
     public IEnumerable<Guest> GetAllNamedGuests()

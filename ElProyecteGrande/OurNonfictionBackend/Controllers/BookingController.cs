@@ -19,17 +19,17 @@ public class BookingController : ControllerBase
         return Ok(_bookingService.GetAll());
     }
 
-    [HttpGet("{id}")]
-    public ActionResult<Booking> GetBookingByID(int id)
+    [HttpGet("{bookingId}")]
+    public ActionResult<Booking> GetBookingByID(int bookingId)
     {
-        return Ok(_bookingService.Get(id));
+        return Ok(_bookingService.Get(bookingId));
     }
 
     [HttpPost]
     public ActionResult AddNewBooking(Booking booking)
     {
         _bookingService.Add(booking);
-        return CreatedAtAction(nameof(AddNewBooking), new { id = booking.Id },booking);
+        return CreatedAtAction(nameof(AddNewBooking), new { id = booking.Id }, booking);
     }
 
     [HttpPut("{bookingId}")]
@@ -44,5 +44,12 @@ public class BookingController : ControllerBase
 
         _bookingService.Update(booking);
         return NoContent();
+    }
+
+    [HttpDelete("{bookingId}")]
+    public ActionResult SetStatusToCancelled(int bookingId)
+    {
+        _bookingService.SetStatusCancelled(bookingId);
+        return Ok();
     }
 }

@@ -43,9 +43,9 @@ public class BookingRepository : IRepository<Booking>
         return _bookings;
     }
 
-    public Booking? Get(int id)
+    public Booking? Get(int bookingId)
     {
-        return _bookings.FirstOrDefault(booking => booking.Id == id);
+        return _bookings.FirstOrDefault(booking => booking.Id == bookingId);
     }
 
     public void Add(Booking booking)
@@ -53,9 +53,9 @@ public class BookingRepository : IRepository<Booking>
         _bookings.Add(booking);
     }
 
-    public bool Delete(int id)
+    public bool Delete(int bookingId)
     {
-        var booking = Get(id);
+        var booking = Get(bookingId);
         if (booking != null)
             return _bookings.Remove(booking);
         return false;

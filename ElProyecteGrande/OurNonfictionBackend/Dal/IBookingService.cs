@@ -4,14 +4,12 @@ namespace ElProyecteGrande.Dal;
 public interface IBookingService
 {
     IEnumerable<Booking> GetAll();
-    Booking? Get(int roomId);
+    Booking? Get(int bookingId);
     void Add(Booking booking);
     void Update(Booking booking);
-    void SetStatusCancelled(int id);
+    void SetStatusCancelled(int bookingId);
     void DeleteGuestFromBooking(int guestId);
-    Guest? GetGuest(int id);
+    Guest? GetGuest(int guestId);
     void EditGuest(Guest guest);
-    Booking AddRoomToBooking(int id, Room room);
-    IEnumerable<Room> FilterRoomsByBookingDate(int bookingId, IEnumerable<Room> rooms);
     IEnumerable<Guest> GetAllNamedGuests();
 }

@@ -2,7 +2,6 @@
 using System.ComponentModel.DataAnnotations;
 
 namespace ElProyecteGrande.Models;
-
 public enum Age
 {
     Adult,
@@ -22,10 +21,10 @@ public class Guest
     public Guest(Age age)
     {
         Age = age;
-        ID = _nextId++;
+        Id = _nextId++;
     }
 
-    public int ID { get; set; }
+    public int Id { get; set; }
     public string FullName { get; set; } = "Accompanying Guest";
     [BindProperty, DataType(DataType.DateTime)]
     public DateTime BirthDate { get; set; }

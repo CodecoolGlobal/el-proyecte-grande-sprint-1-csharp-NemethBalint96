@@ -35,7 +35,7 @@ public class GuestController : ControllerBase
     [HttpPut("{guestId}")]
     public ActionResult EditGuest(int guestId, Guest guest)
     {
-        if (guestId != guest.ID)
+        if (guestId != guest.Id)
             return BadRequest();
 
         var existingGuest = _bookingService.GetGuest(guestId);

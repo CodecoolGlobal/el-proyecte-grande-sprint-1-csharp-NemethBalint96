@@ -2,7 +2,6 @@
 using System.ComponentModel.DataAnnotations;
 
 namespace ElProyecteGrande.Models;
-
 public enum Status
 {
     Confirmed,

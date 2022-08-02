@@ -25,6 +25,13 @@ public class RoomController : ControllerBase
     [HttpGet("available/{bookingId}")]
     public ActionResult<IEnumerable<Room>> GetAvailableRooms(int bookingId)
     {
-        return NotFound();
+        return Ok(_bookingDetailsServiceService.FilterRoomsByBookingDate(bookingId));
+    }
+
+    [HttpPost("{roomId}/{bookingId}")]
+    public ActionResult AddRoomToBooking(int roomId, int bookingId)
+    {
+        _bookingDetailsServiceService.AddRoomToBooking(roomId, bookingId);
+        return Ok();
     }
 }

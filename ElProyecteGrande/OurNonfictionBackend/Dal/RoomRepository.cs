@@ -53,9 +53,9 @@ public class RoomRepository : IRepository<Room>
         return _rooms;
     }
 
-    public Room? Get(int id)
+    public Room? Get(int bookingId)
     {
-        return _rooms.FirstOrDefault(room => room.Id == id);
+        return _rooms.FirstOrDefault(room => room.Id == bookingId);
     }
 
     public void Add(Room room)
@@ -63,9 +63,9 @@ public class RoomRepository : IRepository<Room>
         _rooms.Add(room);
     }
 
-    public bool Delete(int id)
+    public bool Delete(int bookingId)
     {
-        var room = Get(id);
+        var room = Get(bookingId);
         if (room != null)
             return _rooms.Remove(room);
         return false;

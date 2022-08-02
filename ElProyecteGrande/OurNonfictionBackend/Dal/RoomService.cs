@@ -20,8 +20,8 @@ public class RoomService : IRoomService
         return _roomRepository.GetAll();
     }
 
-    public Room? Get(int id)
+    public Room? Get(int roomId)
     {
-        return _roomRepository.Get(id);
+        return _roomRepository.Get(roomId);
     }
 }
