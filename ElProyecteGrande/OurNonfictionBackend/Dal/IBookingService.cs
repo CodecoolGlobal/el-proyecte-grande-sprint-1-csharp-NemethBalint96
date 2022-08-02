@@ -8,7 +8,7 @@ public interface IBookingService
     void Add(Booking booking);
     void Update(Booking booking);
     void SetStatusCancelled(int bookingId);
-    void DeleteGuestFromBooking(int guestId);
+    bool DeleteGuestFromBooking(int guestId);
     Guest? GetGuest(int guestId);
     void EditGuest(Guest guest);
     IEnumerable<Guest> GetAllNamedGuests();

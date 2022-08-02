@@ -35,10 +35,13 @@ public class BookingDetailsService : IBookingDetailsService
         return available;
     }
 
-    public void AddRoomToBooking(int roomId, int bookingId)
+    public bool AddRoomToBooking(int roomId, int bookingId)
     {
         var booking = _bookingRepository.Get(bookingId);
         var room = _roomRepository.Get(roomId);
+        if ((booking is null) || (room is null))
+            return false;
+
         if (booking.Room == null)
         {
             booking.Room = new Room();
@@ -49,5 +52,6 @@ public class BookingDetailsService : IBookingDetailsService
         booking.Room.RoomType = room.RoomType;
         booking.Room.Price = room.Price;
         booking.Room.Comment = room.Comment;
+        return true;
     }
 }

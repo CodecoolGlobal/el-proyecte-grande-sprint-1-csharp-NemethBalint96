@@ -22,7 +22,7 @@ public class Booking
     public string BookersName { get; set; }
     public List<Guest> Guests { get; set; }
     public string Email { get; set; }
-    public Room Room { get; set; }
+    public Room? Room { get; set; }
     public int Adults { get; set; }
     public int Children { get; set; }
     public int Infants { get; set; }

@@ -20,9 +20,13 @@ public class BookingController : ControllerBase
     }
 
     [HttpGet("{bookingId}")]
-    public ActionResult<Booking> GetBookingByID(int bookingId)
+    public ActionResult<Booking> GetBooking(int bookingId)
     {
-        return Ok(_bookingService.Get(bookingId));
+        var booking = _bookingService.Get(bookingId);
+        if (booking is null)
+            return NotFound();
+
+        return Ok(booking);
     }
 
     [HttpPost]
@@ -49,7 +53,11 @@ public class BookingController : ControllerBase
     [HttpDelete("{bookingId}")]
     public ActionResult SetStatusToCancelled(int bookingId)
     {
+        var booking = _bookingService.Get(bookingId);
+        if (booking is null)
+            return NotFound();
+
         _bookingService.SetStatusCancelled(bookingId);
-        return Ok();
+        return NoContent();
     }
 }

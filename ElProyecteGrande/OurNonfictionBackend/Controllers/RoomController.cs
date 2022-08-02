@@ -31,7 +31,10 @@ public class RoomController : ControllerBase
     [HttpPost("{roomId}/{bookingId}")]
     public ActionResult AddRoomToBooking(int roomId, int bookingId)
     {
-        _bookingDetailsServiceService.AddRoomToBooking(roomId, bookingId);
-        return Ok();
+        var isAdded = _bookingDetailsServiceService.AddRoomToBooking(roomId, bookingId);
+        if (isAdded)
+            return NoContent();
+
+        return NotFound();
     }
 }

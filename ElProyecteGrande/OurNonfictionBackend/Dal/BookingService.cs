@@ -68,21 +68,22 @@ public class BookingService : IBookingService
             infantsNumber, editableBooking.Guests);
     }
 
-    public void DeleteGuestFromBooking(int guestId)
+    public bool DeleteGuestFromBooking(int guestId)
     {
         var booking = _bookingRepository.GetAll()
             .FirstOrDefault(booking => booking.Guests.Any(guest => guest.Id == guestId));
-        var guests = _bookingRepository.Get(booking.Id).Guests;
-        var guest = guests.Find(x => x.Id == guestId);
-        DecreaseGuestNumber(booking.Id, guest);
+        if (booking is null)
+            return false;
 
-        guests.Remove(guest);
+        var guest = booking.Guests.First(g => g.Id == guestId);
+        DecreaseGuestNumber(booking, guest.Age);
+        booking.Guests.Remove(guest);
+        return true;
     }
 
-    private void DecreaseGuestNumber(int bookingId, Guest guest)
+    private void DecreaseGuestNumber(Booking booking, Age age)
     {
-        var booking = _bookingRepository.Get(bookingId);
-        switch (guest.Age)
+        switch (age)
         {
             case Age.Adult:
                 booking.Adults--;
@@ -96,15 +97,14 @@ public class BookingService : IBookingService
         }
     }
 
-    public Guest GetGuest(int guestId)
+    public Guest? GetGuest(int guestId)
     {
-        return _bookingRepository.GetAll().SelectMany(booking => booking.Guests).First(guest => guest.Id == guestId);
+        return _bookingRepository.GetAll().SelectMany(booking => booking.Guests).FirstOrDefault(guest => guest.Id == guestId);
     }
 
     public void EditGuest(Guest newGuest)
     {
         var editableGuest = GetGuest(newGuest.Id);
-        editableGuest.Id = newGuest.Id;
         editableGuest.FullName = newGuest.FullName;
         editableGuest.BirthDate = newGuest.BirthDate;
         editableGuest.BirthPlace = newGuest.BirthPlace;

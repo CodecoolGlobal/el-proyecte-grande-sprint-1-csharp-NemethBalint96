@@ -22,14 +22,21 @@ public class GuestController : ControllerBase
     [HttpGet("{guestId}")]
     public ActionResult GetGuest(int guestId)
     {
-        return Ok(_bookingService.GetGuest(guestId));
+        var guest = _bookingService.GetGuest(guestId);
+        if (guest is null)
+            return NotFound();
+
+        return Ok(guest);
     }
 
     [HttpDelete("{guestId}")]
     public ActionResult DeleteGuestFromBooking(int guestId)
     {
-        _bookingService.DeleteGuestFromBooking(guestId);
-        return NoContent();
+        var isDeleted = _bookingService.DeleteGuestFromBooking(guestId);
+        if (isDeleted)
+            return NoContent();
+
+        return NotFound();
     }
 
     [HttpPut("{guestId}")]
