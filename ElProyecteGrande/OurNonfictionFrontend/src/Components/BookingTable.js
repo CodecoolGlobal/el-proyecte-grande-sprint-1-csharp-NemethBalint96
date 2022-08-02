@@ -18,6 +18,7 @@ const BookingTable = () => {
   return (
       <table className="table table-sm table-responsive table-striped table-success table-hover align-middle">
           <thead className="text-center align-middle">
+          <tr>
             <th>Id</th>
             <th>Booker's Name</th>
             <th>Email</th>
@@ -32,11 +33,11 @@ const BookingTable = () => {
             <th>Status</th>
             <th>Created</th>
             <th>Modified</th>
-            
+          </tr>
         </thead>
         <tbody>
       {bookings.map(booking=><tr className="text-center align-middle" key={booking.id}>
-        <Link  to={`/booking/${booking.id}`}><td>{booking.id}</td></Link>
+      <td><Link  to={`/booking/${booking.id}`}>{booking.id}</Link></td>
       <td>{booking.bookersName}</td>
       <td>{booking.email}</td>
       <td>{booking.nights}</td>
