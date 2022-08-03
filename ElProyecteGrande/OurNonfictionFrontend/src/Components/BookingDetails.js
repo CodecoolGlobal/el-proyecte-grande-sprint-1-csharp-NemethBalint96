@@ -1,12 +1,13 @@
 import {Link, useParams} from 'react-router-dom';
 import { useState,useEffect } from 'react';
-import { deleteApi, getApi } from '../Clients/requests';
+import { deleteApi, getApi, postApi } from '../Clients/requests';
 
 const BookingDetails = () => {
     const params = useParams();
     const url=params.bookingId;
     const [booking,setBooking]=useState({});
     const [guests,setGuests]=useState([]);
+    const [newGuestAge,setNewGuestAge]=useState(0);
     
     useEffect(()=>{
     getApi(url).then(data=>{
@@ -24,8 +25,23 @@ const BookingDetails = () => {
           }
 
 
-      
-    return (
+
+  const body={
+    'age':parseInt(newGuestAge)
+  }
+
+  function onClick(){
+    postApi(`/booking/${params.bookingId}/addnew`,body).then(getApi(url).then(data=>{
+      setBooking(data);
+      setGuests(data.guests);
+      const element = document.getElementById('select');
+      element.style.display='none';
+      const button = document.getElementById('button');
+      button.style.display='';
+    }))
+  }
+     
+return (
 <div>
   <div>
     <Link to={`/available/${booking.id}`}>Add room to Booking</Link>
@@ -70,6 +86,25 @@ const BookingDetails = () => {
           </tbody>
         </table>
         <br/><br/>
+        <div>
+      <div>
+        <button id="button" onClick={()=>{
+          const element= document.getElementById('select');
+          element.style.display='';
+          const button=document.getElementById('button');
+          button.style.display='none';
+          
+        }}>New Guest</button>
+      </div>
+      <div id='select' style={{display:'none'}}>
+            <select  onChange={(e)=>setNewGuestAge(e.target.value)}>
+            <option value="0" >Adult</option>
+            <option value ='1'>Child</option>
+            <option value="2">Infant</option>
+          </select>
+         <input type="submit" onClick={onClick}/>
+         </div>
+    </div>
         <div>
         <table>
             <thead>
