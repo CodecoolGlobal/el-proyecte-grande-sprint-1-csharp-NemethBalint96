@@ -1,10 +1,9 @@
 import {Link, useParams} from 'react-router-dom';
 import { useState,useEffect } from 'react';
-import { getApi } from '../Clients/requests';
+import { deleteApi, getApi } from '../Clients/requests';
 
 const BookingDetails = () => {
     const params = useParams();
-
     const url=params.bookingId;
     const [booking,setBooking]=useState({});
     const [guests,setGuests]=useState([]);
@@ -17,6 +16,15 @@ const BookingDetails = () => {
         }
       ,[url]);
 
+  function OnClick(){
+    getApi(url).then(data=>{
+    setBooking(data);
+    setGuests(data.guests);
+            });
+          }
+
+
+      
     return (
 <div>
   <div>
@@ -93,6 +101,10 @@ const BookingDetails = () => {
           <td>{guest.postalCode}</td>
           <td>{guest.citizenship}</td>
           <td><Link to={`/guest/${guest.id}`}><button>Edit</button></Link></td>
+          <td><button onClick={()=>{
+            deleteApi(`/guest/${guest.id}`).then(()=>{OnClick()})
+            
+            }} >Delete</button></td>
           </tr>)}
           </tbody>
         </table>
