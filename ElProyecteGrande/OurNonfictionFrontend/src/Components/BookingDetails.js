@@ -67,8 +67,8 @@ const BookingDetails = () => {
             <thead>
                 <th>Id</th>
                 <th>Full Name</th>
-                <th>Birth Date</th>
                 <th>Birth Place</th>
+                <th>Birth Date</th>
                 <th>Email</th>
                 <th>Phone Number</th>
                 <th>Country</th>
