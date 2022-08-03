@@ -1,28 +1,27 @@
-import { useState, useEffect } from "react"
-import { getApi, postApi, putApi } from "../Clients/requests"
-import { useNavigate, useParams } from "react-router-dom"
+import { useState, useEffect } from "react";
+import { getApi, postApi, putApi } from "../Clients/requests";
+import { useNavigate, useParams } from "react-router-dom";
 
 let now = new Date();
-let baseDate= now.toISOString().slice(0, 10);
-let tomorrow = now.setDate(now.getDate()+1);
+let baseDate = now.toISOString().slice(0, 10);
+let tomorrow = now.setDate(now.getDate() + 1);
 let sec = tomorrow;
-let normalDate = new Date(sec).toISOString().slice(0,10);
+let normalDate = new Date(sec).toISOString().slice(0, 10);
 
 const BookingForm = () => {
-  const navigate = useNavigate()
-  const [bookersName, setBookersName] = useState('')
-  const [email, setEmail] = useState('')
-  const [country, setCountry] = useState('')
-  const [adults, setAdults] = useState(0)
-  const [children, setChildren] = useState(0)
-  const [infants, setInfants] = useState(0)
-  const [arrivalDate, setArrivalDate] = useState(baseDate)
-    const [departureDate, setDepartureDate] = useState(normalDate)
-    const [guests, setGuests] = useState([]);
+  const navigate = useNavigate();
+  const [bookersName, setBookersName] = useState('');
+  const [email, setEmail] = useState('');
+  const [country, setCountry] = useState('');
+  const [adults, setAdults] = useState(0);
+  const [children, setChildren] = useState(0);
+  const [infants, setInfants] = useState(0);
+  const [arrivalDate, setArrivalDate] = useState(baseDate);
+  const [departureDate, setDepartureDate] = useState(normalDate);
+  const [guests, setGuests] = useState([]);
 
-  const params = useParams()
-  const bookingId = params.bookingId > 0 ? params.bookingId : null
-  console.log(bookingId)
+  const params = useParams();
+  const bookingId = params.bookingId > 0 ? params.bookingId : null;
   const body = {
     "bookersName":bookersName,
     "email":email,
@@ -32,39 +31,38 @@ const BookingForm = () => {
     "infants":infants,
     "arrivalDate":arrivalDate,
     "departureDate": departureDate,
-    "guests":guests
+    "guests":guests,
   }
 
   useEffect(() => {
     if(bookingId) {
       getApi(`/booking/${bookingId}`).then(data => {
-        setBookersName(data.bookersName)
-        setEmail(data.email)
-        setCountry(data.country)
-        setAdults(data.adults)
-        setChildren(data.children)
-        setInfants(data.infants)
-        setArrivalDate(data.arrivalDate.slice(0, 10))
-          setDepartureDate(data.departureDate.slice(0, 10))
-          setGuests(data.guests);
+        setBookersName(data.bookersName);
+        setEmail(data.email);
+        setCountry(data.country);
+        setAdults(data.adults);
+        setChildren(data.children);
+        setInfants(data.infants);
+        setArrivalDate(data.arrivalDate.slice(0, 10));
+        setDepartureDate(data.departureDate.slice(0, 10));
+        setGuests(data.guests);
       })
     }
   }, [bookingId])
 
   const onclick = (e) => {
-    console.log(body)
-    e.preventDefault()
+    e.preventDefault();
     if(!bookingId) {
       postApi("booking", body).then(data => {
-        navigate(`/available/${data.id}`)
+        navigate(`/available/${data.id}`);
       })
     } else {
-      body.id = parseInt(bookingId)
+      body.id = parseInt(bookingId);
       putApi(`/booking/${bookingId}`, body).then((response) => {
         if(response.status === 204) {
           navigate(`/booking/${bookingId}`)
         }
-      })
+      });
     }
   }
 
@@ -77,63 +75,59 @@ const BookingForm = () => {
   }
 
   return (
-  <form>
-    <div>
-      <label>Booker's Name</label>
-      <div>
-      <input type="text" value={bookersName} onChange={(e)=>setBookersName(e.target.value)}/>
-      </div>
+    <div class="container form-control">
+      <form>
+        <div className="row">
+          <div className="col">
+            <label className="form-label">Booker's Name</label><br/>
+            <input className="form-control" type="text" value={bookersName} onChange={(e)=>setBookersName(e.target.value)}/>
+          </div>
+          <div className="col">
+            <label className="form-label">Email</label><br/>
+            <input className="form-control" type="email" value={email} onChange={(e)=>setEmail(e.target.value)}/>
+          </div>
+          <div className="col">
+            <label className="form-label">Country</label><br/>
+            <input className="form-control" type="text" value={country} onChange={(e)=>setCountry(e.target.value)}/>
+          </div>
+        </div>
+        <br></br>
+        <div className="row">
+          <div className="col">
+            <label className="form-label">Adults</label><br/>
+            <input className="form-control" type="number" value={adults} onChange={(e)=>setAdults(e.target.value)}/>
+          </div>
+          <div className="col">
+            <label className="form-label">Children</label><br/>
+            <input className="form-control" type="number" value={children} onChange={(e)=>setChildren(e.target.value)}/>
+          </div>
+          <div className="col">
+            <label className="form-label">Infants</label><br/>
+            <input className="form-control" type="number" value={infants} onChange={(e)=>setInfants(e.target.value)}/>
+          </div>
+        </div>
+        <br></br>
+        <div className="row">
+          <div className="col">
+            <label className="form-label">Arrival's Date</label><br/>
+            <input className="form-control" type="date" min={baseDate} value={arrivalDate} onChange={(e)=>{
+              setArrivalDate(e.target.value)
+              getTomorrowsDate(e); // sets departureDate to 1 day later
+            }}/>
+          </div>
+          <div className="col">
+            <label className="form-label">Departure's Date</label><br/>
+            <input className="form-control" type="date" min={normalDate} value={departureDate} onChange={(e)=>setDepartureDate(e.target.value)}/>
+          </div>
+        </div>
+        <br></br>
+        <br></br>
+        <div>
+          <input className="form-control btn btn-primary" type="submit" onClick={onclick}/>
+        </div>
+      </form>
     </div>
-    <div>
-      <label>Email</label>
-      <div>
-      <input type="email" value={email} onChange={(e)=>setEmail(e.target.value)}/>
-      </div>
-    </div>
-    <div>
-      <label>Country</label>
-      <div>
-      <input type="text" value={country} onChange={(e)=>setCountry(e.target.value)}/>
-      </div>
-    </div>
-    <div>
-      <label>Adults</label>
-      <div>
-      <input type="number" value={adults} onChange={(e)=>setAdults(e.target.value)}/>
-      </div>
-    </div>
-    <div>
-      <label>Children</label>
-      <div>
-      <input type="number" value={children} onChange={(e)=>setChildren(e.target.value)}/>
-      </div>
-    </div>
-    <div>
-      <label>Infants</label>
-      <div>
-      <input type="number" value={infants} onChange={(e)=>setInfants(e.target.value)}/>
-      </div>
-    </div>
-    <div>
-      <label>Arrival's Date</label>
-      <div>
-      <input type="date" min={baseDate} value={arrivalDate}  onChange={(e)=>{
-        setArrivalDate(e.target.value)
-        getTomorrowsDate(e); // sets departureDate to 1 day later
-      }}/>
-      </div>
-    </div>
-    <div>
-      <label>Departure's Date</label>
-      <div>
-      <input type="date" min={normalDate} value={departureDate}  onChange={(e)=>setDepartureDate(e.target.value)}/>
-      </div>
-    </div>
-    <div>
-      <input type="submit" onClick={onclick}/>
-    </div>
-  </form>
-  )
+  );
 }
 
-export default BookingForm
+export default BookingForm;
