@@ -3,28 +3,24 @@ import { Link, Outlet } from "react-router-dom";
 const App = () => {
 
  return (
-    <div>
-        <nav
+    <>
+      <nav
         style={{
           borderBottom: "solid 1px",
           paddingBottom: "1rem",
         }}
       >
-        <Link to="/">Bookings</Link>{"     "}          
+        <Link to="/">Bookings</Link>{" "}          
         <Link to="/guests">Guests</Link>{" "}
       </nav>
       <Outlet/>
-
-      <footer className="border-top footer text-muted">
-        <div className="container">
-            &copy; 2022 - El Proyecte Grande - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+      <footer className="footer mt-auto py-3 bg-ligh border-top text-muted">
+        <div className="container text-center">
+            &copy; 2022 - El Proyecte Grande - Nonfiction
         </div>
-    </footer>
-    </div>
+      </footer>
+    </>
   )
 }
 
 export default App
-
-
-    
