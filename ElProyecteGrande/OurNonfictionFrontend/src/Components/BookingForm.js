@@ -75,7 +75,7 @@ const BookingForm = () => {
   }
 
   return (
-    <div class="container form-control">
+    <div className="container form-control">
       <form>
         <div className="row">
           <div className="col">
