@@ -8,7 +8,7 @@ const GuestForm = () => {
     const url= `/guest/${params.guestId}`;
     const [name,setName]=useState({});
     const[birthPlace,setBirthPlace]= useState("");
-    const[birthDate,setBirthDate]= useState("");
+    const[birthDate,setBirthDate]= useState("0001-01-01");
     const[email,setEmail]= useState("");
     const[phone,setPhone]= useState("");
     const[country,setCountry]= useState("");
@@ -20,7 +20,7 @@ const GuestForm = () => {
     const body = {
         "id":parseInt(params.guestId),
         "fullName":name,
-        "birthPlace":birthPlace,
+        "birthPlace":birthPlace===null?"":birthPlace,
         "birthDate":birthDate,
         "email":email,
         "phone":phone,
@@ -28,7 +28,8 @@ const GuestForm = () => {
         "city":city,
         "address":address,
         "postalCode":postalCode,
-        "citizenship":citizenship
+        "citizenship":citizenship,
+        "comment":""
     }
 
     useEffect(()=>{
@@ -37,14 +38,14 @@ const GuestForm = () => {
         console.log(data);
         setName(data.fullName);
         setBirthPlace(data.birthPlace);
-        setBirthDate(data.birthDate);
-        setEmail(data.email);
-        setPhone(data.phone);
-        setCountry(data.country);
-        setCity(data.city);
-        setAddress(data.address);
-        setPostalCode(data.postalCode);
-        setCitizenship(data.citizenship);
+        setBirthDate(data.birthDate.slice(0,10));
+        setEmail(data.email===null?"":data.email);
+        setPhone(data.phone===null?"":data.phone);
+        setCountry(data.country===null?"":data.country);
+        setCity(data.city===null?"":data.city);
+        setAddress(data.address===null?"":data.address);
+        setPostalCode(data.postalCode===null?0:data.postalCode);
+        setCitizenship(data.citizenship===null?"":data.citizenship);
                 });
             }
           ,[url]);
@@ -60,43 +61,43 @@ const GuestForm = () => {
     <div>
             <label>Name</label>
             <div>
-            <input type="text" placeholder={guest.fullName} onChange={(e)=>setName(e.target.value)}/>
+            <input type="text" value={name} onChange={(e)=>setName(e.target.value)}/>
             </div>
             <label>Birth Place</label>
             <div>
-            <input type="text"  placeholder={guest.birthPlace===null?"":birthPlace} onChange={(e)=>setBirthPlace(e.target.value)} />
+            <input type="text"  value={birthPlace===null?"":birthPlace} onChange={(e)=>setBirthPlace(e.target.value)} />
             </div>
             <label>Birth Date</label>
             <div>
-            <input type="date" placeholder={guest.birthDate} onChange={(e)=>setBirthDate(e.target.value)} />
+            <input type="date" value={birthDate} onChange={(e)=>setBirthDate(e.target.value)} />
             </div>
             <label>Email</label>
             <div>
-            <input type="text" placeholder={guest.email===null?"":email} onChange={(e)=>setEmail(e.target.value)} />
+            <input type="text" value={email===null?"":email} onChange={(e)=>setEmail(e.target.value)} />
             </div>
             <label>Phone</label>
             <div>
-            <input type="text" placeholder={guest.phone===null?"":phone} onChange={(e)=>setPhone(e.target.value)} />
+            <input type="text" value={phone===null?"":phone} onChange={(e)=>setPhone(e.target.value)} />
             </div>
             <label>Country</label>
             <div>
-            <input type="text" placeholder={guest.country===null?"":country} onChange={(e)=>setCountry(e.target.value)} />
+            <input type="text" value={country===null?"":country} onChange={(e)=>setCountry(e.target.value)} />
             </div>
             <label>City</label>
             <div>
-            <input type="text" placeholder={guest.city===null?"":city} onChange={(e)=>setCity(e.target.value)} />
+            <input type="text" value={city===null?"":city} onChange={(e)=>setCity(e.target.value)} />
             </div>
             <label>Address</label>
             <div>
-            <input type="text" placeholder={guest.address===null?"":address} onChange={(e)=>setAddress(e.target.value)} />
+            <input type="text" value={address===null?"":address} onChange={(e)=>setAddress(e.target.value)} />
             </div>
             <label>Postal Code</label>
             <div>
-            <input type="number" placeholder={guest.postalCode===null?"":postalCode} onChange={(e)=>setPostalCode(e.target.value)} />
+            <input type="number" value={postalCode===null?"":postalCode} onChange={(e)=>setPostalCode(e.target.value)} />
             </div>
             <label>Citizenship</label>
             <div>
-            <input type="text" placeholder={guest.citizenship===null?"":citizenship} onChange={(e)=>setCitizenship(e.target.value)}  />
+            <input type="text" value={citizenship===null?"":citizenship} onChange={(e)=>setCitizenship(e.target.value)}  />
             </div>
             <div>
                 <input type="submit" onClick={onclick}/>
