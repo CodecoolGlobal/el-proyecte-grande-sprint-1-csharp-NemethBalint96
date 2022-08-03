@@ -29,4 +29,3 @@ export async function putApi(url,body){
     const response = await fetch(url,settings);
     return response;
 }
-

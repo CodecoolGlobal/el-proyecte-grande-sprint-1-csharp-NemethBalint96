@@ -3,9 +3,7 @@ import { getApi, postApi, putApi } from "../Clients/requests"
 import { useNavigate, useParams } from "react-router-dom"
 
 let now = new Date();
-
 let baseDate= now.toISOString().slice(0, 10);
-
 let tomorrow = now.setDate(now.getDate()+1);
 let sec = tomorrow;
 let normalDate = new Date(sec).toISOString().slice(0,10);
