@@ -18,3 +18,15 @@ export async function postApi(url,body){
     return data;
 }
 
+export async function putApi(url,body){
+    const settings = {
+        method: 'PUT',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body:JSON.stringify(body)
+        };
+    const response = await fetch(url,settings);
+    return response;
+}
