@@ -12,7 +12,6 @@ const App = () => {
       >
         <Link to="/">Bookings</Link>{"     "}          
         <Link to="/guests">Guests</Link>{" "}
-        <Link to="/newbooking">Add New Booking</Link>
       </nav>
       <Outlet/>
 

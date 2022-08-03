@@ -13,6 +13,7 @@ import BookingDetails from './Components/BookingDetails';
 import BookingTable from './Components/BookingTable';
 import BookingForm from './Components/BookingForm';
 import SelectRoom from './Components/SelectRoom';
+import GuestForm from './Components/GuestForm';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -24,9 +25,9 @@ root.render(
     <Route path='/booking/:bookingId' element={<BookingDetails/>}/>
     <Route path='/newbooking' element={<BookingForm/>}/>
     <Route path='/available/:bookingId' element={<SelectRoom/>}/>
+    <Route path='/guest/:guestId' element={<GuestForm/>}/>
     <Route path='/editbooking/:bookingId' element={<BookingForm />}/>
-
-    </Route>
+  </Route>
   </Routes>
   </BrowserRouter>
 );

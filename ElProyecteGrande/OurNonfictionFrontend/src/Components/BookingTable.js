@@ -16,6 +16,8 @@ const BookingTable = () => {
       ,[url]);
 
   return (
+    <>
+    <Link to="/newbooking">Add New Booking</Link>
       <table className="table table-sm table-responsive table-striped table-success table-hover align-middle">
           <thead className="text-center align-middle">
           <tr>
@@ -54,6 +56,7 @@ const BookingTable = () => {
       </tr>)}
       </tbody>
     </table>
+    </>
   )
 }
 
