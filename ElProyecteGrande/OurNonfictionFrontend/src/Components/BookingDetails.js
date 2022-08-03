@@ -17,15 +17,15 @@ const BookingDetails = () => {
         }
       ,[url]);
 
-      console.log(booking);
-
     return (
 <div>
   <div>
     <Link to={`/available/${booking.id}`}>Add room to Booking</Link>
+    <Link to={`/editbooking/${booking.id}`}>Edit booking</Link>
   </div>
         <table>
             <thead>
+              <tr>
                 <th>Id</th>
                 <th>Booker's Name</th>
                 <th>Email</th>
@@ -40,7 +40,7 @@ const BookingDetails = () => {
                 <th>Status</th>
                 <th>Created</th>
                 <th>Modified</th>
-                
+              </tr>
             </thead>
             <tbody>
           <tr key={booking.id}>

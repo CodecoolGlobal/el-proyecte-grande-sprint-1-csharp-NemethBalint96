@@ -16,8 +16,8 @@ const App = () => {
       </nav>
       <Outlet/>
 
-      <footer class="border-top footer text-muted">
-        <div class="container">
+      <footer className="border-top footer text-muted">
+        <div className="container">
             &copy; 2022 - El Proyecte Grande - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
