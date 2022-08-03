@@ -39,5 +39,5 @@ public class Guest
     public int PostalCode { get; set; } = 0;
     public string Citizenship { get; set; } = "";
     public string Comment { get; set; } = "";
-    public Age Age { get; set; } = 0;
+    public Age Age { get; set; }
 }
