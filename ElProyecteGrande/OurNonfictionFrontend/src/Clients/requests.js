@@ -29,3 +29,11 @@ export async function putApi(url,body){
     const response = await fetch(url,settings);
     return response;
 }
+
+export async function deleteApi(url){
+    const settings = {
+        method: 'DELETE',
+        };
+    const response = await fetch(url,settings);
+    return response;
+}
