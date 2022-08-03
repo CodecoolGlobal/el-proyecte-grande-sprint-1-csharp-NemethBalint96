@@ -2,6 +2,14 @@ import { useState, useEffect } from "react"
 import { getApi, postApi, putApi } from "../Clients/requests"
 import { useNavigate, useParams } from "react-router-dom"
 
+let now = new Date();
+
+let baseDate= now.toISOString().slice(0, 10);
+
+let tomorrow = now.setDate(now.getDate()+1);
+let sec = tomorrow;
+let normalDate = new Date(sec).toISOString().slice(0,10);
+
 const BookingForm = () => {
   const navigate = useNavigate()
   const [bookersName, setBookersName] = useState('')
@@ -10,8 +18,8 @@ const BookingForm = () => {
   const [adults, setAdults] = useState(0)
   const [children, setChildren] = useState(0)
   const [infants, setInfants] = useState(0)
-  const [arrivalDate, setArrivalDate] = useState('0001-01-01')
-  const [departureDate, setDepartureDate] = useState('0001-01-01')
+  const [arrivalDate, setArrivalDate] = useState(baseDate)
+  const [departureDate, setDepartureDate] = useState(normalDate)
 
   const params = useParams()
   const bookingId = params.bookingId > 0 ? params.bookingId : null
@@ -23,8 +31,8 @@ const BookingForm = () => {
     "adults":adults,
     "children":children,
     "infants":infants,
-    "arrivalDate":arrivalDate.slice(0, 10),
-    "departureDate":departureDate.slice(0, 10),
+    "arrivalDate":arrivalDate,
+    "departureDate":departureDate,
   }
 
   useEffect(() => {
@@ -57,6 +65,14 @@ const BookingForm = () => {
         }
       })
     }
+  }
+
+  function getTomorrowsDate(e) {
+    let targetDate = e.target.value;
+    let date = new Date(targetDate); //converts IsoString to date object
+    let ms = date.getTime(targetDate); // convert date to milliseconds
+    let result = ms + 86400000; // add one day in milliseconds to date
+    setDepartureDate(new Date(result).toISOString().slice(0, 10)); //setting departureDate.
   }
 
   return (
@@ -100,13 +116,16 @@ const BookingForm = () => {
     <div>
       <label>Arrival's Date</label>
       <div>
-      <input type="date" value={arrivalDate} onChange={(e)=>setArrivalDate(e.target.value)}/>
+      <input type="date" min={baseDate} value={arrivalDate}  onChange={(e)=>{
+        setArrivalDate(e.target.value)
+        getTomorrowsDate(e); // sets departureDate to 1 day later
+      }}/>
       </div>
     </div>
     <div>
       <label>Departure's Date</label>
       <div>
-      <input type="date" value={departureDate} onChange={(e)=>setDepartureDate(e.target.value)}/>
+      <input type="date" min={normalDate} value={departureDate}  onChange={(e)=>setDepartureDate(e.target.value)}/>
       </div>
     </div>
     <div>
