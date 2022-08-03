@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom";
-import { getApi,postApi, putApi} from "../Clients/requests";
+import { getApi,putApi} from "../Clients/requests";
 
 const GuestForm = () => {
     const params = useParams();
@@ -54,7 +54,7 @@ const GuestForm = () => {
             e.preventDefault();
             putApi(`/guest/${guest.id}`,body).then(data=>
             {
-                navigate('/');
+                navigate(-1);
              });}
     
   return (
