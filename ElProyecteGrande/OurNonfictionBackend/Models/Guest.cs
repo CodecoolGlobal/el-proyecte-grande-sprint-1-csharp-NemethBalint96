@@ -15,7 +15,7 @@ public class Guest
 
     public Guest()
     {
-
+        Id = _nextId++;
     }
 
     public Guest(Age age)

@@ -62,9 +62,9 @@ public class BookingController : ControllerBase
     }
 
     [HttpPost("{bookingId}/addnew")]
-    public ActionResult AddNewGuestToBooking(int bookingId,Guest guest)
+    public ActionResult AddNewGuestToBooking(int bookingId, Guest guest)
     {
-        var newGuest = _bookingService.AddNewGuestToBooking(bookingId, guest);
-        return CreatedAtAction(nameof(AddNewGuestToBooking),new{id=newGuest.Id},newGuest);
+        _bookingService.AddNewGuestToBooking(bookingId, guest);
+        return CreatedAtAction(nameof(AddNewGuestToBooking),new{id=guest.Id},guest);
     }
 }

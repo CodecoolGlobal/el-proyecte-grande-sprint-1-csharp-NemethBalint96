@@ -12,5 +12,5 @@ public interface IBookingService
     Guest? GetGuest(int guestId);
     void EditGuest(Guest guest);
     IEnumerable<Guest> GetAllNamedGuests();
-    Guest AddNewGuestToBooking(int bookingId, Guest guest);
+    void AddNewGuestToBooking(int bookingId, Guest guest);
 }
