@@ -5,12 +5,12 @@ using OurNonfictionBackend.Dal;
 
 namespace OurNonfictionBackend.Controllers;
 [ApiController, Route("[controller]")]
-public class RoomController : ControllerBase
+public class RoomApiController : ControllerBase
 {
     private readonly IRoomService _roomService;
     private readonly IBookingDetailsService _bookingDetailsServiceService;
 
-    public RoomController(IRoomService roomService, IBookingDetailsService bookingDetailsServiceService)
+    public RoomApiController(IRoomService roomService, IBookingDetailsService bookingDetailsServiceService)
     {
         _roomService = roomService;
         _bookingDetailsServiceService = bookingDetailsServiceService;

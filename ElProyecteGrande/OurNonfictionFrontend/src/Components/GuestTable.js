@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { getApi } from "../Clients/requests";
 
 const GuestTable = () => {
-  const url = 'guest';
+  const url = 'guestapi';
   const [guests, setGuests] = useState([]);
 
   useEffect(()=>{
