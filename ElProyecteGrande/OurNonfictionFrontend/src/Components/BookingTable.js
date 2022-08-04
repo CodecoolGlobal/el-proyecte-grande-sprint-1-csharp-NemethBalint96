@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { getApi } from "../Clients/requests";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const BookingTable = () => {
   const url = "booking";
   const [bookings, setBookings] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getApi(url).then(data=>{
@@ -13,6 +14,10 @@ const BookingTable = () => {
     });
   }
   ,[url]);
+
+  function redirect(bookingId) {
+    navigate(`/booking/${bookingId}`);
+  }
 
   return (
     <>
@@ -41,8 +46,8 @@ const BookingTable = () => {
       </thead>
       <tbody>
         {bookings.map(booking =>
-          <tr className="text-center align-middle" key={booking.id}>
-            <td><Link to={`/booking/${booking.id}`}>{booking.id}</Link></td>
+          <tr className="text-center align-middle" key={booking.id} onClick={() => redirect(booking.id)} >
+            <td>{booking.id}</td>
             <td>{booking.bookersName}</td>
             <td>{booking.email}</td>
             <td>{booking.nights}</td>
