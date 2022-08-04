@@ -125,13 +125,21 @@ public class BookingService : IBookingService
             .SelectMany(b => b.Guests.Where(guest => guest.FullName != "Accompanying Guest"));
     }
 
-    
-
-    public Guest AddNewGuestToBooking(int bookingId, Guest guest)
+    public void AddNewGuestToBooking(int bookingId, Guest guest)
     {
         var booking = _bookingRepository.Get(bookingId);
-        var newGuest = new Guest(guest.Age);
-        booking.Guests.Add(newGuest);
-        return newGuest;
+        switch (guest.Age)
+        {
+            case Age.Adult:
+                booking.Adults++;
+                break;
+            case Age.Child:
+                booking.Children++;
+                break;
+            case Age.Infant:
+                booking.Infants++;
+                break;
+        }
+        booking.Guests.Add(guest);
     }
 }

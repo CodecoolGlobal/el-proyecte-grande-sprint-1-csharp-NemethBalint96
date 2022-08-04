@@ -23,7 +23,7 @@ const GuestForm = () => {
     "id":parseInt(params.guestId),
     "fullName":name,
     "birthPlace":birthPlace,
-    "birthDate":birthDate,
+    "birthDate":birthDate === '' ? '0001-01-01' : birthDate.slice(0, 10),
     "email":email,
     "phone":phone,
     "country":country,
@@ -37,7 +37,6 @@ const GuestForm = () => {
 
   useEffect(() => {
     getApi(url).then(data => {
-      console.log(data)
       setGuest(data);
       setName(data.fullName);
       setBirthPlace(data.birthPlace);
@@ -61,6 +60,13 @@ const GuestForm = () => {
     {
       navigate(-1);
     });
+  }
+
+  function select(e) {
+    console.log(age)
+    console.log(e.target.value)
+    setAge(e.target.value);
+    console.log(age);
   }
 
   return (
@@ -112,11 +118,19 @@ const GuestForm = () => {
         </div>
         <br></br>
         <div className="row">
-          <div className="col-md-4">
+          <div className="col">
           <label className="form-label">Citizenship</label><br/>
           <input className="form-control" type="text" value={citizenship} onChange={(e)=>setCitizenship(e.target.value)}/>
           </div>
-          <div className="col-md-8">
+          <div className="col">
+            <select className='form-select' onChange={(e)=>{select(e)}}>
+              <option value={age}>Select</option>
+              <option value="0">Adult</option>
+              <option value="1">Child</option>
+              <option value="2">Infant</option>
+            </select>
+          </div>
+          <div className="col">
           <label className="form-label">Comment</label><br/>
           <input className="form-control" type="text" value={comment} onChange={(e)=>setComment(e.target.value)}/>
           </div>
