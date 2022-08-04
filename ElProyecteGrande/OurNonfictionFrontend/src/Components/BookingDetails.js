@@ -125,6 +125,7 @@ const BookingDetails = () => {
             <tr>
               <th>Id</th>
               <th>Full Name</th>
+              <th>Age</th>
               <th>Birth Place</th>
               <th>Birth Date</th>
               <th>Email</th>
@@ -141,7 +142,8 @@ const BookingDetails = () => {
           <tbody>
           {guests.map(guest=><tr className="text-center align-middle" key={guest.id}>
           <td>{guest.id}</td>
-          <td>{guest.fullName}</td>
+              <td>{guest.fullName}</td>
+                <td>{guest.age===0?"Adult":guest.age===1?"Child":guest.age===2?"Infant":""}</td>
           <td>{guest.birthPlace}</td>
           <td>{guest.birthDate}</td>
           <td>{guest.email}</td>
