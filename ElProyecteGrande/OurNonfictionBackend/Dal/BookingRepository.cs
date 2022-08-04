@@ -15,25 +15,10 @@ public class BookingRepository : IRepository<Booking>
 
     private void CreateBookings()
     {
-        string json = File.ReadAllText(@"Data\booking.json");
+        string json = File.ReadAllText(@"Data\newBooking.json");
         List<Booking> bookings = JsonConvert.DeserializeObject<List<Booking>>(json);
         foreach (var booking in bookings)
-        {
-            var random = new Random();
-            booking.DepartureDate = booking.ArrivalDate.AddDays(random.Next(1, 7));
-            booking.Created = booking.ArrivalDate.Subtract(TimeSpan.FromDays(random.Next(1, 7)));
-            booking.ModificationDate = booking.Created.AddDays(random.Next(1, 7));
-            var rooms = _roomRepository.GetAll().ToList();
-            booking.Room = rooms[random.Next(1, rooms.Count)];
-            booking.Guests = new List<Guest>{
-                new Guest(Age.Adult)
-                {
-                    FullName = booking.BookersName,
-                    Email = booking.Email,
-                    Country = booking.Country,
-                    Citizenship = booking.Country,
-                },
-            };
+        { 
             _bookings.Add(booking);
         }
     }
