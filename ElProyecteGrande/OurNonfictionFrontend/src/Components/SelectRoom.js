@@ -26,12 +26,14 @@ navigate(`/booking/${id}`);
 }
 
   return (
-    <div>
-      <select onChange={(e)=>setRoomId(e.target.value)}>
-        {rooms.map(room=><option value={room.id} key={room.id}>{room.floor} {room.doorNumber} {room.roomType===1?"Apartman":room.roomType===2?"Standard":room.roomType===3?"Superior":""}</option>)}
+    <div className="container form-control">
+      <label className="form-label">Available Room</label>
+      <select className="form-select" onChange={(e)=>setRoomId(e.target.value)}>
+        {rooms.map(room=><option value={room.id} key={room.id}>Floor Number: {room.floor} Room Number: {room.doorNumber} Room Type: {room.roomType===1?"Apartman":room.roomType===2?"Standard":room.roomType===3?"Superior":""}</option>)}
       </select>
       <div>
-      <input type="submit" onClick={onClick}/>
+      <br></br>
+      <input className="form-control btn btn-primary" type="submit" onClick={onClick}/>
       </div>
     </div>
   )

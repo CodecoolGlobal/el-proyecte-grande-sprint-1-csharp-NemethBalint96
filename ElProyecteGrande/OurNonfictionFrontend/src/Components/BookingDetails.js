@@ -1,4 +1,4 @@
-import { Link, useParams} from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { deleteApi, getApi, postApi } from '../Clients/requests';
 
@@ -9,15 +9,20 @@ const BookingDetails = () => {
   const [guests, setGuests] = useState([]);
   const [room, setRoom] = useState({});
   const [newGuestAge, setNewGuestAge] = useState(0);
+  const [roomId, setRoomId] = useState(0);
+  const [rooms, setRooms] = useState([]);
 
   useEffect(() => {
+    getApi(`/room/available/${url}`).then(data => {
+      setRooms(data);
+      setRoomId(data[0].id);
+    });
     getApi(url).then(data => {
       setBooking(data);
       setGuests(data.guests);
       setRoom(data.room);
-      console.log(data.room);
-      console.log(data);
     });
+    
   } ,[url]);
 
   function OnClick() {
@@ -26,10 +31,6 @@ const BookingDetails = () => {
       setGuests(data.guests);
       setRoom(data.room);
     });
-  }
-
-  const body = {
-    'age':parseInt(newGuestAge)
   }
 
   function onClick() {
@@ -47,14 +48,9 @@ const BookingDetails = () => {
       "age":parseInt(newGuestAge),
       "comment":'',
     }
-    console.log(body)
     postApi(`/bookingapi/${params.bookingId}/addnew`, body).then(() => {getApi(url).then(data => {
       setBooking(data);
       setGuests(data.guests);
-      const element = document.getElementById('select');
-      element.style.display='none';
-      const button = document.getElementById('button');
-      button.style.display='';
     })})
   }
 
@@ -62,6 +58,28 @@ const BookingDetails = () => {
     deleteApi(`${url}`).then(() => {
       OnClick();
     })
+  }
+
+  function selectRoom() {
+    const element = document.getElementById('roomSelect');
+    element.style.display='';
+    const button = document.getElementById('roomSelectButton');
+    button.style.display='none';
+  }
+
+  function onSubmit(e) {
+    e.preventDefault();
+    getApi("/room/"+roomId+"/"+url);
+    const element = document.getElementById('roomSelect');
+    element.style.display='none';
+    const button = document.getElementById('roomSelectButton');
+    button.style.display='';
+    const newRoom = rooms.filter((room) =>room.id === roomId);
+    setRoom(newRoom[0]);
+    getApi(`/room/available/${url}`).then(data => {
+      setRooms(data);
+      setRoomId(data[0].id);
+    });
   }
 
   return (
@@ -75,7 +93,17 @@ const BookingDetails = () => {
           <Link to={`/editbooking/${booking.id}`}><button className="btn btn-primary">Edit</button></Link>
         </div>
         <div className='col'>
-          <Link to={`/available/${booking.id}`}><button className="btn btn-primary">Select Room</button></Link>
+          <button className="btn btn-primary" id='roomSelectButton' onClick={selectRoom}>Select Room</button>
+          <div className='row' id='roomSelect' style={{display:'none'}}>
+          <div className='col-md-7'>
+            <select className='form-select' onChange={(e)=>setRoomId(parseInt(e.target.value))}>
+              {rooms.map(room=><option value={room.id} key={room.id}>Floor:{room.floor} Door:{room.doorNumber} {room.roomType===1?"Apartman":room.roomType===2?"Standard":room.roomType===3?"Superior":""}</option>)}
+            </select>
+            </div>
+            <div className='col'>
+            <input type="submit" className="btn btn-primary" onClick={e=>onSubmit(e)}/>
+            </div>
+          </div>
         </div>
       </div>
       <div className="row">
