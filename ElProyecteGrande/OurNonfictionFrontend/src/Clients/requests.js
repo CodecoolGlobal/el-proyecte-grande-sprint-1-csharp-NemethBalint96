@@ -8,7 +8,8 @@ export async function postApi(url,body){
     const settings = {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
         },
         body:JSON.stringify(body)
         };
@@ -26,8 +27,7 @@ export async function putApi(url,body){
         },
         body:JSON.stringify(body)
         };
-    const response = await fetch(url,settings);
-    return response;
+    return await fetch(url,settings);
 }
 
 export async function deleteApi(url){
