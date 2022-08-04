@@ -128,6 +128,18 @@ public class BookingService : IBookingService
     public void AddNewGuestToBooking(int bookingId, Guest guest)
     {
         var booking = _bookingRepository.Get(bookingId);
+        switch (guest.Age)
+        {
+            case Age.Adult:
+                booking.Adults++;
+                break;
+            case Age.Child:
+                booking.Children++;
+                break;
+            case Age.Infant:
+                booking.Infants++;
+                break;
+        }
         booking.Guests.Add(guest);
     }
 }
