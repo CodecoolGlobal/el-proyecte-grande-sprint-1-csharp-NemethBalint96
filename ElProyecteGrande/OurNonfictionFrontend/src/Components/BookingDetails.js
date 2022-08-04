@@ -13,7 +13,7 @@ const BookingDetails = () => {
   const [rooms, setRooms] = useState([]);
 
   useEffect(() => {
-    getApi(`/room/available/${url}`).then(data => {
+    getApi(`/roomapi/available/${params.bookingId}`).then(data => {
       setRooms(data);
       setRoomId(data[0].id);
     });
@@ -69,14 +69,14 @@ const BookingDetails = () => {
 
   function onSubmit(e) {
     e.preventDefault();
-    getApi("/room/"+roomId+"/"+url);
+    getApi(`/roomapi/${roomId}/${params.bookingId}`);
     const element = document.getElementById('roomSelect');
     element.style.display='none';
     const button = document.getElementById('roomSelectButton');
     button.style.display='';
     const newRoom = rooms.filter((room) =>room.id === roomId);
     setRoom(newRoom[0]);
-    getApi(`/room/available/${url}`).then(data => {
+    getApi(`/roomapi/available/${params.bookingId}`).then(data => {
       setRooms(data);
       setRoomId(data[0].id);
     });

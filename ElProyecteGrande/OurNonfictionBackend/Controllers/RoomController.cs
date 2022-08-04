@@ -33,7 +33,7 @@ public class RoomApiController : ControllerBase
     {
         var isAdded = _bookingDetailsServiceService.AddRoomToBooking(roomId, bookingId);
         if (isAdded)
-            return NoContent();
+            return Ok(isAdded);
 
         return NotFound();
     }
