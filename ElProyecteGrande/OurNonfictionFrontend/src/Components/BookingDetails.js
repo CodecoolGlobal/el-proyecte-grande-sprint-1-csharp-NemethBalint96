@@ -59,7 +59,7 @@ const BookingDetails = () => {
   }
 
   function cancelBooking() {
-    deleteApi(`/bookingapi/${url}`).then(() => {
+    deleteApi(`${url}`).then(() => {
       OnClick();
     })
   }
