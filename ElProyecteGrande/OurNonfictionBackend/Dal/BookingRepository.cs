@@ -5,11 +5,9 @@ namespace ElProyecteGrande.Dal;
 public class BookingRepository : IRepository<Booking>
 {
     private readonly List<Booking> _bookings;
-    private readonly IRepository<Room> _roomRepository;
-    public BookingRepository(IRepository<Room> roomRepository)
+    public BookingRepository()
     {
         _bookings = new List<Booking>();
-        _roomRepository = roomRepository;
         CreateBookings();
     }
 
