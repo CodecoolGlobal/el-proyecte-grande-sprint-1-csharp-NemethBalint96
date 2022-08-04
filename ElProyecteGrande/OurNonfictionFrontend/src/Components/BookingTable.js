@@ -2,24 +2,44 @@ import { useState, useEffect } from "react";
 import { getApi } from "../Clients/requests";
 import { Link } from "react-router-dom";
 
+
 const BookingTable = () => {
   const url = "booking";
+  const[firstBooking,setFirstBookings]=useState([]);
   const [bookings, setBookings] = useState([]);
 
+  
+  const handleSearch = (event) => {
+    let search = event.target.value;
+    const data = bookings.filter((item) =>
+    item.bookersName.toLowerCase().includes(search.toLowerCase()))
+    setBookings(data);
+    if(search===""){
+    setBookings(firstBooking);
+    }
+  };
+  
   useEffect(() => {
     getApi(url).then(data=>{
       console.log(data);
+      setFirstBookings(data);
       setBookings(data);
-    });
-  }
+
+  })}
   ,[url]);
 
-  return (
+return (
     <>
     <div>
       <Link to="/newbooking"><button className="btn btn-primary">Add New Booking</button></Link>
     </div>
     <br></br>
+   <div className="row">
+    <div className="col-md-2">
+  <input  type="text" id="myInput" onChange={(e)=>{handleSearch(e)}} placeholder="Start typing a name..."/>
+  </div>
+  </div>
+  <br></br>
     <table className="table table-sm table-responsive table-striped table-success table-hover align-middle">
       <thead className="text-center align-middle">
         <tr>
@@ -43,7 +63,7 @@ const BookingTable = () => {
         {bookings.map(booking =>
           <tr className="text-center align-middle" key={booking.id}>
             <td><Link to={`/booking/${booking.id}`}>{booking.id}</Link></td>
-            <td>{booking.bookersName}</td>
+            <td id="booker-name">{booking.bookersName}</td>
             <td>{booking.email}</td>
             <td>{booking.nights}</td>
             <td>{booking.adults}</td>
