@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 
 const BookingTable = () => {
-  const url = "booking";
+  const url = "bookingapi";
   const[firstBooking,setFirstBookings]=useState([]);
   const [bookings, setBookings] = useState([]);
 

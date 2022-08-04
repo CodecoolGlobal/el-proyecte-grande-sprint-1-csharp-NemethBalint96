@@ -36,7 +36,7 @@ const BookingForm = () => {
 
   useEffect(() => {
     if(bookingId) {
-      getApi(`/booking/${bookingId}`).then(data => {
+      getApi(`/bookingapi/${bookingId}`).then(data => {
         setBookersName(data.bookersName);
         setEmail(data.email);
         setCountry(data.country);
@@ -53,12 +53,12 @@ const BookingForm = () => {
   const onclick = (e) => {
     e.preventDefault();
     if(!bookingId) {
-      postApi("booking", body).then(data => {
+      postApi("bookingapi", body).then(data => {
         navigate(`/available/${data.id}`);
       })
     } else {
       body.id = parseInt(bookingId);
-      putApi(`/booking/${bookingId}`, body).then((response) => {
+      putApi(`/bookingapi/${bookingId}`, body).then((response) => {
         if(response.status === 204) {
           navigate(`/booking/${bookingId}`)
         }
