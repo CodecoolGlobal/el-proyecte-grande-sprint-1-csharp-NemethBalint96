@@ -15,17 +15,19 @@ const GuestTable = () => {
   return (
     <table className="table table-sm table-responsive table-striped table-success table-hover align-middle">
       <thead className="text-center align-middle">
-        <th>Id</th>
-        <th>Full Name</th>
-        <th>Birth Place</th>
-        <th>Birth Date</th>
-        <th>Email</th>
-        <th>Phone Number</th>
-        <th>Country</th>
-        <th>City</th>
-        <th>Address</th>
-        <th>Postal Code</th>
-        <th>Citizenship</th>
+        <tr>
+          <th>Id</th>
+          <th>Full Name</th>
+          <th>Birth Place</th>
+          <th>Birth Date</th>
+          <th>Email</th>
+          <th>Phone Number</th>
+          <th>Country</th>
+          <th>City</th>
+          <th>Address</th>
+          <th>Postal Code</th>
+          <th>Citizenship</th>
+        </tr>
       </thead>
       <tbody>
         {guests.map(guest =>
