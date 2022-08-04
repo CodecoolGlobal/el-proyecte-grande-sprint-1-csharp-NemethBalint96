@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import { getApi } from "../Clients/requests";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
 const BookingTable = () => {
   const url = "booking";
   const[firstBooking,setFirstBookings]=useState([]);
   const [bookings, setBookings] = useState([]);
+  const navigate = useNavigate();
 
   
   const handleSearch = (event) => {
@@ -28,7 +29,15 @@ const BookingTable = () => {
   })}
   ,[url]);
 
-return (
+  function redirect(bookingId) {
+    navigate(`/booking/${bookingId}`);
+  }
+
+  function redirect(bookingId) {
+    navigate(`/booking/${bookingId}`);
+  }
+
+  return (
     <>
     <div>
       <Link to="/newbooking"><button className="btn btn-primary">Add New Booking</button></Link>
@@ -61,9 +70,9 @@ return (
       </thead>
       <tbody>
         {bookings.map(booking =>
-          <tr className="text-center align-middle" key={booking.id}>
-            <td><Link to={`/booking/${booking.id}`}>{booking.id}</Link></td>
-            <td id="booker-name">{booking.bookersName}</td>
+          <tr className="text-center align-middle" key={booking.id} onClick={() => redirect(booking.id)} >
+            <td>{booking.id}</td>
+            <td>{booking.bookersName}</td>
             <td>{booking.email}</td>
             <td>{booking.nights}</td>
             <td>{booking.adults}</td>

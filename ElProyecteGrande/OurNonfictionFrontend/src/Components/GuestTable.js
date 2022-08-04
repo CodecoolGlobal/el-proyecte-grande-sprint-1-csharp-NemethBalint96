@@ -33,7 +33,7 @@ const GuestTable = () => {
             <td>{guest.id}</td>
             <td>{guest.fullName}</td>
             <td>{guest.birthPlace}</td>
-            <td>{guest.birthDate}</td>
+            <td>{guest.birthDate.slice(0, 10)}</td>
             <td>{guest.email}</td>
             <td>{guest.phone}</td>
             <td>{guest.country}</td>
