@@ -4,11 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace OurNonfictionBackend.Controllers;
 [ApiController, Route("[controller]")]
-public class GuestController : ControllerBase
+public class GuestApiController : ControllerBase
 {
     private readonly IBookingService _bookingService;
 
-    public GuestController(IBookingService bookingService)
+    public GuestApiController(IBookingService bookingService)
     {
         _bookingService = bookingService;
     }

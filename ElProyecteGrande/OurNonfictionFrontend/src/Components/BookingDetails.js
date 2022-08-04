@@ -4,7 +4,7 @@ import { deleteApi, getApi, postApi } from '../Clients/requests';
 
 const BookingDetails = () => {
   const params = useParams();
-  const url = params.bookingId;
+  const url = `/bookingapi/${params.bookingId}`;
   const [booking, setBooking] = useState({});
   const [guests, setGuests] = useState([]);
   const [room, setRoom] = useState({});
@@ -21,7 +21,6 @@ const BookingDetails = () => {
       setBooking(data);
       setGuests(data.guests);
       setRoom(data.room);
-      console.log(data.room)
     });
     
   } ,[url]);
@@ -49,14 +48,14 @@ const BookingDetails = () => {
       "age":parseInt(newGuestAge),
       "comment":'',
     }
-    postApi(`/booking/${params.bookingId}/addnew`, body).then(() => {getApi(url).then(data => {
+    postApi(`/bookingapi/${params.bookingId}/addnew`, body).then(() => {getApi(url).then(data => {
       setBooking(data);
       setGuests(data.guests);
     })})
   }
 
   function cancelBooking() {
-    deleteApi(`/booking/${url}`).then(() => {
+    deleteApi(`${url}`).then(() => {
       OnClick();
     })
   }
@@ -205,7 +204,7 @@ const BookingDetails = () => {
             </svg>
             </button></Link></td>
           <td><button className="btn btn-outline-secondary" onClick={() => {
-            deleteApi(`/guest/${guest.id}`).then(()=>{OnClick()})
+            deleteApi(`/guestapi/${guest.id}`).then(()=>{OnClick()})
             }}>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16">
               <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>

@@ -4,12 +4,12 @@ import { getApi } from "../Clients/requests";
 
 const SelectRoom = () => {
     const navigate = useNavigate();
-    const urlGet= "/room";
+    const urlGet= "/roomapi";
     const params = useParams();
     const id = params.bookingId;
     const [rooms,setRooms]=useState([]);
     const[roomId,setRoomId]=useState({});
-    const url =`/room/available/${id}`;
+    const url =`/roomapi/available/${id}`;
     useEffect(()=>{
         getApi(url).then(data=>{
         setRooms(data);

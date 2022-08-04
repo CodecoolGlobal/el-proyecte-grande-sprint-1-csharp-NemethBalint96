@@ -4,7 +4,7 @@ import { getApi, putApi } from "../Clients/requests";
 
 const GuestForm = () => {
   const params = useParams();
-  const url = `/guest/${params.guestId}`;
+  const url = `/guestapi/${params.guestId}`;
   const [guest, setGuest] = useState({});
   const [name, setName] = useState("");
   const [birthPlace, setBirthPlace] = useState("");
@@ -56,7 +56,7 @@ const GuestForm = () => {
   const onclick = (e) => {
     e.preventDefault();
     console.log(body)
-    putApi(`/guest/${guest.id}`, body).then(() =>
+    putApi(`/guestapi/${guest.id}`, body).then(() =>
     {
       navigate(-1);
     });
