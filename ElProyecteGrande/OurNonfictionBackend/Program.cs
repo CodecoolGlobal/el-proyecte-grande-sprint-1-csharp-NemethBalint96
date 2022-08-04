@@ -11,7 +11,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IRepository<Room>>(new RoomRepository());
-builder.Services.AddSingleton<IRepository<Booking>>(x => new BookingRepository(x.GetRequiredService<IRepository<Room>>()));
+builder.Services.AddSingleton<IRepository<Booking>>(x => new BookingRepository());
 builder.Services.AddSingleton<IBookingDetailsService>(x => new BookingDetailsService(x.GetRequiredService<IRepository<Booking>>(), x.GetRequiredService<IRepository<Room>>()));
 builder.Services.AddSingleton<IBookingService>(x => new BookingService(x.GetRequiredService<IRepository<Booking>>()));
 builder.Services.AddSingleton<IRoomService>(x => new RoomService(x.GetRequiredService<IRepository<Room>>()));
