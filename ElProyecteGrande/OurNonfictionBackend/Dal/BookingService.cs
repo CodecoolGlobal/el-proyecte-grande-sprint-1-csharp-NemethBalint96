@@ -57,6 +57,7 @@ public class BookingService : IBookingService
         var oldBooking = _bookingRepository.Get(booking.Id);
         booking.Room = oldBooking.Room;
         CreatePlusGuests(oldBooking, booking);
+        booking.ModificationDate = DateTime.Now;
         _bookingRepository.Update(booking);
     }
 

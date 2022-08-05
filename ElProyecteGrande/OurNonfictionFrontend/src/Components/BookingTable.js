@@ -33,10 +33,6 @@ const BookingTable = () => {
     navigate(`/booking/${bookingId}`);
   }
 
-  function redirect(bookingId) {
-    navigate(`/booking/${bookingId}`);
-  }
-
   return (
     <>
     <div>

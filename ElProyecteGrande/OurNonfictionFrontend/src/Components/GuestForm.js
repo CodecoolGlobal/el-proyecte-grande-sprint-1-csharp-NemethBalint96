@@ -19,42 +19,42 @@ const GuestForm = () => {
   const [age, setAge] = useState(0);
   const [comment, setComment] = useState("");
   const navigate = useNavigate();
-  const body = {
-    "id":parseInt(params.guestId),
-    "fullName":name,
-    "birthPlace":birthPlace,
-    "birthDate":birthDate === '' ? '0001-01-01' : birthDate.slice(0, 10),
-    "email":email,
-    "phone":phone,
-    "country":country,
-    "city":city,
-    "address":address,
-    "postalCode":postalCode,
-    "citizenship":citizenship,
-    "age":parseInt(age),
-    "comment":comment,
-  }
 
   useEffect(() => {
     getApi(url).then(data => {
       setGuest(data);
       setName(data.fullName);
-      setBirthPlace(data.birthPlace);
+      setBirthPlace(data.birthPlace === null ? '' : data.birthPlace);
       setBirthDate(data.birthDate.slice(0, 10) === '0001-01-01' ? "" : data.birthDate.slice(0, 10));
-      setEmail(data.email);
-      setPhone(data.phone);
-      setCountry(data.country);
-      setCity(data.city);
-      setAddress(data.address);
+      setEmail(data.email === null ? '' : data.email);
+      setPhone(data.phone === null ? '' : data.phone);
+      setCountry(data.country === null ? '' : data.country);
+      setCity(data.city === null ? '' : data.city);
+      setAddress(data.address === null ? '' : data.address);
       setPostalCode(data.postalCode);
-      setCitizenship(data.citizenship);
+      setCitizenship(data.citizenship === null ? '' : data.citizenship);
       setAge(data.age);
-      setComment(data.comment);
+      setComment(data.comment === null ? '' : data.comment);
     });
   }, [url]);
 
   const onclick = (e) => {
     e.preventDefault();
+    const body = {
+      "id":parseInt(params.guestId),
+      "fullName":name,
+      "birthPlace":birthPlace,
+      "birthDate":birthDate === '' ? '0001-01-01' : birthDate.slice(0, 10),
+      "email":email,
+      "phone":phone,
+      "country":country,
+      "city":city,
+      "address":address,
+      "postalCode":postalCode,
+      "citizenship":citizenship,
+      "age":parseInt(age),
+      "comment":comment,
+    }
     console.log(body)
     putApi(`/guestapi/${guest.id}`, body).then(() =>
     {
@@ -63,10 +63,7 @@ const GuestForm = () => {
   }
 
   function select(e) {
-    console.log(age)
-    console.log(e.target.value)
     setAge(e.target.value);
-    console.log(age);
   }
 
   return (
@@ -123,6 +120,7 @@ const GuestForm = () => {
           <input className="form-control" type="text" value={citizenship} onChange={(e)=>setCitizenship(e.target.value)}/>
           </div>
           <div className="col">
+            <label className="form-label">Age</label><br/>
             <select className='form-select' onChange={(e)=>{select(e)}}>
               <option value={age}>Select</option>
               <option value="0">Adult</option>
