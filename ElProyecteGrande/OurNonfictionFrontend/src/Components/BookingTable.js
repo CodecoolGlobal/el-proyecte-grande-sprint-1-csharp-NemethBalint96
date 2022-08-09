@@ -1,51 +1,17 @@
-import { useState, useEffect } from "react";
-import { getApi } from "../Clients/requests";
-import { Link, useNavigate } from "react-router-dom";
+import React from 'react'
+import { useNavigate } from 'react-router-dom';
+const BookingTable = ({bookings}) => {
 
+    console.log(bookings);
+    const navigate = useNavigate();
 
-const BookingTable = () => {
-  const url = "bookingapi";
-  const[firstBooking,setFirstBookings]=useState([]);
-  const [bookings, setBookings] = useState([]);
-  const navigate = useNavigate();
-
-  
-  const handleSearch = (event) => {
-    let search = event.target.value;
-    const data = bookings.filter((item) =>
-    item.bookersName.toLowerCase().includes(search.toLowerCase()))
-    setBookings(data);
-    if(search===""){
-    setBookings(firstBooking);
-    }
-  };
-  
-  useEffect(() => {
-    getApi(url).then(data=>{
-      console.log(data);
-      setFirstBookings(data);
-      setBookings(data);
-
-  })}
-  ,[url]);
-
-  function redirect(bookingId) {
-    navigate(`/booking/${bookingId}`);
-  }
+    function redirect(bookingId) {
+        navigate(`/booking/${bookingId}`);
+      }
 
   return (
     <>
-    <div>
-      <Link to="/newbooking"><button className="btn btn-primary">Add New Booking</button></Link>
-    </div>
-    <br></br>
-   <div className="row">
-    <div className="col-md-2">
-  <input  type="text" id="myInput" onChange={(e)=>{handleSearch(e)}} placeholder="Start typing a name..."/>
-  </div>
-  </div>
-  <br></br>
-    <table className="table table-sm table-responsive table-striped table-success table-hover align-middle">
+      <table className="table table-sm table-responsive table-striped table-success table-hover align-middle">
       <thead className="text-center align-middle">
         <tr>
           <th>Id</th>
@@ -86,7 +52,7 @@ const BookingTable = () => {
       </tbody>
     </table>
     </>
-  );
+  )
 }
 
-export default BookingTable;
+export default BookingTable
