@@ -10,7 +10,7 @@ import {
 } from "react-router-dom";
 import GuestTable from './Components/GuestTable';
 import BookingDetails from './Components/BookingDetails';
-import BookingTable from './Components/BookingTable';
+import MainPage from './Components/MainPage';
 import BookingForm from './Components/BookingForm';
 import SelectRoom from './Components/SelectRoom';
 import GuestForm from './Components/GuestForm';
@@ -20,7 +20,7 @@ root.render(
   <BrowserRouter>
   <Routes>
     <Route path='/' element={<App/>}>
-    <Route path='/' element={<BookingTable/>}/>
+    <Route path='/' element={<MainPage/>}/>
     <Route path='/guests' element={<GuestTable/>}/>
     <Route path='/booking/:bookingId' element={<BookingDetails/>}/>
     <Route path='/newbooking' element={<BookingForm/>}/>

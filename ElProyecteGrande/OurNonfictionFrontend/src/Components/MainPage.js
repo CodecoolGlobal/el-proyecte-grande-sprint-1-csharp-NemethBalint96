@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { getApi } from "../Clients/requests";
 import { Link} from "react-router-dom";
-import BookingTable from "./BookingTable";
+import Table from "./Table";
 
 
 const MainPage = () => {
@@ -9,7 +9,7 @@ const MainPage = () => {
   const[firstBooking,setFirstBookings]=useState([]);
   const [bookings, setBookings] = useState([]);
   
-  {console.log(bookings)}
+
   
   const handleSearch = (event) => {
     let search = event.target.value;
@@ -23,7 +23,6 @@ const MainPage = () => {
   
   useEffect(() => {
     getApi(url).then(data=>{
-      console.log(data);
       setFirstBookings(data);
       setBookings(data);
 
@@ -44,7 +43,7 @@ const MainPage = () => {
   </div>
   </div>
   <br></br>
-    {bookings.length!==0?<BookingTable bookings={bookings}/>:<p></p>}
+    <Table data={bookings} type="Booking"/>
     </>
   );
 }
