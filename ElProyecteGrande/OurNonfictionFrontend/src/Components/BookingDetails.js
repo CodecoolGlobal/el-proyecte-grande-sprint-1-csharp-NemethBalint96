@@ -1,6 +1,7 @@
 import { Link, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { deleteApi, getApi, postApi } from '../Clients/requests';
+import BookingTable from './Table';
 
 const BookingDetails = () => {
   const params = useParams();
@@ -169,7 +170,8 @@ const BookingDetails = () => {
         </div>
       </> : <></>}
       <div>
-        <table className="table table-sm table-responsive table-striped table-success table-hover align-middle table-bordered border-primary">
+        <BookingTable data={booking} guests={guests} type='Guests' OnClick={OnClick}/>
+        {/* <table className="table table-sm table-responsive table-striped table-success table-hover align-middle table-bordered border-primary">
           <thead className="text-center align-middle">
             <tr>
               <th>Id</th>
@@ -222,7 +224,7 @@ const BookingDetails = () => {
           </> : <></>}
           </tr>)}
           </tbody>
-        </table>
+        </table> */}
         </div>
     </>
   );
