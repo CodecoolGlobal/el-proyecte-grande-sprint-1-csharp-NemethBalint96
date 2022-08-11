@@ -13,19 +13,19 @@ function configurePage(data, type) {
   if(type==='Booking'){
   data.map(booking => delete booking["guests"]);
   data.map(booking => delete booking["room"]);
-  data.map(booking => booking["status"]= booking['status']!==0?"Cancelled":'Confirmed');
+  data.map(booking => booking["status"]= booking['status']===0?'Confirmed':booking['status']==='Confirmed'?'Confirmed':'Cancelled');
   data.map(booking =>booking['arrivalDate']= booking['arrivalDate'].slice(0,10));
   data.map(booking =>booking['departureDate']= booking['departureDate'].slice(0,10));
   data.map(booking =>booking['created']= booking['created'].slice(0,10));
   data.map(booking =>booking['modificationDate']= booking['modificationDate'].slice(0,10));
   }
   if(type==='Guests'){
-    guests.map(guest => guest["age"] = guest["age"] === 0 ? "Adult" :guest["age"]=== 1 ? "Child" :"Infant");
+    guests.map(guest => guest["age"] = guest["age"] === 0 ? "Adult" :guest["age"]=== 1 ? "Child" :guest["age"]==='Adult'?'Adult':guest['age']==='Child'?'Child':'Infant');
     guests.map(guest =>guest['birthDate']=guest['birthDate'].slice(0,10));
     guests.map(guest=>delete guest['comment']);
   }
   if (type !== 'Booking'&& type!=='Guests') {
-    data.map(guest => guest["age"] = guest["age"] === 0 ? "Adult" :guest["age"]=== 1 ? "Child" :"Infant");
+    data.map(guest => guest["age"] =  guest["age"] === 0 ? "Adult" :guest["age"]=== 1 ? "Child" :guest["age"]==='Adult'?'Adult':guest['age']==='Child'?'Child':'Infant');
     data.map(guest =>guest['birthDate']=guest['birthDate'].slice(0,10));
     data.map(guest=>delete guest['comment']);
   }
