@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { useParams,useNavigate } from "react-router-dom";
-import { getApi } from "../Clients/requests";
+import { useParams, useNavigate } from "react-router-dom";
+import { getApi, putApi } from "../Clients/requests";
 
 const SelectRoom = () => {
     const navigate = useNavigate();
@@ -20,7 +20,7 @@ const SelectRoom = () => {
 
 function onClick(e){
 e.preventDefault();
-getApi(urlGet+"/"+roomId+"/"+id);
+putApi(urlGet+"/"+roomId+"/"+id,null);
 navigate(`/booking/${id}`);
 
 }
