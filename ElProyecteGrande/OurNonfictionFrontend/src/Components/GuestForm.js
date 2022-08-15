@@ -14,27 +14,27 @@ const GuestForm = () => {
   const [country, setCountry] = useState("");
   const [city, setCity] = useState("");
   const [address, setAddress] = useState("");
-  const [postalCode, setPostalCode] = useState("");
+  const [postalCode, setPostalCode] = useState(0);
   const [citizenship, setCitizenship] = useState("");
   const [age, setAge] = useState(0);
   const [comment, setComment] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
-    getApi(url).then(data => {
-      setGuest(data);
-      setName(data.fullName);
-      setBirthPlace(data.birthPlace === null ? '' : data.birthPlace);
-      setBirthDate(data.birthDate.slice(0, 10) === '0001-01-01' ? "" : data.birthDate.slice(0, 10));
-      setEmail(data.email === null ? '' : data.email);
-      setPhone(data.phone === null ? '' : data.phone);
-      setCountry(data.country === null ? '' : data.country);
-      setCity(data.city === null ? '' : data.city);
-      setAddress(data.address === null ? '' : data.address);
-      setPostalCode(data.postalCode);
-      setCitizenship(data.citizenship === null ? '' : data.citizenship);
-      setAge(data.age);
-      setComment(data.comment === null ? '' : data.comment);
+      getApi(url).then(data => {
+          setGuest(data.result);
+      setName(data.result.fullName);
+        setBirthPlace(data.result.birthPlace === null ? '' : data.result.birthPlace);
+        setBirthDate(data.result.birthDate.slice(0, 10) === '0001-01-01' ? "" : data.result.birthDate === undefined?"": data.result.birthDate.slice(0, 10));
+      setEmail(data.result.email === null ? '' : data.result.email);
+      setPhone(data.result.phone === null ? '' : data.result.phone);
+      setCountry(data.result.country === null ? '' : data.result.country);
+      setCity(data.result.city === null ? '' : data.result.city);
+      setAddress(data.result.address === null ? '' : data.result.address);
+      setPostalCode(data.result.postalCode);
+      setCitizenship(data.result.citizenship === null ? '' : data.result.citizenship);
+      setAge(data.result.age);
+      setComment(data.result.comment === null ? '' : data.result.comment);
     });
   }, [url]);
 

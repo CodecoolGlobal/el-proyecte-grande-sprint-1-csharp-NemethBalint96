@@ -3,6 +3,6 @@
 namespace OurNonfictionBackend.Dal;
 public interface IBookingDetailsService
 {
-    IEnumerable<Room> FilterRoomsByBookingDate(int bookingId);
-    bool AddRoomToBooking(int roomId, int bookingId);
+    Task<List<Room>> FilterRoomsByBookingDate(long bookingId);
+    Task AddRoomToBooking(long roomId, long bookingId);
 }

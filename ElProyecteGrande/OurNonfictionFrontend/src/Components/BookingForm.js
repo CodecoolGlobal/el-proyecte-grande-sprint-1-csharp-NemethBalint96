@@ -57,7 +57,8 @@ const BookingForm = () => {
         navigate(`/available/${data.id}`);
       })
     } else {
-      body.id = parseInt(bookingId);
+        //body.bookingId = parseInt(bookingId);
+        console.log(body);
       putApi(`/bookingapi/${bookingId}`, body).then((response) => {
         if(response.status === 204) {
           navigate(`/booking/${bookingId}`)

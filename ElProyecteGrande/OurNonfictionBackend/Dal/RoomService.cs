@@ -1,4 +1,5 @@
 ﻿using ElProyecteGrande.Models;
+using OurNonfictionBackend.Dal.Repositories;
 
 namespace ElProyecteGrande.Dal;
 public class RoomService : IRoomService
@@ -15,13 +16,13 @@ public class RoomService : IRoomService
         _roomRepository.Add(room);
     }
 
-    public IEnumerable<Room> GetAll()
+    public Task<List<Room>> GetAll()
     {
         return _roomRepository.GetAll();
     }
 
-    public Room? Get(int roomId)
+    public async Task<Room>? Get(int roomId)
     {
-        return _roomRepository.Get(roomId);
+        return await _roomRepository.Get(roomId);
     }
 }

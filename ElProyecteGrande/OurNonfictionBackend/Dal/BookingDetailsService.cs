@@ -1,5 +1,5 @@
-﻿using ElProyecteGrande.Dal;
-using ElProyecteGrande.Models;
+﻿using ElProyecteGrande.Models;
+using OurNonfictionBackend.Dal.Repositories;
 
 namespace OurNonfictionBackend.Dal;
 public class BookingDetailsService : IBookingDetailsService
@@ -13,45 +13,21 @@ public class BookingDetailsService : IBookingDetailsService
         _roomRepository = roomRepository;
     }
 
-    public IEnumerable<Room> FilterRoomsByBookingDate(int bookingId)
+    public async Task<List<Room>> FilterRoomsByBookingDate(long bookingId)
     {
-        var booking = _bookingRepository.Get(bookingId);
-        var notCancelledBookings = _bookingRepository.GetAll().Where(b => b.Status != Status.Cancelled);
-        var available = _roomRepository.GetAll().ToList();
-        foreach (var room in _roomRepository.GetAll())
-        {
-            foreach (var reservation in notCancelledBookings)
-            {
-                if (reservation.Room?.Id == room.Id &&
-                    (reservation.ArrivalDate.Date < booking.DepartureDate.Date ||
-                     reservation.ArrivalDate.Date <= booking.ArrivalDate.Date) &&
-                    (reservation.DepartureDate.Date > booking.ArrivalDate.Date ||
-                     reservation.DepartureDate.Date >= booking.DepartureDate.Date))
-                {
-                    available.Remove(room);
-                }
-            }
-        }
-        return available;
+
+         return await _roomRepository.FilterRoomsByBookingDate(bookingId);
     }
 
-    public bool AddRoomToBooking(int roomId, int bookingId)
-    {
-        var booking = _bookingRepository.Get(bookingId);
-        var room = _roomRepository.Get(roomId);
-        if ((booking is null) || (room is null))
-            return false;
 
-        if (booking.Room == null)
-        {
-            booking.Room = new Room();
-        }
-        booking.Room.Id = room.Id;
-        booking.Room.Floor = room.Floor;
-        booking.Room.DoorNumber = room.DoorNumber;
-        booking.Room.RoomType = room.RoomType;
-        booking.Room.Price = room.Price;
-        booking.Room.Comment = room.Comment;
-        return true;
+    public IEnumerable<Room> FilterRoomsByBookingDate(int bookingId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task AddRoomToBooking(long roomId, long bookingId)
+    {
+
+        await _bookingRepository.AddRoomToBooking(roomId, bookingId);
     }
 }

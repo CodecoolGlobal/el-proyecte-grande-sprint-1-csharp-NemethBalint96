@@ -17,24 +17,20 @@ public class RoomApiController : ControllerBase
     }
 
     [HttpGet]
-    public ActionResult<IEnumerable<Room>> GetAll()
+    public async Task<List<Room>> GetAll()
     {
-        return Ok(_roomService.GetAll());
+        return await  _roomService.GetAll();
     }
 
     [HttpGet("available/{bookingId}")]
-    public ActionResult<IEnumerable<Room>> GetAvailableRooms(int bookingId)
+    public async Task<List<Room>> GetAvailableRooms(long bookingId)
     {
-        return Ok(_bookingDetailsServiceService.FilterRoomsByBookingDate(bookingId));
+        return await _bookingDetailsServiceService.FilterRoomsByBookingDate(bookingId);
     }
 
     [HttpGet("{roomId}/{bookingId}")]
-    public ActionResult AddRoomToBooking(int roomId, int bookingId)
+    public async Task AddRoomToBooking(long roomId, long bookingId)
     {
-        var isAdded = _bookingDetailsServiceService.AddRoomToBooking(roomId, bookingId);
-        if (isAdded)
-            return Ok(isAdded);
-
-        return NotFound();
+        await _bookingDetailsServiceService.AddRoomToBooking(roomId, bookingId);
     }
 }

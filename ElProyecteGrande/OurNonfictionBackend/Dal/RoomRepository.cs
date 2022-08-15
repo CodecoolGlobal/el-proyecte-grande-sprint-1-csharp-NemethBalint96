@@ -1,80 +1,118 @@
 ﻿using ElProyecteGrande.Models;
+using Microsoft.EntityFrameworkCore;
+using OurNonfictionBackend.Dal.Repositories;
+using OurNonfictionBackend.Models;
 
 namespace ElProyecteGrande.Dal;
 public class RoomRepository : IRepository<Room>
 {
-    private readonly List<Room> _rooms;
+    private NonfictionContext _context;
 
-    public RoomRepository()
+    public RoomRepository(NonfictionContext context)
     {
-        _rooms = new List<Room>();
-        Initialize();
+        _context = context;
     }
 
-    private void Initialize()
+
+    public async Task<List<Room>> GetAll()
     {
-        for (var i = 1; i < 6; i++)
-        {
-            var room = new Room
-            {
-                DoorNumber = i,
-                Floor = 1,
-                RoomType = RoomType.Standard,
-                Price = 80
-            };
-            _rooms.Add(room);
-        }
-        for (var i = 1; i < 6; i++)
-        {
-            var room = new Room
-            {
-                DoorNumber = i,
-                Floor = 2,
-                RoomType = RoomType.Superior,
-                Price = 100
-            };
-            _rooms.Add(room);
-        }
-        for (var i = 1; i < 6; i++)
-        {
-            var room = new Room
-            {
-                DoorNumber = i,
-                Floor = 3,
-                RoomType = RoomType.Apartman,
-                Price = 150
-            };
-            _rooms.Add(room);
-        }
+        return await  _context.Rooms.ToListAsync();
     }
 
-    public IEnumerable<Room> GetAll()
+    public async Task<Room>? Get(long roomId)
     {
-        return _rooms;
+        return _context.Rooms.First(room => room.Id == roomId);
     }
 
-    public Room? Get(int bookingId)
+    public async Task Add(Room room)
     {
-        return _rooms.FirstOrDefault(room => room.Id == bookingId);
+       await  _context.Rooms.AddAsync(room);
+       await _context.SaveChangesAsync();
     }
 
-    public void Add(Room room)
+    public async Task Delete(long roomId)
     {
-        _rooms.Add(room);
-    }
-
-    public bool Delete(int bookingId)
-    {
-        var room = Get(bookingId);
+        var room = _context.Rooms.First(r=>r.Id==roomId);
         if (room != null)
-            return _rooms.Remove(room);
-        return false;
+            _context.Rooms.Remove(room);
+        await _context.SaveChangesAsync();
     }
 
-    public void Update(Room room)
+    public Task Update(Room item, long bookingId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task Update(Room room)
     {
         var isDeleted = Delete(room.Id);
-        if (isDeleted)
-            Add(room);
+        await Add(room);
+    }
+
+    public Task SetStatusCancelled(long bookingId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task DeleteGuestsFromBooking(long guestId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<Guest> GetGuest(long guestId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task EditGuest(Guest newGuest)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task AddNewGuestToBooking(long bookingId, Guest guest)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<IEnumerable<Guest>> GetAllNamedGuest()
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task AddRoomToBooking(long roomId, long bookingId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<List<Room>> FilterRoomsByBookingDate(long bookingId)
+    {
+        var booking = _context.Bookings.First(b=>b.Id==bookingId);
+        var notCancelledBookings = _context.Bookings.Where(x => x.Status != Status.Cancelled);
+        var available = _context.Rooms;
+        foreach (var room in available)
+        {
+            foreach (var reservation in notCancelledBookings)
+            {
+                if (reservation.Room?.Id == room.Id &&
+                    (reservation.ArrivalDate.Date < booking.DepartureDate.Date ||
+                     reservation.ArrivalDate.Date <= booking.ArrivalDate.Date) &&
+                    (reservation.DepartureDate.Date > booking.ArrivalDate.Date ||
+                     reservation.DepartureDate.Date >= booking.DepartureDate.Date))
+                {
+                    available.Remove(room);
+                }
+            }
+        }
+        return available.ToListAsync();
+    }
+
+    public Task<Booking> GetLatestBooking()
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<Guest> GetLatestGuest()
+    {
+        throw new NotImplementedException();
     }
 }

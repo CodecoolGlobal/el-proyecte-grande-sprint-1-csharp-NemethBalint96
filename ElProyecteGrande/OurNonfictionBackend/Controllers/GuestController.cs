@@ -14,10 +14,10 @@ public class GuestApiController : ControllerBase
     }
 
     [HttpGet]
-    public ActionResult<IEnumerable<Guest>> GetAllNamedGuests()
+    public Task<IEnumerable<Guest>> GetAllNamedGuests()
     {
         var guests = _bookingService.GetAllNamedGuests();
-        return Ok(guests);
+        return guests;
     }
 
     [HttpGet("{guestId}")]
@@ -31,26 +31,14 @@ public class GuestApiController : ControllerBase
     }
 
     [HttpDelete("{guestId}")]
-    public ActionResult DeleteGuestFromBooking(int guestId)
+    public async Task DeleteGuestFromBooking(int guestId)
     {
-        var isDeleted = _bookingService.DeleteGuestFromBooking(guestId);
-        if (isDeleted)
-            return NoContent();
-
-        return NotFound();
+        await _bookingService.DeleteGuestFromBooking(guestId);
     }
 
     [HttpPut("{guestId}")]
-    public ActionResult EditGuest(int guestId, Guest guest)
+    public async Task EditGuest(int guestId, Guest guest)
     {
-        if (guestId != guest.Id)
-            return BadRequest();
-
-        var existingGuest = _bookingService.GetGuest(guestId);
-        if (existingGuest is null)
-            return NotFound();
-
-        _bookingService.EditGuest(guest);
-        return NoContent();
+        await _bookingService.EditGuest(guest);
     }
 }

@@ -1,53 +1,174 @@
 ﻿using ElProyecteGrande.Models;
-using Newtonsoft.Json;
+using Microsoft.EntityFrameworkCore;
+using OurNonfictionBackend.Dal.Repositories;
+using OurNonfictionBackend.Models;
 
 namespace ElProyecteGrande.Dal;
 public class BookingRepository : IRepository<Booking>
 {
-    private  List<Booking> _bookings;
-    public BookingRepository()
+    private NonfictionContext _context;
+    public BookingRepository(NonfictionContext context)
     {
-        _bookings = new List<Booking>();
-        CreateBookings();
+        _context = context;
     }
 
-    private void CreateBookings()
+
+    public async Task<List<Booking>>GetAll()
     {
-        string json = File.ReadAllText(@"Data\newBooking.json");
-        List<Booking> bookings = JsonConvert.DeserializeObject<List<Booking>>(json);
-        foreach (var booking in bookings)
-        { 
-            _bookings.Add(booking);
+        return await _context.Bookings.Include(x=>x.Guests).Include(booking=>booking.Room).AsNoTracking().ToListAsync();
+    }
+
+    public async  Task<Booking>? Get(long bookingId)
+    {
+        return await _context.Bookings.Include(x=>x.Guests).Include(x=>x.Room).FirstAsync(booking => booking.Id == bookingId);
+    }
+
+    public async Task Add(Booking booking)
+    {
+        CreateGuests(booking.Adults, booking.Children, booking.Infants, booking.Guests);
+        await _context.Bookings.AddAsync(booking);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task Delete(long bookingId)
+    {
+        var booking = await  Get(bookingId);
+        if (booking != null)
+            _context.Bookings.Remove(booking);
+        await _context.SaveChangesAsync();
+
+    }
+
+    public async Task Update(Booking booking, long bookingId)
+    {
+        var oldBooking =  _context.Bookings.First(b=>b.Id==bookingId);
+        _context.ChangeTracker.Clear();
+        booking.Room = oldBooking.Room;
+        booking.Guests.AddRange(oldBooking.Guests);
+        CreatePlusGuests(oldBooking, booking);
+        booking.ModificationDate = DateTime.Now;
+        oldBooking = booking;
+        oldBooking.Id = bookingId;
+        _context.Bookings.Update(oldBooking);
+        await _context.SaveChangesAsync();
+    }
+
+    private void CreatePlusGuests(Booking booking, Booking? editableBooking)
+    {
+        var adultsNumber = editableBooking.Adults - booking.Adults;
+        var childrenNumber = editableBooking.Children - booking.Children;
+        var infantsNumber = editableBooking.Infants - booking.Infants;
+        CreateGuests(adultsNumber, childrenNumber,
+            infantsNumber, editableBooking.Guests);
+    }
+
+    private void CreateGuests(int adults, int children, int infants, ICollection<Guest> guests)
+    {
+        for (var i = 0; i < adults; i++)
+        {
+            var adult = new Guest(Age.Adult);
+            guests.Add(adult);
+        }
+        for (var i = 0; i < children; i++)
+        {
+            var child = new Guest(Age.Child);
+            guests.Add(child);
+        }
+        for (var i = 0; i < infants; i++)
+        {
+            var infant = new Guest(Age.Infant);
+            guests.Add(infant);
         }
     }
 
-    public IEnumerable<Booking> GetAll()
+    public async Task SetStatusCancelled(long bookingId)
     {
-        return _bookings;
+        var booking = await Get(bookingId);
+        booking.Status = Status.Cancelled;
+        _context.Update(booking);
+        await _context.SaveChangesAsync();
     }
 
-    public Booking? Get(int bookingId)
+    public async Task DeleteGuestsFromBooking(long guestId)
     {
-        return _bookings.FirstOrDefault(booking => booking.Id == bookingId);
+        var booking = _context.Bookings.First(booking => booking.Guests.Any(guest => guest.Id == guestId));
+        var guest = _context.Guests.First(guest => guest.Id == guestId);
+        DecreaseGuestNumber(booking,guest.Age);
+        _context.Guests.Remove(guest);
+        await _context.SaveChangesAsync();
     }
 
-    public void Add(Booking booking)
+    public async Task<Guest> GetGuest(long guestId)
     {
-        _bookings.Add(booking);
+        return _context.Guests.First(g=>g.Id==guestId);
     }
 
-    public bool Delete(int bookingId)
+    public async Task EditGuest(Guest newGuest)
     {
-        var booking = Get(bookingId);
-        if (booking != null)
-            return _bookings.Remove(booking);
-        return false;
+        _context.Guests.Update(newGuest);
+        await _context.SaveChangesAsync();
     }
 
-    public void Update(Booking booking)
+    public async Task AddNewGuestToBooking(long bookingId, Guest guest)
     {
-        var isDeleted = Delete(booking.Id);
-        if (isDeleted)
-            Add(booking);
+        var booking = _context.Bookings.First(b=>b.Id==bookingId);
+        switch (guest.Age)
+        {
+            case Age.Adult:
+                booking.Adults++;
+                break;
+            case Age.Child:
+                booking.Children++;
+                break;
+            case Age.Infant:
+                booking.Infants++;
+                break;
+        }
+        booking.Guests.Add(guest);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task<IEnumerable<Guest>> GetAllNamedGuest()
+    {
+        return await _context.Guests.Where(guest=>guest.FullName!="Accompanying Guest").ToListAsync();
+    }
+
+    public async Task AddRoomToBooking(long roomId, long bookingId)
+    {
+        var booking = _context.Bookings.First(b => b.Id == bookingId);
+        booking.Room = _context.Rooms.First(r => r.Id == roomId);
+        _context.Bookings.Update(booking);
+        await _context.SaveChangesAsync();
+    }
+
+    public Task<List<Room>> FilterRoomsByBookingDate(long bookingId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<Booking> GetLatestBooking()
+    {
+        return  _context.Bookings.OrderByDescending(b => b.Id).First();
+    }
+
+    public async Task<Guest> GetLatestGuest()
+    {
+        return _context.Guests.OrderByDescending(g => g.Id).First();
+    }
+
+    private void DecreaseGuestNumber(Booking booking, Age age)
+    {
+        switch (age)
+        {
+            case Age.Adult:
+                booking.Adults--;
+                break;
+            case Age.Child:
+                booking.Children--;
+                break;
+            case Age.Infant:
+                booking.Infants--;
+                break;
+        }
     }
 }
