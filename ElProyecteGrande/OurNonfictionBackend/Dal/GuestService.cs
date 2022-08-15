@@ -44,7 +44,44 @@ public class GuestService : IGuestService
 
     public async Task EditGuest(Guest newGuest)
     {
+        //var bookings = await _context.Bookings.Include(b => b.Guests).ToListAsync();
+        //var booking = bookings.First(b => b.Guests.Any(g => g.Id == newGuest.Id));
+        //var guest = booking.Guests.First(g => g.Id == newGuest.Id);
+        //switch (guest.Age)
+        //{
+        //    case Age.Adult:
+        //        booking.Adults--;
+        //        break;
+        //    case Age.Child:
+        //        booking.Children--;
+        //        break;
+        //    case Age.Infant:
+        //        booking.Infants--;
+        //        break;
+        //}
+        //switch (newGuest.Age)
+        //{
+        //    case Age.Adult:
+        //        booking.Adults++;
+        //        break;
+        //    case Age.Child:
+        //        booking.Children++;
+        //        break;
+        //    case Age.Infant:
+        //        booking.Infants++;
+        //        break;
+        //}
+
         _context.Guests.Update(newGuest);
+        _context.SaveChanges();
+
+        var bookings = await _context.Bookings.Include(b => b.Guests).ToListAsync();
+        var booking = bookings.First(b => b.Guests.Any(g => g.Id == newGuest.Id));
+        booking.Adults = booking.Guests.Count(g => g.Age == Age.Adult);
+        booking.Children = booking.Guests.Count(g => g.Age == Age.Child);
+        booking.Infants = booking.Guests.Count(g => g.Age == Age.Infant);
+
+        _context.Bookings.Update(booking);
         await _context.SaveChangesAsync();
     }
 

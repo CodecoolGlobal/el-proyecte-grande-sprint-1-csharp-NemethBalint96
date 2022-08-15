@@ -22,13 +22,10 @@ public class GuestApiController : ControllerBase
     }
 
     [HttpGet("{guestId}")]
-    public ActionResult GetGuest(int guestId)
+    public async Task<Guest> GetGuest(int guestId)
     {
-        var guest = _guestService.GetGuest(guestId);
-        if (guest is null)
-            return NotFound();
-
-        return Ok(guest);
+        var guest = await _guestService.GetGuest(guestId);
+        return guest;
     }
 
     [HttpDelete("{guestId}")]

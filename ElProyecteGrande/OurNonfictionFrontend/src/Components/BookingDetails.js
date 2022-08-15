@@ -101,8 +101,8 @@ const BookingDetails = () => {
             <button className="btn btn-primary" id='roomSelectButton' onClick={selectRoom}>Select Room</button>
             <div className='row' id='roomSelect' style={{display:'none'}}>
             <div className='col-md-7'>
-                              <select className='form-select' onChange={(e)=>setRoomId(parseInt(e.target.value))}>
-                                  {rooms.map(room => <option value={room.id} selected={room.id === roomId ? true : false } key={room.id}>Floor:{room.floor} Door:{room.doorNumber} {room.roomType===1?"Apartman":room.roomType===2?"Standard":room.roomType===3?"Superior":""}</option>)}
+                <select className='form-select' onChange={(e)=>setRoomId(parseInt(e.target.value))}>
+                    {rooms.map(room => <option value={room.id} selected={room.id === roomId ? true : false } key={room.id}>Floor:{room.floor} Door:{room.doorNumber} {room.roomType===1?"Apartman":room.roomType===2?"Standard":room.roomType===3?"Superior":""}</option>)}
               </select>
               </div>
               <div className='col'>
