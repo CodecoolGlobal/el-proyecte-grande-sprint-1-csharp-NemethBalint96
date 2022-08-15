@@ -20,9 +20,9 @@ public class BookingApiController : ControllerBase
     }
 
     [HttpGet("{bookingId}")]
-    public Task<Booking> GetBooking(int bookingId)
+    public async Task<Booking> GetBooking(int bookingId)
     {
-        var booking = _bookingService.Get(bookingId);
+        var booking = await _bookingService.Get(bookingId);
         return booking;
     }
 
@@ -31,7 +31,6 @@ public class BookingApiController : ControllerBase
     {
         await _bookingService.Add(booking);
         return await _bookingService.GetLatestBooking();
-
     }
 
     [HttpPut("{bookingId}")]
@@ -44,13 +43,5 @@ public class BookingApiController : ControllerBase
     public async Task SetStatusToCancelled(long bookingId)
     {
         await _bookingService.SetStatusCancelled(bookingId);
-    }
-    
-    [HttpPost("{bookingId}/addnew")]
-    public async Task<Guest> AddNewGuestToBooking(int bookingId, Guest guest)
-    {
-        await _bookingService.AddNewGuestToBooking(bookingId, guest);
-        return await _bookingService.GetLatestGuest();
-
     }
 }

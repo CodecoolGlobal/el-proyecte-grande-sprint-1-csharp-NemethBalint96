@@ -60,7 +60,7 @@ const BookingForm = () => {
         //body.bookingId = parseInt(bookingId);
         console.log(body);
       putApi(`/bookingapi/${bookingId}`, body).then((response) => {
-        if(response.status === 204) {
+        if(response.status === 200) {
           navigate(`/booking/${bookingId}`)
         }
       });

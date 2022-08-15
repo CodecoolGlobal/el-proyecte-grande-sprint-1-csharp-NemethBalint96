@@ -8,12 +8,10 @@ namespace OurNonfictionBackend.Controllers;
 public class RoomApiController : ControllerBase
 {
     private readonly IRoomService _roomService;
-    private readonly IBookingDetailsService _bookingDetailsServiceService;
 
-    public RoomApiController(IRoomService roomService, IBookingDetailsService bookingDetailsServiceService)
+    public RoomApiController(IRoomService roomService)
     {
         _roomService = roomService;
-        _bookingDetailsServiceService = bookingDetailsServiceService;
     }
 
     [HttpGet]
@@ -25,12 +23,12 @@ public class RoomApiController : ControllerBase
     [HttpGet("available/{bookingId}")]
     public async Task<List<Room>> GetAvailableRooms(long bookingId)
     {
-        return await _bookingDetailsServiceService.FilterRoomsByBookingDate(bookingId);
+        return await _roomService.FilterRoomsByBookingDate(bookingId);
     }
 
-    [HttpGet("{roomId}/{bookingId}")]
+    [HttpPut("{roomId}/{bookingId}")]
     public async Task AddRoomToBooking(long roomId, long bookingId)
     {
-        await _bookingDetailsServiceService.AddRoomToBooking(roomId, bookingId);
+        await _roomService.AddRoomToBooking(roomId, bookingId);
     }
 }

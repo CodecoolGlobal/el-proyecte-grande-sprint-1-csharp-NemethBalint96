@@ -1,29 +1,30 @@
 ﻿using ElProyecteGrande.Dal;
 using ElProyecteGrande.Models;
 using Microsoft.AspNetCore.Mvc;
+using OurNonfictionBackend.Dal;
 
 namespace OurNonfictionBackend.Controllers;
 [ApiController, Route("[controller]")]
 public class GuestApiController : ControllerBase
 {
-    private readonly IBookingService _bookingService;
+    private readonly IGuestService _guestService;
 
-    public GuestApiController(IBookingService bookingService)
+    public GuestApiController(IGuestService guestService)
     {
-        _bookingService = bookingService;
+        _guestService = guestService;
     }
 
     [HttpGet]
     public Task<IEnumerable<Guest>> GetAllNamedGuests()
     {
-        var guests = _bookingService.GetAllNamedGuests();
+        var guests = _guestService.GetAllNamedGuests();
         return guests;
     }
 
     [HttpGet("{guestId}")]
     public ActionResult GetGuest(int guestId)
     {
-        var guest = _bookingService.GetGuest(guestId);
+        var guest = _guestService.GetGuest(guestId);
         if (guest is null)
             return NotFound();
 
@@ -33,12 +34,19 @@ public class GuestApiController : ControllerBase
     [HttpDelete("{guestId}")]
     public async Task DeleteGuestFromBooking(int guestId)
     {
-        await _bookingService.DeleteGuestFromBooking(guestId);
+        await _guestService.DeleteGuestFromBooking(guestId);
     }
 
     [HttpPut("{guestId}")]
     public async Task EditGuest(int guestId, Guest guest)
     {
-        await _bookingService.EditGuest(guest);
+        await _guestService.EditGuest(guest);
+    }
+
+    [HttpPost("{bookingId}/addnew")]
+    public async Task<Guest> AddNewGuestToBooking(int bookingId, Guest guest)
+    {
+        await _guestService.AddNewGuestToBooking(bookingId, guest);
+        return await _guestService.GetLatestGuest();
     }
 }

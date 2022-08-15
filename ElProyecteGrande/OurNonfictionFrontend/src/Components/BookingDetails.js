@@ -1,6 +1,6 @@
 import { Link, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { deleteApi, getApi, postApi } from '../Clients/requests';
+import { deleteApi, getApi, postApi, putApi } from '../Clients/requests';
 import BookingTable from './Table';
 
 const BookingDetails = () => {
@@ -49,7 +49,7 @@ const BookingDetails = () => {
       "age":parseInt(newGuestAge),
       "comment":'',
     }
-    postApi(`/bookingapi/${params.bookingId}/addnew`, body).then(() => {getApi(url).then(data => {
+    postApi(`/guestapi/${params.bookingId}/addnew`, body).then(() => {getApi(url).then(data => {
       setBooking(data);
       setGuests(data.guests);
     })})
@@ -70,17 +70,20 @@ const BookingDetails = () => {
 
   function onSubmit(e) {
     e.preventDefault();
-    getApi(`/roomapi/${roomId}/${params.bookingId}`);
-    const element = document.getElementById('roomSelect');
-    element.style.display='none';
-    const button = document.getElementById('roomSelectButton');
-    button.style.display='';
-    const newRoom = rooms.filter((room) =>room.id === roomId);
-    setRoom(newRoom[0]);
-    getApi(`/roomapi/available/${params.bookingId}`).then(data => {
-      setRooms(data);
-      setRoomId(data[0].id);
-    });
+      putApi(`/roomapi/${roomId}/${params.bookingId}`, null).then((response) => {
+          if (response.status === 200) {
+              const element = document.getElementById('roomSelect');
+              element.style.display = 'none';
+              const button = document.getElementById('roomSelectButton');
+              button.style.display = '';
+              const newRoom = rooms.filter((room) => room.id === roomId);
+              setRoom(newRoom[0]);
+              getApi(`/roomapi/available/${params.bookingId}`).then(data => {
+                  setRooms(data);
+                  setRoomId(data[0].id);
+              });
+          }
+      });
   }
 
   return (
@@ -98,8 +101,8 @@ const BookingDetails = () => {
             <button className="btn btn-primary" id='roomSelectButton' onClick={selectRoom}>Select Room</button>
             <div className='row' id='roomSelect' style={{display:'none'}}>
             <div className='col-md-7'>
-              <select className='form-select' onChange={(e)=>setRoomId(parseInt(e.target.value))}>
-                {rooms.map(room=><option value={room.id} key={room.id}>Floor:{room.floor} Door:{room.doorNumber} {room.roomType===1?"Apartman":room.roomType===2?"Standard":room.roomType===3?"Superior":""}</option>)}
+                              <select className='form-select' onChange={(e)=>setRoomId(parseInt(e.target.value))}>
+                                  {rooms.map(room => <option value={room.id} selected={room.id === roomId ? true : false } key={room.id}>Floor:{room.floor} Door:{room.doorNumber} {room.roomType===1?"Apartman":room.roomType===2?"Standard":room.roomType===3?"Superior":""}</option>)}
               </select>
               </div>
               <div className='col'>
