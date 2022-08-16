@@ -1,10 +1,7 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ElProyecteGrande.Models;
 
-[JsonConverter(typeof(StringEnumConverter))]
 public enum RoomType
 {
     Apartman = 1,
