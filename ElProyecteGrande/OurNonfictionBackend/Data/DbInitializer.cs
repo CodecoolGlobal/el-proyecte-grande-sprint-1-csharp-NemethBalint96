@@ -16,14 +16,14 @@ namespace OurNonfictionBackend.Data
 
         public static void Initialize(NonfictionContext context)
         {
-            if (context.Rooms.Any()&&context.Bookings.Any()&&context.Guests.Any())
+            if (context.Rooms.Any() && context.Bookings.Any() && context.Guests.Any())
             {
                 return; //DB has been seeded
             }
-            
+
             CreateBookings(context);
-            
-            
+
+
 
         }
     }

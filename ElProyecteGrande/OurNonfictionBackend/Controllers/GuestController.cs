@@ -1,5 +1,4 @@
-﻿using ElProyecteGrande.Dal;
-using ElProyecteGrande.Models;
+﻿using ElProyecteGrande.Models;
 using Microsoft.AspNetCore.Mvc;
 using OurNonfictionBackend.Dal;
 

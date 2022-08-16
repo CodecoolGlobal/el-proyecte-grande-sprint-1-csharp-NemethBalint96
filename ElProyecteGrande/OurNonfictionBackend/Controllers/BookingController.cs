@@ -34,9 +34,9 @@ public class BookingApiController : ControllerBase
     }
 
     [HttpPut("{bookingId}")]
-    public async Task EditBooking(Booking booking,long bookingId)
+    public async Task EditBooking(Booking booking, long bookingId)
     {
-        await _bookingService.Update(booking,bookingId);
+        await _bookingService.Update(booking, bookingId);
     }
 
     [HttpDelete("{bookingId}")]

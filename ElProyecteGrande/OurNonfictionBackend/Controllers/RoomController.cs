@@ -1,7 +1,6 @@
 ﻿using ElProyecteGrande.Dal;
 using ElProyecteGrande.Models;
 using Microsoft.AspNetCore.Mvc;
-using OurNonfictionBackend.Dal;
 
 namespace OurNonfictionBackend.Controllers;
 [ApiController, Route("[controller]")]
@@ -17,7 +16,7 @@ public class RoomApiController : ControllerBase
     [HttpGet]
     public async Task<List<Room>> GetAll()
     {
-        return await  _roomService.GetAll();
+        return await _roomService.GetAll();
     }
 
     [HttpGet("available/{bookingId}")]

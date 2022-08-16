@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ElProyecteGrande.Models;
 public enum Status
@@ -11,7 +9,7 @@ public enum Status
 [System.Serializable]
 public class Booking
 {
-    
+
 
     public Booking()
     {
