@@ -1,20 +1,22 @@
 using ElProyecteGrande.Dal;
-using ElProyecteGrande.Models;
+using Microsoft.EntityFrameworkCore;
 using OurNonfictionBackend.Dal;
+using OurNonfictionBackend.Data;
+using OurNonfictionBackend.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+builder.Services.AddDbContext<NonfictionContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddSingleton<IRepository<Room>>(new RoomRepository());
-builder.Services.AddSingleton<IRepository<Booking>>(x => new BookingRepository());
-builder.Services.AddSingleton<IBookingDetailsService>(x => new BookingDetailsService(x.GetRequiredService<IRepository<Booking>>(), x.GetRequiredService<IRepository<Room>>()));
-builder.Services.AddSingleton<IBookingService>(x => new BookingService(x.GetRequiredService<IRepository<Booking>>()));
-builder.Services.AddSingleton<IRoomService>(x => new RoomService(x.GetRequiredService<IRepository<Room>>()));
+builder.Services.AddScoped<IGuestService, GuestService>();
+builder.Services.AddScoped<IBookingService, BookingService>();
+builder.Services.AddScoped<IRoomService, RoomService>();
 
 var app = builder.Build();
 
@@ -30,5 +32,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.CreateDbIfNotExists();
 
 app.Run();

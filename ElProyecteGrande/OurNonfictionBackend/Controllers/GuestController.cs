@@ -1,56 +1,48 @@
-﻿using ElProyecteGrande.Dal;
-using ElProyecteGrande.Models;
+﻿using ElProyecteGrande.Models;
 using Microsoft.AspNetCore.Mvc;
+using OurNonfictionBackend.Dal;
 
 namespace OurNonfictionBackend.Controllers;
 [ApiController, Route("[controller]")]
 public class GuestApiController : ControllerBase
 {
-    private readonly IBookingService _bookingService;
+    private readonly IGuestService _guestService;
 
-    public GuestApiController(IBookingService bookingService)
+    public GuestApiController(IGuestService guestService)
     {
-        _bookingService = bookingService;
+        _guestService = guestService;
     }
 
     [HttpGet]
-    public ActionResult<IEnumerable<Guest>> GetAllNamedGuests()
+    public Task<IEnumerable<Guest>> GetAllNamedGuests()
     {
-        var guests = _bookingService.GetAllNamedGuests();
-        return Ok(guests);
+        var guests = _guestService.GetAllNamedGuests();
+        return guests;
     }
 
     [HttpGet("{guestId}")]
-    public ActionResult GetGuest(int guestId)
+    public async Task<Guest> GetGuest(int guestId)
     {
-        var guest = _bookingService.GetGuest(guestId);
-        if (guest is null)
-            return NotFound();
-
-        return Ok(guest);
+        var guest = await _guestService.GetGuest(guestId);
+        return guest;
     }
 
     [HttpDelete("{guestId}")]
-    public ActionResult DeleteGuestFromBooking(int guestId)
+    public async Task DeleteGuestFromBooking(int guestId)
     {
-        var isDeleted = _bookingService.DeleteGuestFromBooking(guestId);
-        if (isDeleted)
-            return NoContent();
-
-        return NotFound();
+        await _guestService.DeleteGuestFromBooking(guestId);
     }
 
     [HttpPut("{guestId}")]
-    public ActionResult EditGuest(int guestId, Guest guest)
+    public async Task EditGuest(int guestId, Guest guest)
     {
-        if (guestId != guest.Id)
-            return BadRequest();
+        await _guestService.EditGuest(guest);
+    }
 
-        var existingGuest = _bookingService.GetGuest(guestId);
-        if (existingGuest is null)
-            return NotFound();
-
-        _bookingService.EditGuest(guest);
-        return NoContent();
+    [HttpPost("{bookingId}/addnew")]
+    public async Task<Guest> AddNewGuestToBooking(int bookingId, Guest guest)
+    {
+        await _guestService.AddNewGuestToBooking(bookingId, guest);
+        return await _guestService.GetLatestGuest();
     }
 }

@@ -3,6 +3,8 @@
 namespace ElProyecteGrande.Dal;
 public interface IRoomService
 {
-    IEnumerable<Room> GetAll();
-    Room? Get(int roomId);
+    Task<List<Room>> GetAll();
+    Task<Room>? Get(long roomId);
+    Task<List<Room>> FilterRoomsByBookingDate(long bookingId);
+    Task AddRoomToBooking(long roomId, long bookingId);
 }

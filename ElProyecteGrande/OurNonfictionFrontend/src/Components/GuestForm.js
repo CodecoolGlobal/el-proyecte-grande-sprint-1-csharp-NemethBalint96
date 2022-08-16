@@ -14,18 +14,18 @@ const GuestForm = () => {
   const [country, setCountry] = useState("");
   const [city, setCity] = useState("");
   const [address, setAddress] = useState("");
-  const [postalCode, setPostalCode] = useState("");
+  const [postalCode, setPostalCode] = useState(0);
   const [citizenship, setCitizenship] = useState("");
   const [age, setAge] = useState(0);
   const [comment, setComment] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
-    getApi(url).then(data => {
-      setGuest(data);
+      getApi(url).then(data => {
+          setGuest(data);
       setName(data.fullName);
-      setBirthPlace(data.birthPlace === null ? '' : data.birthPlace);
-      setBirthDate(data.birthDate.slice(0, 10) === '0001-01-01' ? "" : data.birthDate.slice(0, 10));
+        setBirthPlace(data.birthPlace === null ? '' : data.birthPlace);
+        setBirthDate(data.birthDate.slice(0, 10) === '0001-01-01' ? "" : data.birthDate === undefined?"": data.birthDate.slice(0, 10));
       setEmail(data.email === null ? '' : data.email);
       setPhone(data.phone === null ? '' : data.phone);
       setCountry(data.country === null ? '' : data.country);

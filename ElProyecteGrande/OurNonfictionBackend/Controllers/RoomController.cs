@@ -1,40 +1,33 @@
 ﻿using ElProyecteGrande.Dal;
 using ElProyecteGrande.Models;
 using Microsoft.AspNetCore.Mvc;
-using OurNonfictionBackend.Dal;
 
 namespace OurNonfictionBackend.Controllers;
 [ApiController, Route("[controller]")]
 public class RoomApiController : ControllerBase
 {
     private readonly IRoomService _roomService;
-    private readonly IBookingDetailsService _bookingDetailsServiceService;
 
-    public RoomApiController(IRoomService roomService, IBookingDetailsService bookingDetailsServiceService)
+    public RoomApiController(IRoomService roomService)
     {
         _roomService = roomService;
-        _bookingDetailsServiceService = bookingDetailsServiceService;
     }
 
     [HttpGet]
-    public ActionResult<IEnumerable<Room>> GetAll()
+    public async Task<List<Room>> GetAll()
     {
-        return Ok(_roomService.GetAll());
+        return await _roomService.GetAll();
     }
 
     [HttpGet("available/{bookingId}")]
-    public ActionResult<IEnumerable<Room>> GetAvailableRooms(int bookingId)
+    public async Task<List<Room>> GetAvailableRooms(long bookingId)
     {
-        return Ok(_bookingDetailsServiceService.FilterRoomsByBookingDate(bookingId));
+        return await _roomService.FilterRoomsByBookingDate(bookingId);
     }
 
-    [HttpGet("{roomId}/{bookingId}")]
-    public ActionResult AddRoomToBooking(int roomId, int bookingId)
+    [HttpPut("{roomId}/{bookingId}")]
+    public async Task AddRoomToBooking(long roomId, long bookingId)
     {
-        var isAdded = _bookingDetailsServiceService.AddRoomToBooking(roomId, bookingId);
-        if (isAdded)
-            return Ok(isAdded);
-
-        return NotFound();
+        await _roomService.AddRoomToBooking(roomId, bookingId);
     }
 }

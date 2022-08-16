@@ -14,57 +14,34 @@ public class BookingApiController : ControllerBase
     }
 
     [HttpGet]
-    public ActionResult<IEnumerable<Booking>> GetAll()
+    public async Task<List<Booking>> GetAll()
     {
-        return Ok(_bookingService.GetAll());
+        return await _bookingService.GetAll();
     }
 
     [HttpGet("{bookingId}")]
-    public ActionResult<Booking> GetBooking(int bookingId)
+    public async Task<Booking> GetBooking(int bookingId)
     {
-        var booking = _bookingService.Get(bookingId);
-        if (booking is null)
-            return NotFound();
-
-        return Ok(booking);
+        var booking = await _bookingService.Get(bookingId);
+        return booking;
     }
 
     [HttpPost]
-    public ActionResult AddNewBooking(Booking booking)
+    public async Task<Booking> AddNewBooking(Booking booking)
     {
-        _bookingService.Add(booking);
-        return CreatedAtAction(nameof(AddNewBooking), new { id = booking.Id }, booking);
+        await _bookingService.Add(booking);
+        return await _bookingService.GetLatestBooking();
     }
 
     [HttpPut("{bookingId}")]
-    public ActionResult EditBooking(int bookingId, Booking booking)
+    public async Task EditBooking(Booking booking, long bookingId)
     {
-        if (bookingId != booking.Id)
-            return BadRequest();
-
-        var existingBooking = _bookingService.Get(bookingId);
-        if (existingBooking is null)
-            return NotFound();
-
-        _bookingService.Update(booking);
-        return NoContent();
+        await _bookingService.Update(booking, bookingId);
     }
 
     [HttpDelete("{bookingId}")]
-    public ActionResult SetStatusToCancelled(int bookingId)
+    public async Task SetStatusToCancelled(long bookingId)
     {
-        var booking = _bookingService.Get(bookingId);
-        if (booking is null)
-            return NotFound();
-
-        _bookingService.SetStatusCancelled(bookingId);
-        return NoContent();
-    }
-
-    [HttpPost("{bookingId}/addnew")]
-    public ActionResult AddNewGuestToBooking(int bookingId, Guest guest)
-    {
-        _bookingService.AddNewGuestToBooking(bookingId, guest);
-        return CreatedAtAction(nameof(AddNewGuestToBooking),new{id=guest.Id},guest);
+        await _bookingService.SetStatusCancelled(bookingId);
     }
 }
