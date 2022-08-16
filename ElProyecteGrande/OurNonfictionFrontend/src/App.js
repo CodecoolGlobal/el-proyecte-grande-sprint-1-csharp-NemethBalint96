@@ -14,6 +14,9 @@ const App = () => {
                 <li className="nav-item">
                   <Link className="nav-link text-dark" to="/guests">Guests</Link>
                 </li>
+                <li className="nav-item">
+                  <Link className="nav-link text-dark" to="/calendar">Calendar</Link>
+                </li>
               </ul>
           </div>
         </nav>
