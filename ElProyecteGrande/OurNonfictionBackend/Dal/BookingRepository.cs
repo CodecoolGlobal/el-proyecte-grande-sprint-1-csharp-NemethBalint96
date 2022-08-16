@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 namespace ElProyecteGrande.Dal;
 public class BookingRepository : IRepository<Booking>
 {
-    private readonly List<Booking> _bookings;
+    private  List<Booking> _bookings;
     public BookingRepository()
     {
         _bookings = new List<Booking>();

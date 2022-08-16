@@ -16,7 +16,8 @@ public class GuestApiController : ControllerBase
     [HttpGet]
     public ActionResult<IEnumerable<Guest>> GetAllNamedGuests()
     {
-        return Ok(_bookingService.GetAllNamedGuests());
+        var guests = _bookingService.GetAllNamedGuests();
+        return Ok(guests);
     }
 
     [HttpGet("{guestId}")]

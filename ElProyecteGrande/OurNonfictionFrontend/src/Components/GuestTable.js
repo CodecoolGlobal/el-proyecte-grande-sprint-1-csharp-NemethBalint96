@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
 import { getApi } from "../Clients/requests";
+import Table from "./Table";
 
 const GuestTable = () => {
   const url = 'guestapi';
   const [guests, setGuests] = useState([]);
+
+console.log(guests);
 
   useEffect(()=>{
     getApi(url).then(data=>{
@@ -13,40 +16,9 @@ const GuestTable = () => {
   [url]);
 
   return (
-    <table className="table table-sm table-responsive table-striped table-success table-hover align-middle">
-      <thead className="text-center align-middle">
-        <tr>
-          <th>Id</th>
-          <th>Full Name</th>
-          <th>Birth Place</th>
-          <th>Birth Date</th>
-          <th>Email</th>
-          <th>Phone Number</th>
-          <th>Country</th>
-          <th>City</th>
-          <th>Address</th>
-          <th>Postal Code</th>
-          <th>Citizenship</th>
-        </tr>
-      </thead>
-      <tbody>
-        {guests.map(guest =>
-          <tr className="text-center align-middle" key={guest.id}>
-            <td>{guest.id}</td>
-            <td>{guest.fullName}</td>
-            <td>{guest.birthPlace}</td>
-            <td>{guest.birthDate.slice(0, 10)}</td>
-            <td>{guest.email}</td>
-            <td>{guest.phone}</td>
-            <td>{guest.country}</td>
-            <td>{guest.city}</td>
-            <td>{guest.address}</td>
-            <td>{guest.postalCode}</td>
-            <td>{guest.citizenship}</td>
-          </tr>
-        )}
-      </tbody>
-    </table>
+    <div>
+        <Table data={guests} />
+      </div>
   );
 }
 
