@@ -18,6 +18,8 @@ const GuestForm = () => {
   const [citizenship, setCitizenship] = useState("");
   const [age, setAge] = useState(0);
   const [comment, setComment] = useState("");
+  const[emailError,setEmailError] = useState({});
+  const[phoneError,setPhoneError] = useState({});
   const navigate = useNavigate();
   let isValidEmail = false;
   let isValidPhone = false;
@@ -43,22 +45,30 @@ const GuestForm = () => {
     });
   }, [url]);
 
+  function validateEmailAndPhone(emailRegex, email, isValidEmail, phoneRegex, phone, isValidPhone) {
+    if (emailRegex.test(email)|| email==='') {
+      isValidEmail = true;
+      setEmailError(false);
+    }
+    else {
+      setEmailError(true);
+    }
+    if (phoneRegex.test(phone)|| phone==='') {
+      isValidPhone = true;
+      setPhoneError(false);
+    }
+    else {
+      setPhoneError(true);
+    }
+    return { isValidEmail, isValidPhone };
+  }
+
+
+
+
   const onclick = (e) => {
     e.preventDefault();
-    console.log(email);
-    console.log(phone)
-    if(emailRegex.test(email)){
-      isValidEmail=true;
-    }
-    else{
-      alert("Please, provide a valid email-address!")
-    }
-    if(phoneRegex.test(phone)){
-      isValidPhone=true;
-    }
-    else{
-      alert("Please Provide phone number in the following format:1234-1234-1234!");
-    }
+    ({ isValidEmail, isValidPhone } = validateEmailAndPhone(emailRegex, email, isValidEmail, phoneRegex, phone, isValidPhone));
     
     if(isValidEmail&&isValidPhone){
       isValidEmail=false;
@@ -113,15 +123,17 @@ const GuestForm = () => {
         <div className="row">
           <div className="col">
             <label className="form-label">Email</label><br/>
-            <input className="form-control" type="text" value={email} onChange={(e)=>setEmail(e.target.value)} />
+            <input id="email" className="form-control" type="text" value={email} onChange={(e)=>setEmail(e.target.value)} />
+            {emailError===true?<p style={{'color':'red'}}>Please provide a valid e-mail address!</p>:<></>}
           </div>
-                  <div className="col">
+                  <div className="col" id="phone">
                       <label htmlFor="tel" className="form-label">Phone</label><br />
-                      <input id="tel" name="tel" className="form-control" type="tel" value={phone} onChange={(e) => setPhone(e.target.value)}/>
+                      <input  name="tel" className="form-control" type="tel" value={phone} onChange={(e) => setPhone(e.target.value)}/>
+                      {phoneError===true?<p style={{'color':'red'}}>Please provide a phone number in this format:1234-1234-1234</p>:<></>}
           </div>
           <div className="col">
             <label className="form-label">Country</label><br/>
-            <input className="form-control" type="text" value={country} onChange={(e)=>setCountry(e.target.value)}/>
+            <input  className="form-control" type="text" value={country} onChange={(e)=>setCountry(e.target.value)}/>
           </div>
         </div>
         <br></br>
@@ -170,3 +182,5 @@ const GuestForm = () => {
 }
 
 export default GuestForm;
+
+
