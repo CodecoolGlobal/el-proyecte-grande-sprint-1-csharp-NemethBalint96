@@ -90,7 +90,7 @@ const Calendar = () => {
 
         days.push(
           <div
-            className={`col cell ${
+            className={`col ${
               isSameDay(day, new Date())
                 ? "today"
                 : ""
@@ -133,34 +133,39 @@ const Calendar = () => {
       const rows = [];
       let days = [];
       let day = startDate;
-      let formattedDate = "";
       while (day <= endDate) {
         for (let i = 0; i < 7; i++) {
-          formattedDate = format(day, dateFormat);
+          const formattedDate = format(day, dateFormat);
           const booking = bookings.filter((booking) => booking.arrivalDate.slice(0, 10) === formattedDate && booking.room.id === roomId)[0]
+          let addition = 0;
+          if(booking) {
+            addition = booking.nights > 1 ? booking.nights - 1 : 0;
+            i += addition;
+          }
+          
           days.push(
             <div
-              className={`col cell ${
+              className={`col${
                 isSameDay(day, new Date())
-                  ? "today"
+                  ? " today"
                   : ""
-              }`}
-              key={day}
+              } ${booking ? 'length-' + booking.nights : ''}`}
+              key={booking && booking.id}
             >
               <span className="number">{booking && booking.id}</span>
             </div>
           );
-          day = addDays(day, 1);
+          day = addDays(day, 1 + addition);
         }
   
         rows.push(
-          <div className="row" key={day}>
+          <div className="room-row" key={day}>
             {days}
           </div>
         );
         days = [];
       }
-      return <div className="body">{rows}</div>;
+      return <>{rows}</>;
     };
 
     return (

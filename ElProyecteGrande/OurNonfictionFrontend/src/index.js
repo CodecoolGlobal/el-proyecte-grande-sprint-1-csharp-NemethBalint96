@@ -28,7 +28,7 @@ root.render(
     <Route path='/available/:bookingId' element={<SelectRoom/>}/>
     <Route path='/guest/:guestId' element={<GuestForm/>}/>
     <Route path='/editbooking/:bookingId' element={<BookingForm />}/>
-    <Route path='/calendar' element={<Calendar />} />
+    <Route path='/calendar' element={<Calendar/>}/>
   </Route>
   </Routes>
   </BrowserRouter>
