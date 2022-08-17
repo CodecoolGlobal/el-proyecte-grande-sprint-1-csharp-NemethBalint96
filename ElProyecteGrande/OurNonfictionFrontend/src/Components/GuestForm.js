@@ -19,6 +19,11 @@ const GuestForm = () => {
   const [age, setAge] = useState(0);
   const [comment, setComment] = useState("");
   const navigate = useNavigate();
+  let isValidEmail = false;
+  let isValidPhone = false;
+  const phoneRegex = /^\(?([0-9]{4})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/;
+  const emailRegex = /\S+@\S+\.\S+/;
+   
 
   useEffect(() => {
       getApi(url).then(data => {
@@ -40,7 +45,26 @@ const GuestForm = () => {
 
   const onclick = (e) => {
     e.preventDefault();
+    console.log(email);
+    console.log(phone)
+    if(emailRegex.test(email)){
+      isValidEmail=true;
+    }
+    else{
+      alert("Please, provide a valid email-address!")
+    }
+    if(phoneRegex.test(phone)){
+      isValidPhone=true;
+    }
+    else{
+      alert("Please Provide phone number in the following format:1234-1234-1234!");
+    }
+    
+    if(isValidEmail&&isValidPhone){
+      isValidEmail=false;
+      isValidPhone= false;
     const body = {
+      
       "id":parseInt(params.guestId),
       "fullName":name,
       "birthPlace":birthPlace,
@@ -61,6 +85,8 @@ const GuestForm = () => {
       navigate(-1);
     });
   }
+}
+
 
   function select(e) {
     setAge(e.target.value);
@@ -87,11 +113,11 @@ const GuestForm = () => {
         <div className="row">
           <div className="col">
             <label className="form-label">Email</label><br/>
-            <input className="form-control" type="text" value={email} onChange={(e)=>setEmail(e.target.value)}/>
+            <input className="form-control" type="text" value={email} onChange={(e)=>setEmail(e.target.value)} />
           </div>
-          <div className="col">
-            <label className="form-label">Phone</label><br/>
-            <input className="form-control" type="text" value={phone} onChange={(e)=>setPhone(e.target.value)}/>
+                  <div className="col">
+                      <label htmlFor="tel" className="form-label">Phone</label><br />
+                      <input id="tel" name="tel" className="form-control" type="tel" value={phone} onChange={(e) => setPhone(e.target.value)}/>
           </div>
           <div className="col">
             <label className="form-label">Country</label><br/>
