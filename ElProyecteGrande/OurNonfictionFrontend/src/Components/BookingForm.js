@@ -18,7 +18,8 @@ const BookingForm = () => {
   const [infants, setInfants] = useState(0);
   const [arrivalDate, setArrivalDate] = useState(baseDate);
   const [departureDate, setDepartureDate] = useState(normalDate);
-  const [guests, setGuests] = useState([]);
+    const [guests, setGuests] = useState([]);
+    const [total, setTotal] = useState(0);
 
   const params = useParams();
   const bookingId = params.bookingId > 0 ? params.bookingId : null;
@@ -31,7 +32,8 @@ const BookingForm = () => {
     "infants":infants,
     "arrivalDate":arrivalDate,
     "departureDate": departureDate,
-    "guests":guests,
+      "guests": guests,
+    "total":total
   }
 
   useEffect(() => {

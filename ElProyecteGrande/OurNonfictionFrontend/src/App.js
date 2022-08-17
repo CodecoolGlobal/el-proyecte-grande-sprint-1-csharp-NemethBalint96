@@ -1,18 +1,18 @@
-import { Link, Outlet } from "react-router-dom";
+import { Outlet,NavLink } from "react-router-dom";
 
 const App = () => {
   return (
-    <>
-      <header>
-        <nav className="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+      <>
+          <header>
+        <nav className="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-primary border-bottom box-shadow mb-3">
           <div className="container-fluid">
-            <a className="navbar-brand" href='/'>Our Nonfiction</a>
+                      <a className="navbar-brand" id="nonfiction" href='/'>Our Nonfiction</a>
               <ul className="navbar-nav flex-grow-1">
-                <li className="nav-item">
-                  <Link className="nav-link text-dark" to="/">Bookings</Link>
+               <li className="nav-item">
+                   <NavLink className='nav-link' to="/">Bookings</NavLink>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link text-dark" to="/guests">Guests</Link>
+                  <NavLink  className='nav-link' to="/guests">Guests</NavLink>
                 </li>
               </ul>
           </div>

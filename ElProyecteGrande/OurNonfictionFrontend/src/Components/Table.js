@@ -4,8 +4,8 @@ import { deleteApi } from '../Clients/requests';
 import { Link } from 'react-router-dom';
 const BookingTable = ({data,type,OnClick,guests}) => {
 
-    const bookinTableHeader=["Id","Booker's Name","Email","Adults","Children","Infants","Total","Country",
-"Arrival Date","Deaprture Date","Nights","Status","Created","Modification Date"];
+    const bookinTableHeader=["Id","Booker's Name","Email","Adults","Children","Infants","Country",
+        "Arrival Date", "Deaprture Date", "Nights","Revenue","Status","Created","Modification Date"];
     const guestTableHeader =["Id","Full Name","Birthdate","Birthplace","Email","Phone Number","Country","City",
 "Address","Postal Code","Citizenship","Age of Guest"];
     
@@ -17,7 +17,9 @@ function configurePage(data, type) {
   data.map(booking =>booking['arrivalDate']= booking['arrivalDate'].slice(0,10));
   data.map(booking =>booking['departureDate']= booking['departureDate'].slice(0,10));
   data.map(booking =>booking['created']= booking['created'].slice(0,10));
-  data.map(booking =>booking['modificationDate']= booking['modificationDate'].slice(0,10));
+  data.map(booking => booking['modificationDate'] = booking['modificationDate'].slice(0, 10));
+      data.map(booking => booking['total'] = `${booking.total} $`);
+
   }
   if(type==='Guests'){
     guests.map(guest => guest["age"] = guest["age"] === 0 ? "Adult" :guest["age"]=== 1 ? "Child" :guest["age"]==='Adult'?'Adult':guest['age']==='Child'?'Child':'Infant');

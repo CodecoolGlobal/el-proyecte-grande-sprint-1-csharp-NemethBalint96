@@ -26,11 +26,22 @@ public class Booking
     public int Adults { get; set; }
     public int Children { get; set; }
     public int Infants { get; set; }
-    public decimal Total { get; set; }
     public string Country { get; set; }
     public DateTime ArrivalDate { get; set; }
     public DateTime DepartureDate { get; set; }
     public int Nights => (DepartureDate - ArrivalDate).Days;
+    public decimal Total
+    {
+        get
+        {
+            if (Room is null)
+            {
+                return 0;
+            }
+            return Nights * Room.Price;
+
+        }
+    }
     public Status Status { get; set; }
     public DateTime Created { get; set; }
     public DateTime ModificationDate { get; set; }

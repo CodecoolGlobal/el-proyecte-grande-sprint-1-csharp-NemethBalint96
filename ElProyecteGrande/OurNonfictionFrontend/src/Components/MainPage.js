@@ -32,16 +32,16 @@ const MainPage = () => {
  
 
   return (
-    <>
-    <div>
-      <Link to="/newbooking"><button className="btn btn-primary">Add New Booking</button></Link>
-    </div>
-    <br></br>
-   <div className="row">
-    <div className="col-md-2">
-  <input  type="text" id="myInput" onChange={(e)=>{handleSearch(e)}} placeholder="Start typing a name..."/>
-  </div>
-  </div>
+      <>
+          <div className=' container-fluid row justify-content-between'>
+              <div className="col-auto">
+                  <input className="form-control" type="text" id="myInput" onChange={(e) => { handleSearch(e) }} placeholder="Start typing a name..." />
+              </div>
+              <div className='col-auto'>
+                  <Link  to="/newbooking"><button className="btn btn-primary">Add New Booking</button></Link>
+              </div>
+              </div>
+    
   <br></br>
     <Table data={bookings} type="Booking"/>
     </>
