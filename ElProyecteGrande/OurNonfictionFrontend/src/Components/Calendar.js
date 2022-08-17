@@ -16,7 +16,6 @@ import { getApi } from '../Clients/requests';
 const Calendar = () => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
 
-  
   const changeMonthHandle = (btnType) => {
     if (btnType === "prev") {
       setCurrentMonth(subMonths(currentMonth, 1));
@@ -133,29 +132,41 @@ const Calendar = () => {
       const rows = [];
       let days = [];
       let day = startDate;
+      const dayCount = 7;
       while (day <= endDate) {
-        for (let i = 0; i < 7; i++) {
+        for (let i = 0; i < dayCount; i++) {
           const formattedDate = format(day, dateFormat);
-          const booking = bookings.filter((booking) => booking.arrivalDate.slice(0, 10) === formattedDate && booking.room.id === roomId)[0]
-          let addition = 0;
-          if(booking) {
-            addition = booking.nights > 1 ? booking.nights - 1 : 0;
-            i += addition;
+          const booking = bookings.filter((booking) => (new Date(formattedDate) >= new Date(booking.arrivalDate.slice(0, 10)) && new Date(formattedDate) <= new Date(booking.departureDate.slice(0, 10)) && booking.room.id === roomId))[0]
+
+          let spanSize = 0;
+          let style = '';
+          if (booking) {
+            if (formattedDate === booking.arrivalDate.slice(0, 10)) {
+              spanSize = booking.nights + i > dayCount ? dayCount - i : booking.nights;
+            } else {
+              let end = new Date(booking.departureDate.slice(0, 10));
+              if (end.getDay() - 1 < 1 && format(end, dateFormat) === formattedDate) {
+                day = addDays(day, 1 + spanSize);
+                continue;
+              }
+              spanSize = end >= new Date(format(addDays(day, dayCount - i), dateFormat)) ? dayCount : end.getDay() - 1;
+            }
+            style = {'gridColumnEnd':'span '+ spanSize, 'border': '2px solid red', 'gridColumnStart': i + 1}
+            i += spanSize;
+            days.push(
+              <div
+                className={`col${
+                  isSameDay(day, new Date())
+                    ? " today"
+                    : ""}`}
+                key={booking.id}
+                style={style}
+              >
+                {booking.id}
+              </div>
+            );
           }
-          
-          days.push(
-            <div
-              className={`col${
-                isSameDay(day, new Date())
-                  ? " today"
-                  : ""
-              } ${booking ? 'length-' + booking.nights : ''}`}
-              key={booking && booking.id}
-            >
-              <span className="number">{booking && booking.id}</span>
-            </div>
-          );
-          day = addDays(day, 1 + addition);
+          day = addDays(day, 1 + spanSize);
         }
   
         rows.push(

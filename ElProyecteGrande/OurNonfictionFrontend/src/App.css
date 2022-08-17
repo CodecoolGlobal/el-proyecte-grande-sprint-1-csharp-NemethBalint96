@@ -43,27 +43,4 @@
   height: 100%;
 }
 
-.length-1 {
-  grid-column: span 1;
-  border: 2px solid red;
-}
 
-.length-2 {
-  grid-column: span 2;
-  border: 2px solid red;
-}
-
-.length-3 {
-  grid-column: span 3;
-  border: 2px solid red;
-}
-
-.length-4 {
-  grid-column: span 4;
-  border: 2px solid red;
-}
-
-.length-5 {
-  grid-column: span 5;
-  border: 2px solid red;
-}
