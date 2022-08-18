@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { getApi, postApi, putApi } from "../Clients/requests";
 import { useNavigate, useParams } from "react-router-dom";
+import { addDays } from "date-fns";
 
 let now = new Date();
 let baseDate = now.toISOString().slice(0, 10);
@@ -93,7 +94,19 @@ const BookingForm = () => {
     let date = new Date(targetDate); //converts IsoString to date object
     let ms = date.getTime(targetDate); // convert date to milliseconds
     let result = ms + 86400000; // add one day in milliseconds to date
-    setDepartureDate(new Date(result).toISOString().slice(0, 10)); //setting departureDate.
+    if(targetDate >= departureDate) {
+      setDepartureDate(new Date(result).toISOString().slice(0, 10)); //setting departureDate.
+    }
+  }
+
+  function resetArrivalDate(e) {
+    setDepartureDate(e.target.value)
+    const departure = new Date(e.target.value);
+    const arrival = new Date(arrivalDate);
+    if(departure <= arrival) {
+      const newArrival = addDays(departure, -1);
+      setArrivalDate(newArrival.toISOString().slice(0, 10));
+    }
   }
 
   return (
@@ -144,7 +157,7 @@ const BookingForm = () => {
           </div>
           <div className="col">
             <label className="form-label">Departure's Date</label><br/>
-            <input className="form-control" type="date" min={normalDate} value={departureDate} onChange={(e)=>setDepartureDate(e.target.value)}/>
+            <input className="form-control" type="date" min={normalDate} value={departureDate} onChange={(e)=>resetArrivalDate(e)}/>
           </div>
         </div>
         <br></br>
