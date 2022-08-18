@@ -5,20 +5,31 @@ import Table from "./Table";
 const GuestTable = () => {
   const url = 'guestapi';
   const [guests, setGuests] = useState([]);
+  const [loading,setLoading] = useState(false);
 
 console.log(guests);
 
   useEffect(()=>{
+    setLoading(true);
     getApi(url).then(data=>{
       setGuests(data);
+      setLoading(false);
     });
   },
   [url]);
 
   return (
+    <>
+    {
+      loading?
+      <div className="loader-container">
+      <div className="spinner"></div>
+    </div>:
     <div>
         <Table data={guests} />
       </div>
+}
+      </>
   );
 }
 

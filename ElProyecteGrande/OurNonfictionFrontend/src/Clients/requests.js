@@ -37,3 +37,24 @@ export async function deleteApi(url){
     const response = await fetch(url,settings);
     return response;
 }
+
+export async function fetchPlus(url,retries){
+    try{
+  let response = await fetch(url);
+      if (response.ok) {
+        return response.json();
+      }
+    else{
+        throw new Error(response.status);
+    }}
+      catch(error){
+        if(error.response){
+            return;
+        }else{
+            if(retries>0){
+                console.log(retries);
+                return fetchPlus(url,retries-1);
+            }
+        }
+    }
+}

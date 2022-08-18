@@ -18,11 +18,21 @@ const GuestForm = () => {
   const [citizenship, setCitizenship] = useState("");
   const [age, setAge] = useState(0);
   const [comment, setComment] = useState("");
+  const[emailError,setEmailError] = useState({});
+  const[phoneError,setPhoneError] = useState({});
   const navigate = useNavigate();
+  let isValidEmail = false;
+  let isValidPhone = false;
+  const phoneRegex = /^\(?([0-9]{4})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/;
+  const emailRegex = /\S+@\S+\.\S+/;
+  const [loading,setLoading] = useState(false);
+   
 
   useEffect(() => {
+    setLoading(true);
       getApi(url).then(data => {
           setGuest(data);
+          setLoading(false);
       setName(data.fullName);
         setBirthPlace(data.birthPlace === null ? '' : data.birthPlace);
         setBirthDate(data.birthDate.slice(0, 10) === '0001-01-01' ? "" : data.birthDate === undefined?"": data.birthDate.slice(0, 10));
@@ -38,9 +48,39 @@ const GuestForm = () => {
     });
   }, [url]);
 
+  function validateEmailAndPhone(emailRegex, email, isValidEmail, phoneRegex, phone, isValidPhone) {
+    if (emailRegex.test(email)|| email==='') {
+      isValidEmail = true;
+      setEmailError(false);
+    }
+    else {
+      setLoading(false);
+      setEmailError(true);
+    }
+    if (phoneRegex.test(phone)|| phone==='') {
+      isValidPhone = true;
+      setPhoneError(false);
+    }
+    else {
+      setLoading(false);
+      setPhoneError(true);
+    }
+    return { isValidEmail, isValidPhone };
+  }
+
+
+
+
   const onclick = (e) => {
+    setLoading(true);
     e.preventDefault();
+    ({ isValidEmail, isValidPhone } = validateEmailAndPhone(emailRegex, email, isValidEmail, phoneRegex, phone, isValidPhone));
+    
+    if(isValidEmail&&isValidPhone){
+      isValidEmail=false;
+      isValidPhone= false;
     const body = {
+      
       "id":parseInt(params.guestId),
       "fullName":name,
       "birthPlace":birthPlace,
@@ -58,15 +98,23 @@ const GuestForm = () => {
     console.log(body)
     putApi(`/guestapi/${guest.id}`, body).then(() =>
     {
+      setLoading(false);
       navigate(-1);
     });
   }
+}
+
 
   function select(e) {
     setAge(e.target.value);
   }
 
   return (
+    <>
+    {loading? 
+    <div className="loader-container">
+    <div className="spinner"></div>
+  </div>:
     <div className="container form-control">
       <form>
         <div className="row">
@@ -87,15 +135,17 @@ const GuestForm = () => {
         <div className="row">
           <div className="col">
             <label className="form-label">Email</label><br/>
-            <input className="form-control" type="text" value={email} onChange={(e)=>setEmail(e.target.value)}/>
+            <input id="email" className="form-control" type="text" value={email} onChange={(e)=>setEmail(e.target.value)} />
+            {emailError===true?<p style={{'color':'red'}}>Please provide a valid e-mail address!</p>:<></>}
           </div>
-          <div className="col">
-            <label className="form-label">Phone</label><br/>
-            <input className="form-control" type="text" value={phone} onChange={(e)=>setPhone(e.target.value)}/>
+                  <div className="col" id="phone">
+                      <label htmlFor="tel" className="form-label">Phone</label><br />
+                      <input  name="tel" className="form-control" type="tel" value={phone} onChange={(e) => setPhone(e.target.value)}/>
+                      {phoneError===true?<p style={{'color':'red'}}>Please provide a phone number in this format:1234-1234-1234</p>:<></>}
           </div>
           <div className="col">
             <label className="form-label">Country</label><br/>
-            <input className="form-control" type="text" value={country} onChange={(e)=>setCountry(e.target.value)}/>
+            <input  className="form-control" type="text" value={country} onChange={(e)=>setCountry(e.target.value)}/>
           </div>
         </div>
         <br></br>
@@ -139,8 +189,11 @@ const GuestForm = () => {
           <input className="form-control btn btn-primary" type="submit" onClick={onclick}/>
         </div>
       </form>
-    </div>
+    </div>}
+    </>
   );
 }
 
 export default GuestForm;
+
+

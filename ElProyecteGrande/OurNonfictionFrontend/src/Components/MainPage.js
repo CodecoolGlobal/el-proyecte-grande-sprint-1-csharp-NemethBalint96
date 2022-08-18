@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getApi } from "../Clients/requests";
+import { fetchPlus } from "../Clients/requests";
 import { Link} from "react-router-dom";
 import Table from "./Table";
 
@@ -8,6 +8,7 @@ const MainPage = () => {
   const url = "bookingapi";
   const[firstBooking,setFirstBookings]=useState([]);
   const [bookings, setBookings] = useState([]);
+  const [loading,setLoading] = useState(false);
   
 
   
@@ -22,8 +23,11 @@ const MainPage = () => {
   };
   
   useEffect(() => {
-    getApi(url).then(data=>{
+    setLoading(true);
+    fetchPlus(url,1000).then(data=>{
+      console.log(data);
       setFirstBookings(data);
+      setLoading(false);
       setBookings(data);
 
   })}
@@ -32,18 +36,24 @@ const MainPage = () => {
  
 
   return (
-    <>
-    <div>
-      <Link to="/newbooking"><button className="btn btn-primary">Add New Booking</button></Link>
-    </div>
-    <br></br>
-   <div className="row">
-    <div className="col-md-2">
-  <input  type="text" id="myInput" onChange={(e)=>{handleSearch(e)}} placeholder="Start typing a name..."/>
-  </div>
-  </div>
+      <>
+          <div className=' container-fluid row justify-content-between'>
+              <div className="col-auto">
+                  <input className="form-control" type="text" id="myInput" onChange={(e) => { handleSearch(e) }} placeholder="Start typing a name..." />
+              </div>
+              <div className='col-auto'>
+                  <Link  to="/newbooking"><button className="btn btn-primary">Add New Booking</button></Link>
+              </div>
+              </div>
+    
   <br></br>
-    <Table data={bookings} type="Booking"/>
+  {loading ? 
+  
+        <div className="loader-container">
+      	  <div className="spinner"></div>
+        </div>
+    
+      :bookings!==undefined?<Table data={bookings} type="Booking"/>:<></>}
     </>
   );
 }
