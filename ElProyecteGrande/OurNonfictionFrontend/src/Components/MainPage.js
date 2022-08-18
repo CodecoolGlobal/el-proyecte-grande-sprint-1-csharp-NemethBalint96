@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getApi } from "../Clients/requests";
+import { fetchPlus } from "../Clients/requests";
 import { Link} from "react-router-dom";
 import Table from "./Table";
 
@@ -24,7 +24,8 @@ const MainPage = () => {
   
   useEffect(() => {
     setLoading(true);
-    getApi(url).then(data=>{
+    fetchPlus(url,1000).then(data=>{
+      console.log(data);
       setFirstBookings(data);
       setLoading(false);
       setBookings(data);
@@ -52,7 +53,7 @@ const MainPage = () => {
       	  <div className="spinner"></div>
         </div>
     
-      :<Table data={bookings} type="Booking"/>}
+      :bookings!==undefined?<Table data={bookings} type="Booking"/>:<></>}
     </>
   );
 }
