@@ -9,7 +9,8 @@ import {
   isSameDay,
   lastDayOfWeek,
   addWeeks,
-  subWeeks
+  subWeeks,
+  isSameMonth
 } from "date-fns";
 import { getApi } from '../Clients/requests';
 
@@ -38,48 +39,54 @@ const Calendar = () => {
     const dateFormat = "MMM yyyy";
     return (
       <>
-      <div className="header row flex-middle">
+      <div className="row">
         <div className="col">
-          <div className="icon" onClick={() => changeMonthHandle("prev")}>
-            prev month
+          <div className="btn btn-primary" onClick={() => changeMonthHandle("prev")}>
+            Prev month
           </div>
         </div>
         <div className="col">
-        <div className="icon" onClick={() => changeWeekHandle("prev")}>
-            prev week
+        <div className="btn btn-primary" onClick={() => changeWeekHandle("prev")}>
+            Prev week
           </div>
         </div>
-        <div className="col">
-          <span>{format(currentMonth, dateFormat)}</span>
+        <div className={`col text-center align-middle ${
+              isSameMonth(currentMonth, new Date())
+                ? "bg-warning"
+                : ""
+            }`}>
+          {format(currentMonth, dateFormat)}
         </div>
         <div className="col" onClick={() => changeWeekHandle("next")}>
-          <div className="icon">next week</div>
+          <div className="btn btn-primary">Next week</div>
         </div>
         <div className="col">
-          <div className="icon" onClick={() => changeMonthHandle("next")}>next month</div>
+          <div className="btn btn-primary" onClick={() => changeMonthHandle("next")}>Next month</div>
         </div>
       </div>
       </>
     );
   };
+
   const renderDays = () => {
     const dateFormat = "EEE";
-    const days = [];
+    const days = [<th className='col-2' rowspan='2'>Rooms</th>];
     let startDate = startOfWeek(currentMonth, { weekStartsOn: 1 });
     for (let i = 0; i < 7; i++) {
       days.push(
-        <div className="col col-center" key={i}>
+        <th className="col" key={i}>
           {format(addDays(startDate, i), dateFormat)}
-        </div>
+        </th>
       );
     }
-    return <div className="days row">{days}</div>;
+    return <tr className="text-center align-middle">{days}</tr>;
   };
+
   const renderCells = () => {
     const startDate = startOfWeek(currentMonth, { weekStartsOn: 1 });
     const endDate = lastDayOfWeek(currentMonth, { weekStartsOn: 1 });
     const dateFormat = "d";
-    const rows = [];
+    const week = [];
     let days = [];
     let day = startDate;
     let formattedDate = "";
@@ -88,28 +95,29 @@ const Calendar = () => {
         formattedDate = format(day, dateFormat);
 
         days.push(
-          <div
-            className={`col ${
+          <th
+            className={` ${
               isSameDay(day, new Date())
-                ? "today"
+                ? "bg-warning"
                 : ""
             }`}
+            scope='col'
             key={day}
           >
-            <span className="number">{formattedDate}</span>
-          </div>
+            {formattedDate}
+          </th>
         );
         day = addDays(day, 1);
       }
 
-      rows.push(
-        <div className="row" key={day}>
+      week.push(
+        <tr className="" key={day}>
           {days}
-        </div>
+        </tr>
       );
       days = [];
     }
-    return <div className="body">{rows}</div>;
+    return <>{week}</>;
   };
 
   const RenderRooms = () => {
@@ -147,33 +155,32 @@ const Calendar = () => {
               let end = new Date(booking.departureDate.slice(0, 10));
               if (end.getDay() - 1 < 1 && format(end, dateFormat) === formattedDate) {
                 day = addDays(day, 1 + spanSize);
+                i -= 1;
                 continue;
               }
               spanSize = end >= new Date(format(addDays(day, dayCount - i), dateFormat)) ? dayCount : end.getDay() - 1;
             }
-            style = {'gridColumnEnd':'span '+ spanSize, 'border': '2px solid red', 'gridColumnStart': i + 1}
-            i += spanSize;
+            i += spanSize - 1;
             days.push(
-              <div
-                className={`col${
-                  isSameDay(day, new Date())
-                    ? " today"
-                    : ""}`}
+              <td
+                className={booking.status === 0 ? 'bg-success text-white' : 'bg-danger text-white'}
                 key={booking.id}
-                style={style}
+                colSpan={spanSize}
               >
                 {booking.id}
-              </div>
+              </td>
             );
+          } else {
+            days.push(
+              <td>
+
+              </td>
+            )
           }
           day = addDays(day, 1 + spanSize);
         }
   
-        rows.push(
-          <div className="room-row" key={day}>
-            {days}
-          </div>
-        );
+        rows.push(<>{days}</>);
         days = [];
       }
       return <>{rows}</>;
@@ -182,14 +189,12 @@ const Calendar = () => {
     return (
       <>
       {rooms.map(room => 
-        <div key={room.id} className='row'>
-        <div className='col-2'>
-          {room.id}
-        </div>
-        <div className='col-10'>
+        <tr key={room.id} className='' scope="row">
+        <th className=''>
+          {room.roomType === 1 ? 'Apartman' : room.roomType === 3 ? 'Superior' : 'Standard'} Flr {room.floor} No. {room.doorNumber}
+        </th>
           {RenderBookings(room.id)}
-        </div>
-        </div>
+        </tr>
       )}
       </>
     );
@@ -197,19 +202,17 @@ const Calendar = () => {
 
   return (
     <>
-    <div className='row'>
-      {renderHeader()}
-    </div>
-    <div className='row'>
-      <div className='col-2'>
-
-      </div>
-      <div className="col-10">
-        {renderDays()}
-        {renderCells()}
-      </div>
-    </div>
-    {RenderRooms()}
+    {renderHeader()}
+    <br></br>
+      <table className='table table-sm table-responsive table-striped table-hover align-middle table-bordered table-border-2 border-2 border-primary text-center'>
+      <thead>
+      {renderDays()}
+      {renderCells()}
+      </thead>
+      <tbody>
+      {RenderRooms()}
+      </tbody>
+    </table>
     </>
   );
 };
