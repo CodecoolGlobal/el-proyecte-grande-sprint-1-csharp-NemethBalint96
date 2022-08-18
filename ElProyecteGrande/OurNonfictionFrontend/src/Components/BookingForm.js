@@ -59,16 +59,8 @@ const BookingForm = () => {
   }, [bookingId])
 
   const onclick = (e) => {
-    setLoading(true)
-    if (emailRegex.test(email)|| email==='') {
-      isValidEmail = true;
-      setEmailError(false);
-    }
-    else {
-      setLoading(false);
-      setEmailError(true);
-    }
-    ;
+    setLoading(true);
+    validateEmail();
     e.preventDefault();
     if(!bookingId&&isValidEmail) {
       postApi("bookingapi", body).then(data => {
@@ -82,6 +74,17 @@ const BookingForm = () => {
           navigate(`/booking/${bookingId}`)
         }
       });
+    }
+
+    function validateEmail() {
+      if (emailRegex.test(email) || email === '') {
+        isValidEmail = true;
+        setEmailError(false);
+      }
+      else {
+        setLoading(false);
+        setEmailError(true);
+      }
     }
   }
 
