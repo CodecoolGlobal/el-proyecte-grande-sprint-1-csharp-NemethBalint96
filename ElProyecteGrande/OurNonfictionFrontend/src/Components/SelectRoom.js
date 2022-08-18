@@ -10,22 +10,32 @@ const SelectRoom = () => {
     const [rooms,setRooms]=useState([]);
     const[roomId,setRoomId]=useState({});
     const url =`/roomapi/available/${id}`;
+    const[loading,setLoading] = useState(false);
     useEffect(()=>{
+      setLoading(true);
         getApi(url).then(data=>{
         setRooms(data);
+        setLoading(false);
         setRoomId(data[0].id);
                 });
             }
           ,[url]);
 
 function onClick(e){
+setLoading(true);
 e.preventDefault();
 putApi(urlGet+"/"+roomId+"/"+id,null);
+setLoading(false);
 navigate(`/booking/${id}`);
 
 }
 
   return (
+    <>
+    {loading ? 
+      <div className="loader-container">
+        <div className="spinner"></div>
+      </div>:
     <div className="container form-control">
       <label className="form-label">Available Room</label>
       <select className="form-select" onChange={(e)=>setRoomId(e.target.value)}>
@@ -36,7 +46,8 @@ navigate(`/booking/${id}`);
       <input className="form-control btn btn-primary" type="submit" onClick={onClick}/>
       </div>
     </div>
-  )
+    }
+    </>)
 }
 
 export default SelectRoom
