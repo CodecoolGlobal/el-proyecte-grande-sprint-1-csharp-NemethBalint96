@@ -8,6 +8,7 @@ const MainPage = () => {
   const url = "bookingapi";
   const[firstBooking,setFirstBookings]=useState([]);
   const [bookings, setBookings] = useState([]);
+  const [loading,setLoading] = useState(false);
   
 
   
@@ -22,8 +23,10 @@ const MainPage = () => {
   };
   
   useEffect(() => {
+    setLoading(true);
     getApi(url).then(data=>{
       setFirstBookings(data);
+      setLoading(false);
       setBookings(data);
 
   })}
@@ -43,7 +46,13 @@ const MainPage = () => {
               </div>
     
   <br></br>
-    <Table data={bookings} type="Booking"/>
+  {loading ? 
+  
+        <div className="loader-container">
+      	  <div className="spinner"></div>
+        </div>
+    
+      :<Table data={bookings} type="Booking"/>}
     </>
   );
 }

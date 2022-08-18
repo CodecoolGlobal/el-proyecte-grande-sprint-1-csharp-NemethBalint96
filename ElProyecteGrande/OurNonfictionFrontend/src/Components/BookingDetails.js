@@ -12,13 +12,17 @@ const BookingDetails = () => {
   const [newGuestAge, setNewGuestAge] = useState(0);
   const [roomId, setRoomId] = useState(0);
   const [rooms, setRooms] = useState([]);
+  const [loading,setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     getApi(`/roomapi/available/${params.bookingId}`).then(data => {
+      setLoading(false);
       setRooms(data);
       setRoomId(data[0].id);
     });
     getApi(url).then(data => {
+      setLoading(false);
       setBooking(data);
       setGuests(data.guests);
       setRoom(data.room);
@@ -27,7 +31,9 @@ const BookingDetails = () => {
   } ,[url, params.bookingId]);
 
   function OnClick() {
+    setLoading(true);
     getApi(url).then(data => {
+      setLoading(false);
       setBooking(data);
       setGuests(data.guests);
       setRoom(data.room);
@@ -35,6 +41,7 @@ const BookingDetails = () => {
   }
 
   function onClick() {
+    setLoading(true);
     const body = {
       "fullName":'Accompanying Guest',
       "birthPlace":'',
@@ -50,6 +57,7 @@ const BookingDetails = () => {
       "comment":'',
     }
     postApi(`/guestapi/${params.bookingId}/addnew`, body).then(() => {getApi(url).then(data => {
+      setLoading(false);
       setBooking(data);
       setGuests(data.guests);
     })})
@@ -69,9 +77,11 @@ const BookingDetails = () => {
   }
 
   function onSubmit(e) {
+    setLoading(true);
     e.preventDefault();
       putApi(`/roomapi/${roomId}/${params.bookingId}`, null).then((response) => {
           if (response.status === 200) {
+            setLoading(false);
               const element = document.getElementById('roomSelect');
               element.style.display = 'none';
               const button = document.getElementById('roomSelectButton');
@@ -88,7 +98,10 @@ const BookingDetails = () => {
 
   return (
     <>
-      <h1 className='display-5'>Reservation</h1>
+    {loading?(<div className="loader-container">
+    <div className="spinner"></div>
+  </div>):(<>
+    <h1 className='display-5'>Reservation</h1>
       <div className='row'>
         <div className='col'>
           {booking.status !== 1 ? <button className="btn btn-primary btn-danger" onClick={cancelBooking}>Cancel</button> : <></>}
@@ -173,10 +186,12 @@ const BookingDetails = () => {
         </div>
       </> : <></>}
       <div>
-        <BookingTable data={booking} guests={guests} type='Guests' OnClick={OnClick}/>
+        {loading?<div className="loader-container">
+    <div className="spinner"></div>
+  </div>:
+  <BookingTable data={booking} guests={guests} type='Guests' OnClick={OnClick}/>}
         </div>
     </>
-  );
-}
+  )}</>)}
 
 export default BookingDetails;

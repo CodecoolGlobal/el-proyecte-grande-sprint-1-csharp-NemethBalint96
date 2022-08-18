@@ -18,8 +18,12 @@ const BookingForm = () => {
   const [infants, setInfants] = useState(0);
   const [arrivalDate, setArrivalDate] = useState(baseDate);
   const [departureDate, setDepartureDate] = useState(normalDate);
-    const [guests, setGuests] = useState([]);
-    const [total, setTotal] = useState(0);
+  const [guests, setGuests] = useState([]);
+  const [total, setTotal] = useState(0);
+  const [loading,setLoading] = useState(false);
+  const emailRegex = /\S+@\S+\.\S+/;
+  const[emailError,setEmailError] = useState({});
+  let isValidEmail = false;
 
   const params = useParams();
   const bookingId = params.bookingId > 0 ? params.bookingId : null;
@@ -38,6 +42,7 @@ const BookingForm = () => {
 
   useEffect(() => {
     if(bookingId) {
+      setLoading(true);
       getApi(`/bookingapi/${bookingId}`).then(data => {
         setBookersName(data.bookersName);
         setEmail(data.email);
@@ -48,21 +53,32 @@ const BookingForm = () => {
         setArrivalDate(data.arrivalDate.slice(0, 10));
         setDepartureDate(data.departureDate.slice(0, 10));
         setGuests(data.guests);
+        setLoading(false);
       })
     }
   }, [bookingId])
 
   const onclick = (e) => {
+    setLoading(true)
+    if (emailRegex.test(email)|| email==='') {
+      isValidEmail = true;
+      setEmailError(false);
+    }
+    else {
+      setLoading(false);
+      setEmailError(true);
+    }
+    ;
     e.preventDefault();
-    if(!bookingId) {
+    if(!bookingId&&isValidEmail) {
       postApi("bookingapi", body).then(data => {
+        setLoading(false);
         navigate(`/available/${data.id}`);
       })
-    } else {
-        //body.bookingId = parseInt(bookingId);
-        console.log(body);
+    } else if(isValidEmail) {
       putApi(`/bookingapi/${bookingId}`, body).then((response) => {
         if(response.status === 200) {
+          setLoading(false);
           navigate(`/booking/${bookingId}`)
         }
       });
@@ -78,6 +94,10 @@ const BookingForm = () => {
   }
 
   return (
+    <>
+    {loading?<div className="loader-container">
+    <div className="spinner"></div>
+  </div>:
     <div className="container form-control">
       <form>
         <div className="row">
@@ -88,6 +108,7 @@ const BookingForm = () => {
           <div className="col">
             <label className="form-label">Email</label><br/>
             <input className="form-control" type="email" value={email} onChange={(e)=>setEmail(e.target.value)}/>
+            {emailError===true?<p style={{'color':'red'}}>Please provide a valid e-mail address!</p>:<></>}
           </div>
           <div className="col">
             <label className="form-label">Country</label><br/>
@@ -130,7 +151,7 @@ const BookingForm = () => {
         </div>
       </form>
     </div>
-  );
+          }</>);
 }
 
 export default BookingForm;

@@ -25,11 +25,14 @@ const GuestForm = () => {
   let isValidPhone = false;
   const phoneRegex = /^\(?([0-9]{4})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/;
   const emailRegex = /\S+@\S+\.\S+/;
+  const [loading,setLoading] = useState(false);
    
 
   useEffect(() => {
+    setLoading(true);
       getApi(url).then(data => {
           setGuest(data);
+          setLoading(false);
       setName(data.fullName);
         setBirthPlace(data.birthPlace === null ? '' : data.birthPlace);
         setBirthDate(data.birthDate.slice(0, 10) === '0001-01-01' ? "" : data.birthDate === undefined?"": data.birthDate.slice(0, 10));
@@ -51,6 +54,7 @@ const GuestForm = () => {
       setEmailError(false);
     }
     else {
+      setLoading(false);
       setEmailError(true);
     }
     if (phoneRegex.test(phone)|| phone==='') {
@@ -58,6 +62,7 @@ const GuestForm = () => {
       setPhoneError(false);
     }
     else {
+      setLoading(false);
       setPhoneError(true);
     }
     return { isValidEmail, isValidPhone };
@@ -67,6 +72,7 @@ const GuestForm = () => {
 
 
   const onclick = (e) => {
+    setLoading(true);
     e.preventDefault();
     ({ isValidEmail, isValidPhone } = validateEmailAndPhone(emailRegex, email, isValidEmail, phoneRegex, phone, isValidPhone));
     
@@ -92,6 +98,7 @@ const GuestForm = () => {
     console.log(body)
     putApi(`/guestapi/${guest.id}`, body).then(() =>
     {
+      setLoading(false);
       navigate(-1);
     });
   }
@@ -103,6 +110,11 @@ const GuestForm = () => {
   }
 
   return (
+    <>
+    {loading? 
+    <div className="loader-container">
+    <div className="spinner"></div>
+  </div>:
     <div className="container form-control">
       <form>
         <div className="row">
@@ -177,7 +189,8 @@ const GuestForm = () => {
           <input className="form-control btn btn-primary" type="submit" onClick={onclick}/>
         </div>
       </form>
-    </div>
+    </div>}
+    </>
   );
 }
 
