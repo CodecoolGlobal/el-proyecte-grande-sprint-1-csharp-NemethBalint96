@@ -58,10 +58,3 @@ export async function fetchPlus(url,retries){
         }
     }
 }
-
-    //   if (retries > 0) {
-    //     return fetchPlus(url,retries - 1)
-    //   }
-    //   throw new Error(res.status)
-    // })
-    // .catch(error => fetchPlus(url,retries-1))
