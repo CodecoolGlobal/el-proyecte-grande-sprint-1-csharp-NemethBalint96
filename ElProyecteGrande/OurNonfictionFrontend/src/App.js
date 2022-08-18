@@ -9,13 +9,13 @@ const App = () => {
             <a className="navbar-brand" id="nonfiction" href='/'>Our Nonfiction</a>
             <ul className="navbar-nav flex-grow-1">
               <li className="nav-item">
-                <NavLink className='nav-link' to="/">Bookings</NavLink>
+                <NavLink className='nav-link' to="/bookings">Bookings</NavLink>
               </li>
               <li className="nav-item">
                 <NavLink  className='nav-link' to="/guests">Guests</NavLink>
               </li>
               <li className="nav-item">
-                <Link className="nav-link text-dark" to="/calendar">Calendar</Link>
+                <NavLink className="nav-link " to="/">Calendar</NavLink>
               </li>
             </ul>
           </div>

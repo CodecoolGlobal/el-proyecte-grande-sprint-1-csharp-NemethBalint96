@@ -12,10 +12,28 @@ import {
   subWeeks,
   isSameMonth
 } from "date-fns";
-import { getApi } from '../Clients/requests';
+import { useNavigate } from 'react-router-dom';
+import { fetchPlus} from '../Clients/requests';
 
 const Calendar = () => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
+  const[loading,setLoading] = useState(false);
+const navigate = useNavigate();
+  const [rooms, setRooms] = useState([]);
+  const [bookings, setBookings] = useState([]);
+
+  useEffect(() => {
+    setLoading(true);
+    fetchPlus('roomapi',1000).then(data => {
+      console.log(data)
+      setRooms(data);
+      
+    });
+    fetchPlus('bookingapi',1000).then(data => {
+      setBookings(data);
+      }).then(()=>setLoading(false))
+  }, []);
+
 
   const changeMonthHandle = (btnType) => {
     if (btnType === "prev") {
@@ -70,7 +88,7 @@ const Calendar = () => {
 
   const renderDays = () => {
     const dateFormat = "EEE";
-    const days = [<th className='col-2' rowspan='2'>Rooms</th>];
+    const days = [<th className='col-2' rowSpan='2'>Rooms</th>];
     let startDate = startOfWeek(currentMonth, { weekStartsOn: 1 });
     for (let i = 0; i < 7; i++) {
       days.push(
@@ -121,17 +139,7 @@ const Calendar = () => {
   };
 
   const RenderRooms = () => {
-    const [rooms, setRooms] = useState([]);
-    const [bookings, setBookings] = useState([]);
-
-    useEffect(() => {
-      getApi('roomapi').then(data => {
-        setRooms(data);
-      });
-      getApi('bookingapi').then(data => {
-        setBookings(data);
-      })
-    }, []);
+    
 
     const RenderBookings = (roomId) => {
       const startDate = startOfWeek(currentMonth, { weekStartsOn: 1 });
@@ -147,7 +155,6 @@ const Calendar = () => {
           const booking = bookings.filter((booking) => (new Date(formattedDate) >= new Date(booking.arrivalDate.slice(0, 10)) && new Date(formattedDate) <= new Date(booking.departureDate.slice(0, 10)) && booking.room.id === roomId))[0]
 
           let spanSize = 0;
-          let style = '';
           if (booking) {
             if (formattedDate === booking.arrivalDate.slice(0, 10)) {
               spanSize = booking.nights + i > dayCount ? dayCount - i : booking.nights;
@@ -163,11 +170,13 @@ const Calendar = () => {
             i += spanSize - 1;
             days.push(
               <td
-                className={booking.status === 0 ? 'bg-success text-white' : 'bg-danger text-white'}
+                className={booking.status === 0 ? 'bg-success text-white text-truncate table-hover' : 'table-hover bg-danger text-white text-truncate'}
                 key={booking.id}
                 colSpan={spanSize}
+                style={{cursor: 'pointer'}}
+                onClick={()=>{navigate(`/booking/${booking.id}`)}}
               >
-                {booking.id}
+                {booking.id} {booking.bookersName}
               </td>
             );
           } else {
@@ -189,8 +198,8 @@ const Calendar = () => {
     return (
       <>
       {rooms.map(room => 
-        <tr key={room.id} className='' scope="row">
-        <th className=''>
+        <tr key={room.id} className=''>
+        <th className=''  scope="row">
           {room.roomType === 1 ? 'Apartman' : room.roomType === 3 ? 'Superior' : 'Standard'} Flr {room.floor} No. {room.doorNumber}
         </th>
           {RenderBookings(room.id)}
@@ -202,9 +211,12 @@ const Calendar = () => {
 
   return (
     <>
+    {loading?<div className="loader-container">
+      	  <div className="spinner"></div>
+        </div>:<>
     {renderHeader()}
     <br></br>
-      <table className='table table-sm table-responsive table-striped table-hover align-middle table-bordered table-border-2 border-2 border-primary text-center'>
+      <table className='table table-sm table-striped  align-middle table-bordered table-border-2 border-2 border-primary text-center' style={{tableLayout:'fixed'}}>
       <thead>
       {renderDays()}
       {renderCells()}
@@ -212,8 +224,9 @@ const Calendar = () => {
       <tbody>
       {RenderRooms()}
       </tbody>
-    </table>
+    </table></>}
     </>
+   
   );
 };
 
