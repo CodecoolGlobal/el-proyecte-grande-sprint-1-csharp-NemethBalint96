@@ -16,15 +16,20 @@ namespace OurNonfictionBackend.Data
 
         public static void Initialize(NonfictionContext context)
         {
-            if (context.Rooms.Any() && context.Bookings.Any() && context.Guests.Any())
+            if (context.Rooms.Any() && context.Bookings.Any() && context.Guests.Any() && context.Accounts.Any())
             {
                 return; //DB has been seeded
             }
 
             CreateBookings(context);
+            CreateAccount(context);
+        }
 
-
-
+        private static void CreateAccount(NonfictionContext context)
+        {
+            context.Accounts.Add(new Account()
+                { Email = "nemeth.balint1996@gmail.com", Username = "p", Password = "p", Role = "Admin" });
+            context.SaveChanges();
         }
     }
 }

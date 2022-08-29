@@ -15,6 +15,7 @@ import BookingForm from './Components/BookingForm';
 import SelectRoom from './Components/SelectRoom';
 import GuestForm from './Components/GuestForm';
 import Calendar from './Components/Calendar';
+import UserForm from './Components/UserForm';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -29,6 +30,8 @@ root.render(
     <Route path='/guest/:guestId' element={<GuestForm/>}/>
     <Route path='/editbooking/:bookingId' element={<BookingForm />}/>
     <Route path='/' element={<Calendar/>}/>
+    <Route path='/registration' element={<UserForm />}/>
+    <Route path='/login' element={<UserForm />}/>
   </Route>
   </Routes>
   </BrowserRouter>
