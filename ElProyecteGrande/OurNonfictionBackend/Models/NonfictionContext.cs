@@ -12,5 +12,6 @@ namespace OurNonfictionBackend.Models
         public DbSet<Booking> Bookings => Set<Booking>();
         public DbSet<Guest> Guests => Set<Guest>();
         public DbSet<Room> Rooms => Set<Room>();
+        public DbSet<Account> Accounts => Set<Account>();
     }
 }
