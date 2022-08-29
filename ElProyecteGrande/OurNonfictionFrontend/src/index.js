@@ -30,7 +30,7 @@ root.render(
     <Route path='/guest/:guestId' element={<GuestForm/>}/>
     <Route path='/editbooking/:bookingId' element={<BookingForm />}/>
     <Route path='/' element={<Calendar/>}/>
-    <Route path='/registration' element={<UserForm />}/>
+    <Route path='/registration' element={<UserForm type="registration" />}/>
     <Route path='/login' element={<UserForm />}/>
   </Route>
   </Routes>

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { postApi } from "../Clients/requests";
 
-const UserForm = () => {
+const UserForm = ({type}) => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -40,15 +40,10 @@ const UserForm = () => {
     }
   }
 
-
-    
-  
-
   const submit = (e) => {
     e.preventDefault();
     if(validateForm(emailRegex)){
     postApi("/account/checkname",username).then((response)=>response.json()).then((result)=>{
-      console.log(result);
       if(result!==true){
       const body = {
         "username":username,
@@ -91,7 +86,7 @@ const UserForm = () => {
       </div>
       <br></br>
       <div>
-        <input className="form-control btn btn-primary" type="submit" onClick={(e) => submit(e)}/>
+        <button className="form-control btn btn-primary" type="submit" onClick={(e) => submit(e)}>{type!=='registration'?"Login":"Register"}</button>
       </div>
     </form>
     </div>
