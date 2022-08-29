@@ -14,8 +14,7 @@ export async function postApi(url,body){
         body:JSON.stringify(body)
         };
     const response = await fetch(url,settings);
-    const data = await response.json();
-    return data;
+    return await response;
 }
 
 export async function putApi(url,body){

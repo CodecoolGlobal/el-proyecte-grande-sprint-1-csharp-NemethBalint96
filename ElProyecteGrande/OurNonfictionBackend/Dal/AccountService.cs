@@ -1,4 +1,5 @@
-﻿using OurNonfictionBackend.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using OurNonfictionBackend.Models;
 
 namespace OurNonfictionBackend.Dal;
 
@@ -21,5 +22,10 @@ class AccountService : IAccountService
         account.Password = BCrypt.Net.BCrypt.HashPassword(account.Password);
         await _context.Accounts.AddAsync(account);
         await _context.SaveChangesAsync();
+    }
+
+    public async Task<bool> CheckUserName(string username)
+    {
+        return await _context.Accounts.AnyAsync(user => user.Username == username);
     }
 }

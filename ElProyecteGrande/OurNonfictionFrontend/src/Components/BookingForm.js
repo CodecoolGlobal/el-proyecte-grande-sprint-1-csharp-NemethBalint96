@@ -64,10 +64,10 @@ const BookingForm = () => {
     validateEmail();
     e.preventDefault();
     if(!bookingId&&isValidEmail) {
-      postApi("bookingapi", body).then(data => {
-        setLoading(false);
-        navigate(`/available/${data.id}`);
-      })
+      postApi("bookingapi", body).then(data=>data.json()).then(data=>{
+      setLoading(false);
+      navigate(`/available/${data.id}`);
+    })
     } else if(isValidEmail) {
       putApi(`/bookingapi/${bookingId}`, body).then((response) => {
         if(response.status === 200) {

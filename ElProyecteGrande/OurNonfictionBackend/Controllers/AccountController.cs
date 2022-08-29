@@ -14,8 +14,15 @@ public class AccountController : ControllerBase
     }
 
     [HttpPost("registration")]
-    public async Task Registration(Account account)
+    public async Task<OkObjectResult> Registration(Account account)
     {
         await _accountService.Registration(account);
+        return Ok("Kész");
+    }
+
+    [HttpPost("checkname")]
+    public async Task<bool> CheckUserName([FromBody] string username)
+    {
+        return await _accountService.CheckUserName(username);
     }
 }
