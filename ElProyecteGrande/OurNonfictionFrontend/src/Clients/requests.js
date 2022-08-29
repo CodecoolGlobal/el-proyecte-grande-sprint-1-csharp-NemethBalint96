@@ -53,7 +53,11 @@ export async function fetchPlus(url,retries){
         }else{
             if(retries>0){
                 console.log(retries);
-                return fetchPlus(url,retries-1);
+                return await new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                    resolve(fetchPlus(url, retries-1));
+                    }, 500);
+                });
             }
         }
     }
