@@ -18,6 +18,7 @@ class AccountService : IAccountService
 
     public async Task Registration(Account account)
     {
+        account.Password = BCrypt.Net.BCrypt.HashPassword(account.Password);
         await _context.Accounts.AddAsync(account);
         await _context.SaveChangesAsync();
     }

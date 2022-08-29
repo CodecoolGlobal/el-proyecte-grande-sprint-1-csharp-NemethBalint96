@@ -28,7 +28,7 @@ namespace OurNonfictionBackend.Data
         private static void CreateAccount(NonfictionContext context)
         {
             context.Accounts.Add(new Account()
-                { Email = "nemeth.balint1996@gmail.com", Username = "p", Password = "p", Role = "Admin" });
+            { Email = "nemeth.balint1996@gmail.com", Username = "p", Password = BCrypt.Net.BCrypt.HashPassword("p"), Role = "Admin" });
             context.SaveChanges();
         }
     }
