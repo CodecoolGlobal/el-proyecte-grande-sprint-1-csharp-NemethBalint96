@@ -22,13 +22,13 @@ namespace OurNonfictionBackend.Data
             }
 
             CreateBookings(context);
-            //CreateAccount(context);
+            CreateAccount(context);
         }
 
         private static void CreateAccount(NonfictionContext context)
         {
             context.Accounts.Add(new Account()
-            { Email = "nemeth.balint1996@gmail.com", Username = "p", Password = BCrypt.Net.BCrypt.HashPassword("p"), Role = "Admin" });
+            { Email = "admin@admin.com", Username = "admin", Password = BCrypt.Net.BCrypt.HashPassword("admin"), Role = "Admin" });
             context.SaveChanges();
         }
     }

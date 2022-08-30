@@ -13,7 +13,7 @@ import {
   isSameMonth
 } from "date-fns";
 import { useNavigate } from 'react-router-dom';
-import { fetchPlus} from '../Clients/requests';
+import { getApi } from '../Clients/requests';
 
 const Calendar = () => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
@@ -24,12 +24,12 @@ const navigate = useNavigate();
 
   useEffect(() => {
     setLoading(true);
-    fetchPlus('roomapi',1000).then(data => {
+    getApi('roomapi').then(data => {
       console.log(data)
       setRooms(data);
       
     });
-    fetchPlus('bookingapi',1000).then(data => {
+    getApi('bookingapi').then(data => {
       setBookings(data);
       }).then(()=>setLoading(false))
   }, []);

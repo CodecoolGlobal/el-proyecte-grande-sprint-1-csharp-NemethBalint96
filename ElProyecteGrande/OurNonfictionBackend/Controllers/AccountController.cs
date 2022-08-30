@@ -30,7 +30,6 @@ public class AccountController : ControllerBase
         return await _accountService.CheckUserName(username);
     }
 
-    [AllowAnonymous]
     [HttpPost("login")]
     public async Task<IActionResult> Login(Account account)
     {
@@ -40,5 +39,12 @@ public class AccountController : ControllerBase
             return Unauthorized();
 
         return Ok(token);
+    }
+
+    [Authorize(Roles = "Admin")]
+    [HttpGet]
+    public async Task<List<Account>> GetAccounts()
+    {
+        return await _accountService.GetAll();
     }
 }

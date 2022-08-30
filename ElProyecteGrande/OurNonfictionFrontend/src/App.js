@@ -15,7 +15,10 @@ const App = ({ username, setUsername }) => {
                 <NavLink  className='nav-link' to="/guests">Guests</NavLink>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link " to="/">Calendar</NavLink>
+                <NavLink className="nav-link " to="/calendar">Calendar</NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink className="nav-link " to="/users">Users</NavLink>
               </li>
               {username ? 
               <>
@@ -23,7 +26,7 @@ const App = ({ username, setUsername }) => {
                 <div className="nav-link">{username}</div>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link " to="/login" onClick={() => {
+                <NavLink className="nav-link " to="/" onClick={() => {
                   setUsername(null);
                   sessionStorage.clear();
                 }}>Logout</NavLink>
@@ -32,7 +35,7 @@ const App = ({ username, setUsername }) => {
               :
               <>
               <li className="nav-item">
-                <NavLink className="nav-link " to="/login">Login</NavLink>
+                <NavLink className="nav-link " to="/">Login</NavLink>
               </li>
               <li className="nav-item">
                 <NavLink className="nav-link " to="/registration">Registration</NavLink>

@@ -7,8 +7,6 @@ const GuestTable = () => {
   const [guests, setGuests] = useState([]);
   const [loading,setLoading] = useState(false);
 
-console.log(guests);
-
   useEffect(()=>{
     setLoading(true);
     getApi(url).then(data=>{

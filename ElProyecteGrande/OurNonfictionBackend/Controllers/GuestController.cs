@@ -1,8 +1,10 @@
 ﻿using ElProyecteGrande.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OurNonfictionBackend.Dal;
 
 namespace OurNonfictionBackend.Controllers;
+[Authorize]
 [ApiController, Route("[controller]")]
 public class GuestApiController : ControllerBase
 {
