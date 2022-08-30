@@ -13,7 +13,7 @@ export async function getApi(url){
     return await response.json();
 }
 
-export async function postApi(url,body){
+export async function postApi(url,body){    
     const token = sessionStorage.getItem('token');
     const settings = {
         method: 'POST',
@@ -25,7 +25,7 @@ export async function postApi(url,body){
         body:JSON.stringify(body)
         };
     const response = await fetch(url,settings);
-    return await response;
+    return response;
 }
 
 export async function putApi(url,body){

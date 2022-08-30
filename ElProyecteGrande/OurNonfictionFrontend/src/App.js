@@ -1,6 +1,8 @@
 import { Outlet, NavLink } from "react-router-dom";
 
 const App = ({ username, setUsername }) => {
+  const role = sessionStorage.getItem('role');
+  console.log(role);
   return (
       <>
         <header>
@@ -17,9 +19,11 @@ const App = ({ username, setUsername }) => {
               <li className="nav-item">
                 <NavLink className="nav-link " to="/calendar">Calendar</NavLink>
               </li>
+              {role==='Admin'?
               <li className="nav-item">
                 <NavLink className="nav-link " to="/users">Users</NavLink>
-              </li>
+              </li>:<></>}
+
               {username ? 
               <>
               <li className="nav-item">
