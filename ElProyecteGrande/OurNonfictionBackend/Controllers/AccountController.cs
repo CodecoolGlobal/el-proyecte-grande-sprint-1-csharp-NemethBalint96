@@ -38,7 +38,8 @@ public class AccountController : ControllerBase
         if (token is null)
             return Unauthorized();
 
-        return Ok(token);
+        var user = await _accountService.Get(account.Username);
+        return Ok(new{Token=token,role=user.Role});
     }
 
     [Authorize(Roles = "Admin")]

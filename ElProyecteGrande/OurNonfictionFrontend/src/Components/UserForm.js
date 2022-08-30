@@ -14,28 +14,28 @@ const UserForm = ({ type, setName }) => {
   const emailRegex = /\S+@\S+\.\S+/;
 
   const validateForm = (emailRegex)=>{
-    let flag1 = false;
-    let flag2 = false;
-    let flag3 = false;
+    let isPasswordValid = false;
+    let isUserNameValid = false;
+    let isEmailValid = false;
     if(password===''){
       setPasswordError(true);
     }else{
-      flag1 = true;
+      isPasswordValid = true;
       setPasswordError(false);
     }
     if(username===''){
       setUserNameError(true);
     }else{
-      flag2 = true;
+      isUserNameValid = true;
       setUserNameError(false);
     }
     if(email===''|| !emailRegex.test(email)){
       setEmailError(true);
     }else{
-      flag3 = true;
+      isEmailValid = true;
       setEmailError(false);
     }
-    if(flag1&&flag2&&flag3){
+    if(isPasswordValid&&isUserNameValid&&isEmailValid){
       return true;
     }
   }
@@ -45,14 +45,17 @@ const UserForm = ({ type, setName }) => {
     if (type === 'login') {
       const body = {
         "username":username,
-        "email":email,
+        "email":'',
         "password":password,
-        "role":"User"
+        "role":""
       }
       postApi('/account/login', body).then((response)=>response.json()).then(data => {
-        sessionStorage.setItem('token', data);
+        sessionStorage.setItem('token', data.token);
+        sessionStorage.setItem('role',data.role);
+        console.log(data.role);
         setName(username);
       }).then(() => navigate('/calendar'))}
+  if(type ==='registration'){
     if(validateForm(emailRegex)){
       postApi("/account/checkname",username).then((response)=>response.json()).then((result)=>{
         if(result!==true){
@@ -72,6 +75,7 @@ const UserForm = ({ type, setName }) => {
         }
       })
     }
+  }
   }
 
   return (

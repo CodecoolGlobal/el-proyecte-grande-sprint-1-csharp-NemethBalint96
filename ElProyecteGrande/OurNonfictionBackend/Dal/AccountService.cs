@@ -20,9 +20,9 @@ class AccountService : IAccountService
         return _context.Accounts.ToListAsync();
     }
 
-    public Task<Account> Get(string email)
+    public async Task<Account> Get(string username)
     {
-        throw new NotImplementedException();
+        return await _context.Accounts.FirstAsync(user => user.Username == username);
     }
 
     public async Task Registration(Account account)
