@@ -14,27 +14,29 @@ import SelectRoom from './Components/SelectRoom';
 import GuestForm from './Components/GuestForm';
 import Calendar from './Components/Calendar';
 import UserForm from './Components/UserForm';
+import Users from './Components/Users';
 
 function Main() {
   const [username, setUsername] = useState('');
 
   return (
     <BrowserRouter>
-    <Routes>
-    <Route path='/' forceRefresh={true} element={<App username={username} setUsername={setUsername}/>}>
-    <Route path='/bookings' element={<MainPage/>}/>
-    <Route path='/guests' element={<GuestTable/>}/>
-    <Route path='/booking/:bookingId' element={<BookingDetails/>}/>
-    <Route path='/newbooking' element={<BookingForm/>}/>
-    <Route path='/available/:bookingId' element={<SelectRoom/>}/>
-    <Route path='/guest/:guestId' element={<GuestForm/>}/>
-    <Route path='/editbooking/:bookingId' element={<BookingForm />}/>
-    <Route path='/' element={<Calendar/>}/>
-    <Route path='/registration' element={<UserForm type="registration" setName={setUsername}/>}/>
-    <Route path='/login' element={<UserForm type="login" setName={setUsername}/>}/>
-  </Route>
-  </Routes>
-  </BrowserRouter>
+      <Routes>
+        <Route path='/' element={<App username={username} setUsername={setUsername}/>}>
+          <Route path='/bookings' element={<MainPage/>}/>
+          <Route path='/guests' element={<GuestTable/>}/>
+          <Route path='/booking/:bookingId' element={<BookingDetails/>}/>
+          <Route path='/newbooking' element={<BookingForm/>}/>
+          <Route path='/available/:bookingId' element={<SelectRoom/>}/>
+          <Route path='/guest/:guestId' element={<GuestForm/>}/>
+          <Route path='/editbooking/:bookingId' element={<BookingForm />}/>
+          <Route path='/calendar' element={<Calendar/>}/>
+          <Route path='/registration' element={<UserForm type="registration" setName={setUsername}/>}/>
+          <Route path='/' element={<UserForm type="login" setName={setUsername}/>}/>
+          <Route path='/users' element={<Users/>}/>
+        </Route>
+      </Routes>
+    </BrowserRouter>
   )
 }
 

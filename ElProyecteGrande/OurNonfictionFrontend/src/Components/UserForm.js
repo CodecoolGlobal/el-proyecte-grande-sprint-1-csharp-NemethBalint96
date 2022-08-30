@@ -52,7 +52,7 @@ const UserForm = ({ type, setName }) => {
       postApi('/account/login', body).then((response)=>response.json()).then(data => {
         sessionStorage.setItem('token', data);
         setName(username);
-      }).then(() => navigate('/'))}
+      }).then(() => navigate('/calendar'))}
     if(validateForm(emailRegex)){
       postApi("/account/checkname",username).then((response)=>response.json()).then((result)=>{
         if(result!==true){

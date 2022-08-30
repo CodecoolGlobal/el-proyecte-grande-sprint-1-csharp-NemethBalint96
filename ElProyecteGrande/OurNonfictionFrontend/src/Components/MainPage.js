@@ -1,14 +1,13 @@
 import { useState, useEffect } from "react";
-import { fetchPlus } from "../Clients/requests";
-import { Link} from "react-router-dom";
+import { getApi } from "../Clients/requests";
+import { Link } from "react-router-dom";
 import Table from "./Table";
-
 
 const MainPage = () => {
   const url = "bookingapi";
-  const[firstBooking,setFirstBookings]=useState([]);
+  const [firstBooking, setFirstBookings]=useState([]);
   const [bookings, setBookings] = useState([]);
-  const [loading,setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   
 
   
@@ -24,7 +23,7 @@ const MainPage = () => {
   
   useEffect(() => {
     setLoading(true);
-    fetchPlus(url,1000).then(data=>{
+    getApi(url).then(data=>{
       console.log(data);
       setFirstBookings(data);
       setLoading(false);
