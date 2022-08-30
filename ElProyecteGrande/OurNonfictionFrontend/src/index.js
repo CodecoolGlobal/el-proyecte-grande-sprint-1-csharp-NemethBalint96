@@ -31,7 +31,7 @@ root.render(
     <Route path='/editbooking/:bookingId' element={<BookingForm />}/>
     <Route path='/' element={<Calendar/>}/>
     <Route path='/registration' element={<UserForm type="registration" />}/>
-    <Route path='/login' element={<UserForm />}/>
+    <Route path='/login' element={<UserForm type="login" />}/>
   </Route>
   </Routes>
   </BrowserRouter>

@@ -1,4 +1,5 @@
 ﻿using ElProyecteGrande.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OurNonfictionBackend.Dal;
 
@@ -12,7 +13,7 @@ public class GuestApiController : ControllerBase
     {
         _guestService = guestService;
     }
-
+    
     [HttpGet]
     public Task<IEnumerable<Guest>> GetAllNamedGuests()
     {

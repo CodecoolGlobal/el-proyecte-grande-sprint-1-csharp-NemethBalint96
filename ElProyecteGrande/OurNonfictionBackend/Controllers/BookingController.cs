@@ -1,5 +1,6 @@
 ﻿using ElProyecteGrande.Dal;
 using ElProyecteGrande.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace OurNonfictionBackend.Controllers;
@@ -12,7 +13,7 @@ public class BookingApiController : ControllerBase
     {
         _bookingService = bookingService;
     }
-
+    
     [HttpGet]
     public async Task<List<Booking>> GetAll()
     {
