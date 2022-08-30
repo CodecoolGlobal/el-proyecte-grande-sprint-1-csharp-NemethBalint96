@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { postApi } from "../Clients/requests";
 
-const UserForm = ({type}) => {
+const UserForm = ({ type, setName }) => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -49,8 +49,10 @@ const UserForm = ({type}) => {
         "password":password,
         "role":"User"
       }
-      postApi('/account/login', body).then((response)=>response.json()).then(response => console.log(response));
-    }
+      postApi('/account/login', body).then((response)=>response.json()).then(data => {
+        sessionStorage.setItem('token', data);
+        setName(username);
+      }).then(() => navigate('/'))}
     if(validateForm(emailRegex)){
       postApi("/account/checkname",username).then((response)=>response.json()).then((result)=>{
         if(result!==true){
