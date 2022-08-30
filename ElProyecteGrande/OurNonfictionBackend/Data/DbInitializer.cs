@@ -22,7 +22,7 @@ namespace OurNonfictionBackend.Data
             }
 
             CreateBookings(context);
-            CreateAccount(context);
+            //CreateAccount(context);
         }
 
         private static void CreateAccount(NonfictionContext context)

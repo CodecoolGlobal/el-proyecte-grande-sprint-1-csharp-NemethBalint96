@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OurNonfictionBackend.Helpers;
 using OurNonfictionBackend.Models;
+using BCrypt.Net;
+using Microsoft.AspNetCore.Authentication;
 
 namespace OurNonfictionBackend.Dal;
 
@@ -11,6 +13,11 @@ class AccountService : IAccountService
     public AccountService(NonfictionContext context)
     {
         _context = context;
+    }
+
+    public Task<List<Account>> GetAll()
+    {
+        return _context.Accounts.ToListAsync();
     }
 
     public Task<Account> Get(string email)
@@ -29,5 +36,14 @@ class AccountService : IAccountService
     public async Task<bool> CheckUserName(string username)
     {
         return await _context.Accounts.AnyAsync(user => user.Username == username);
+    }
+
+    public async Task<Account?> AuthenticateAsync(string username, string password)
+    {
+        var user = await _context.Accounts.SingleOrDefaultAsync(user => user.Username == username);
+        if (user == null || !BCrypt.Net.BCrypt.Verify(password, user.Password))
+            return null;
+
+        return user;
     }
 }

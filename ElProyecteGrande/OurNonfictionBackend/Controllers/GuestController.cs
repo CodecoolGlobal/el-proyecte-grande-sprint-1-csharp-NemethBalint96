@@ -12,7 +12,7 @@ public class GuestApiController : ControllerBase
     {
         _guestService = guestService;
     }
-
+    
     [HttpGet]
     public Task<IEnumerable<Guest>> GetAllNamedGuests()
     {

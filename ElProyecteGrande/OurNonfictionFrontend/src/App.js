@@ -1,6 +1,6 @@
 import { Outlet, NavLink } from "react-router-dom";
 
-const App = () => {
+const App = ({ username, setUsername }) => {
   return (
       <>
         <header>
@@ -17,9 +17,27 @@ const App = () => {
               <li className="nav-item">
                 <NavLink className="nav-link " to="/">Calendar</NavLink>
               </li>
+              {username ? 
+              <>
+              <li className="nav-item">
+                <div className="nav-link">{username}</div>
+              </li>
+              <li className="nav-item">
+                <NavLink className="nav-link " to="/login" onClick={() => {
+                  setUsername(null);
+                  sessionStorage.clear();
+                }}>Logout</NavLink>
+              </li>
+              </>
+              :
+              <>
+              <li className="nav-item">
+                <NavLink className="nav-link " to="/login">Login</NavLink>
+              </li>
               <li className="nav-item">
                 <NavLink className="nav-link " to="/registration">Registration</NavLink>
               </li>
+              </>}
             </ul>
           </div>
         </nav>

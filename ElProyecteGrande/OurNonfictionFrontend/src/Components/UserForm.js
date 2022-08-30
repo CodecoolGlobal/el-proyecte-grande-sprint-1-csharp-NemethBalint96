@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { postApi } from "../Clients/requests";
 
-const UserForm = ({type}) => {
+const UserForm = ({ type, setName }) => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -42,24 +42,35 @@ const UserForm = ({type}) => {
 
   const submit = (e) => {
     e.preventDefault();
-    if(validateForm(emailRegex)){
-    postApi("/account/checkname",username).then((response)=>response.json()).then((result)=>{
-      if(result!==true){
+    if (type === 'login') {
       const body = {
         "username":username,
         "email":email,
         "password":password,
         "role":"User"
       }
-      postApi("/account/registration", body).then((response)=>{
-        if(response.status ===200){
-          navigate("/");
+      postApi('/account/login', body).then((response)=>response.json()).then(data => {
+        sessionStorage.setItem('token', data);
+        setName(username);
+      }).then(() => navigate('/'))}
+    if(validateForm(emailRegex)){
+      postApi("/account/checkname",username).then((response)=>response.json()).then((result)=>{
+        if(result!==true){
+          const body = {
+            "username":username,
+            "email":email,
+            "password":password,
+            "role":"User"
+          }
+          postApi("/account/registration", body).then((response)=>{
+            if(response.status ===200){
+              navigate("/");
+            }
+          })
+        }else{
+          setUsernameTaken(true);
         }
       })
-    }else{
-      setUsernameTaken(true);
-    }
-    })
     }
   }
 
@@ -73,12 +84,14 @@ const UserForm = ({type}) => {
         {usernameTaken===true?<p id="userName" style={{'color':'red'}}>Username is already taken!</p>:<></>}
       </div>
       <br></br>
-      <div>
-        <label className="form-label">Email</label><br/>
-        <input className="form-control" type="email" onChange={(e) => setEmail(e.target.value)}/>
-        {emailError===true?<p style={{'color':'red'}}>Please provide a valid e-mail address!</p>:<></>}
-      </div>
-      <br></br>
+      {type === 'registration' ? <>
+        <div>
+          <label className="form-label">Email</label><br/>
+          <input className="form-control" type="email" onChange={(e) => setEmail(e.target.value)}/>
+          {emailError===true?<p style={{'color':'red'}}>Please provide a valid e-mail address!</p>:<></>}
+        </div>
+        <br></br>
+      </> : <></> }
       <div>
         <label className="form-label">Password</label><br/>
         <input className="form-control" type="password" onChange={(e) => setPassword(e.target.value)}/>

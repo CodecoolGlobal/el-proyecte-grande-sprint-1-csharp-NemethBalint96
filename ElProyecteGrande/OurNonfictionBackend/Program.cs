@@ -1,5 +1,10 @@
+using System.Text;
 using ElProyecteGrande.Dal;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using OurNonfictionBackend.Auth;
 using OurNonfictionBackend.Dal;
 using OurNonfictionBackend.Data;
 using OurNonfictionBackend.Models;
@@ -19,6 +24,32 @@ builder.Services.AddScoped<IBookingService, BookingService>();
 builder.Services.AddScoped<IRoomService, RoomService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 
+var tokenKey = builder.Configuration.GetValue<string>("TokenKey");
+var key = Encoding.ASCII.GetBytes(tokenKey);
+
+builder.Services.AddAuthentication(x =>
+    {
+        x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+    .AddJwtBearer(x =>
+    {
+        x.RequireHttpsMetadata = false;
+        x.SaveToken = true;
+        x.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(key),
+            ValidateIssuer = false,
+            ValidateAudience = false
+        };
+    });
+
+ServiceProvider serviceProvider = builder.Services.BuildServiceProvider();
+var accountService = serviceProvider.GetService<IAccountService>();
+
+builder.Services.AddSingleton<IJWTAuthenticationManager>(new JWTAuthenticationManager(tokenKey, accountService));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -29,6 +60,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
