@@ -15,6 +15,7 @@ import GuestForm from './Components/GuestForm';
 import Calendar from './Components/Calendar';
 import UserForm from './Components/UserForm';
 import Users from './Components/Users';
+import ForgottenPassword from './Components/ForgottenPassword';
 
 function Main() {
   const [username, setUsername] = useState('');
@@ -34,6 +35,8 @@ function Main() {
           <Route path='/registration' element={<UserForm type="registration" setName={setUsername}/>}/>
           <Route path='/' element={<UserForm type="login" setName={setUsername}/>}/>
           <Route path='/users' element={<Users/>}/>
+          <Route path="/forgot" element={<ForgottenPassword type="sendemail"/>}/>
+          <Route path='/forgot/:username' element={<ForgottenPassword type="changepassword"/>}/>
         </Route>
       </Routes>
     </BrowserRouter>

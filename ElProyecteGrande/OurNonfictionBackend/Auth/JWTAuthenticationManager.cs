@@ -1,9 +1,8 @@
 using Microsoft.IdentityModel.Tokens;
+using OurNonfictionBackend.Dal;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using OurNonfictionBackend.Dal;
-using OurNonfictionBackend.Models;
 
 namespace OurNonfictionBackend.Auth;
 

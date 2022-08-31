@@ -119,6 +119,7 @@ const UserForm = ({ type, setName }) => {
         }
       </div>
     </form>
+    {type==='login'?<div><p>If you forgot your password click <Link to="/forgot">here</Link></p></div>:<></>}
     </div>
   )
 }

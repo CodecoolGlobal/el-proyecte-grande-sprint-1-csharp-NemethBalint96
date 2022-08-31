@@ -14,7 +14,7 @@ public class BookingApiController : ControllerBase
     {
         _bookingService = bookingService;
     }
-    
+
     [HttpGet]
     public async Task<List<Booking>> GetAll()
     {

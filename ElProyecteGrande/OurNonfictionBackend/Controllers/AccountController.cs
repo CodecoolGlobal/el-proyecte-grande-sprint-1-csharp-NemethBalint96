@@ -30,6 +30,24 @@ public class AccountController : ControllerBase
         return await _accountService.CheckUserName(username);
     }
 
+    [HttpPost("checkemail")]
+    public async Task<bool> CheckEmail([FromBody] string email)
+    {
+        return await _accountService.CheckEmail(email);
+    }
+
+    [HttpPost("passwordchange")]
+    public void SendPasswordRecoveryEmail([FromBody] string email)
+    {
+        _accountService.SendPasswordChangeEmail(email);
+    }
+
+    [HttpPost("passwordchange/{username}")]
+    public async Task ChangePasswordForUser([FromBody] string password, [FromRoute] string username)
+    {
+        await _accountService.ChangePasswordForUser(username, password);
+    }
+
     [HttpPost("login")]
     public async Task<IActionResult> Login(Account account)
     {
@@ -39,7 +57,7 @@ public class AccountController : ControllerBase
             return Unauthorized();
 
         var user = await _accountService.Get(account.Username);
-        return Ok(new{Token=token,role=user.Role});
+        return Ok(new { Token = token, role = user.Role });
     }
 
     [Authorize(Roles = "Admin")]
