@@ -11,15 +11,13 @@ const BookingTable = ({data,type,OnClick,guests}) => {
     
 function configurePage(data, type) {
   if(type==='Booking'){
-  data.map(booking => delete booking["guests"]);
-  data.map(booking => delete booking["room"]);
-  data.map(booking => booking["status"]= booking['status']===0?'Confirmed':booking['status']==='Confirmed'?'Confirmed':'Cancelled');
-  data.map(booking =>booking['arrivalDate']= booking['arrivalDate'].slice(0,10));
-  data.map(booking =>booking['departureDate']= booking['departureDate'].slice(0,10));
-  data.map(booking =>booking['created']= booking['created'].slice(0,10));
-  data.map(booking => booking['modificationDate'] = booking['modificationDate'].slice(0, 10));
-      data.map(booking => booking['total'] = `${booking.total} $`);
-
+    data.map(booking => delete booking["guests"]);
+    data.map(booking => delete booking["room"]);
+    data.map(booking => booking["status"]= booking['status']===0?'Confirmed':booking['status']==='Confirmed'?'Confirmed':'Cancelled');
+    data.map(booking =>booking['arrivalDate']= booking['arrivalDate'].slice(0,10));
+    data.map(booking =>booking['departureDate']= booking['departureDate'].slice(0,10));
+    data.map(booking =>booking['created']= booking['created'].slice(0,10));
+    data.map(booking => booking['modificationDate'] = booking['modificationDate'].slice(0, 10));
   }
   if(type==='Guests'){
     guests.map(guest => guest["age"] = guest["age"] === 0 ? "Adult" :guest["age"]=== 1 ? "Child" :guest["age"]==='Adult'?'Adult':guest['age']==='Child'?'Child':'Infant');
