@@ -36,6 +36,18 @@ public class AccountController : ControllerBase
         return await _accountService.CheckEmail(email);
     }
 
+    [HttpPost("passwordchange")]
+    public void SendPasswordRecoveryEmail([FromBody] string email)
+    {
+        _accountService.SendPasswordChangeEmail(email);
+    }
+
+    [HttpPost("passwordchange/{username}")]
+    public async Task ChangePasswordForUser([FromBody] string password, [FromRoute] string username)
+    {
+        await _accountService.ChangePasswordForUser(username, password);
+    }
+
     [HttpPost("login")]
     public async Task<IActionResult> Login(Account account)
     {

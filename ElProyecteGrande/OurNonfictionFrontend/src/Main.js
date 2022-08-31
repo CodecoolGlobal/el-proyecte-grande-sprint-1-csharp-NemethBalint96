@@ -35,7 +35,8 @@ function Main() {
           <Route path='/registration' element={<UserForm type="registration" setName={setUsername}/>}/>
           <Route path='/' element={<UserForm type="login" setName={setUsername}/>}/>
           <Route path='/users' element={<Users/>}/>
-          <Route path="/forgot" element={<ForgottenPassword/>}/>
+          <Route path="/forgot" element={<ForgottenPassword type="sendemail"/>}/>
+          <Route path='/forgot/:username' element={<ForgottenPassword type="changepassword"/>}/>
         </Route>
       </Routes>
     </BrowserRouter>
