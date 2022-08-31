@@ -2,7 +2,6 @@ import { Outlet, NavLink } from "react-router-dom";
 
 const App = ({ username, setUsername }) => {
   const role = sessionStorage.getItem('role');
-  console.log(role);
   return (
       <>
         <header>

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,Link } from 'react-router-dom';
 import { postApi } from "../Clients/requests";
 
 const UserForm = ({ type, setName }) => {
@@ -106,6 +106,7 @@ const UserForm = ({ type, setName }) => {
         <button className="form-control btn btn-primary" type="submit" onClick={(e) => submit(e)}>{type!=='registration'?"Login":"Register"}</button>
       </div>
     </form>
+    {type==='login'?<div><p>If you forgot your password click <Link to="/forgot">here</Link></p></div>:<></>}
     </div>
   )
 }
