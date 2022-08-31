@@ -21,7 +21,7 @@ public class AccountController : ControllerBase
     public async Task<OkObjectResult> Registration(Account account)
     {
         await _accountService.Registration(account);
-        return Ok("Kész");
+        return Ok("Ok");
     }
 
     [HttpPost("checkname")]
@@ -47,5 +47,19 @@ public class AccountController : ControllerBase
     public async Task<List<Account>> GetAccounts()
     {
         return await _accountService.GetAll();
+    }
+
+    [HttpPost("signin-google")]
+    public IActionResult LoginWithGoogle(Account account)
+    {
+        var token = _JWTAuthenticationManager.WriteToken(account);
+
+        return Ok(new { Token = token, role = account.Role });
+    }
+
+    [HttpGet("client-id")]
+    public IActionResult GetClientId()
+    {
+        return Ok(_JWTAuthenticationManager.GetClientId());
     }
 }

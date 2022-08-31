@@ -1,7 +1,5 @@
 using System.Text;
 using ElProyecteGrande.Dal;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -27,36 +25,31 @@ builder.Services.AddScoped<IAccountService, AccountService>();
 
 var tokenKey = builder.Configuration.GetValue<string>("TokenKey");
 var key = Encoding.ASCII.GetBytes(tokenKey);
+var googleAuthNSection = builder.Configuration.GetSection("OurNonfiction:Google");
+var clientId = googleAuthNSection["ClientId"];
 
 builder.Services.AddAuthentication(x =>
-{
-    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-    x.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
-})
-.AddJwtBearer(x =>
-{
-    x.RequireHttpsMetadata = false;
-    x.SaveToken = true;
-    x.TokenValidationParameters = new TokenValidationParameters
     {
-        ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(key),
-        ValidateIssuer = false,
-        ValidateAudience = false
-    };
-})
-.AddGoogle(GoogleDefaults.AuthenticationScheme, options =>
-{
-    IConfigurationSection googleAuthNSection = builder.Configuration.GetSection("OurNonfiction:Google");
-    options.ClientId = googleAuthNSection["ClientId"];
-    options.ClientSecret = googleAuthNSection["ClientSecret"];
-});
+        x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+    .AddJwtBearer(x =>
+    {
+        x.RequireHttpsMetadata = false;
+        x.SaveToken = true;
+        x.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(key),
+            ValidateIssuer = false,
+            ValidateAudience = false
+        };
+    });
 
 ServiceProvider serviceProvider = builder.Services.BuildServiceProvider();
 var accountService = serviceProvider.GetService<IAccountService>();
 
-builder.Services.AddSingleton<IJWTAuthenticationManager>(new JWTAuthenticationManager(tokenKey, accountService));
+builder.Services.AddSingleton<IJWTAuthenticationManager>(new JWTAuthenticationManager(tokenKey, accountService, clientId));
 
 var app = builder.Build();
 

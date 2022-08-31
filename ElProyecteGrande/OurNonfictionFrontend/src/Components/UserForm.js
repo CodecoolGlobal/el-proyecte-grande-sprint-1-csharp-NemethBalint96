@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { postApi } from "../Clients/requests";
+import { getApi, postApi } from "../Clients/requests";
+import Google from './Google';
 
 const UserForm = ({ type, setName }) => {
   const [username, setUsername] = useState('');
@@ -10,8 +11,17 @@ const UserForm = ({ type, setName }) => {
   const [usernameError,setUserNameError] = useState(false);
   const [passwordError,setPasswordError] = useState(false);
   const [usernameTaken,setUsernameTaken] = useState(false);
+  const [clientId, setClientId] = useState('');
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const emailRegex = /\S+@\S+\.\S+/;
+
+  useEffect(() => {
+    getApi('/account/client-id').then(response => {
+      setClientId(response);
+      setLoading(false);
+    })
+  }, []);
 
   const validateForm = (emailRegex)=>{
     let isPasswordValid = false;
@@ -52,30 +62,29 @@ const UserForm = ({ type, setName }) => {
       postApi('/account/login', body).then((response)=>response.json()).then(data => {
         sessionStorage.setItem('token', data.token);
         sessionStorage.setItem('role',data.role);
-        console.log(data.role);
         setName(username);
       }).then(() => navigate('/calendar'))}
-  if(type ==='registration'){
-    if(validateForm(emailRegex)){
-      postApi("/account/checkname",username).then((response)=>response.json()).then((result)=>{
-        if(result!==true){
-          const body = {
-            "username":username,
-            "email":email,
-            "password":password,
-            "role":"User"
-          }
-          postApi("/account/registration", body).then((response)=>{
-            if(response.status ===200){
-              navigate("/");
+    if(type ==='registration'){
+      if(validateForm(emailRegex)){
+        postApi("/account/checkname",username).then((response)=>response.json()).then((result)=>{
+          if(result!==true){
+            const body = {
+              "username":username,
+              "email":email,
+              "password":password,
+              "role":"User"
             }
-          })
-        }else{
-          setUsernameTaken(true);
-        }
-      })
+            postApi("/account/registration", body).then((response)=>{
+              if(response.status ===200){
+                navigate("/");
+              }
+            })
+          }else{
+            setUsernameTaken(true);
+          }
+        })
+      }
     }
-  }
   }
 
   return (
@@ -104,6 +113,10 @@ const UserForm = ({ type, setName }) => {
       <br></br>
       <div>
         <button className="form-control btn btn-primary" type="submit" onClick={(e) => submit(e)}>{type!=='registration'?"Login":"Register"}</button>
+        {loading ? <></>
+        :
+        <Google clientId={clientId} setName={setName}/>
+        }
       </div>
     </form>
     </div>
