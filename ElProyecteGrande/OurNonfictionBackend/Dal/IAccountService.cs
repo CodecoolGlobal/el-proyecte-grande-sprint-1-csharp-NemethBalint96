@@ -9,4 +9,5 @@ public interface IAccountService
     Task Registration(Account account);
     Task<bool> CheckUserName(string username);
     Task<Account?> AuthenticateAsync(string username, string password);
+    Task<bool> CheckEmail(string email);
 }

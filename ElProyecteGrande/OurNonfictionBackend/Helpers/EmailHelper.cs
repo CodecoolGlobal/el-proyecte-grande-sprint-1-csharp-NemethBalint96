@@ -1,11 +1,11 @@
-﻿using System.Net.Mail;
-using System.Net;
+﻿using System.Net;
+using System.Net.Mail;
 
 namespace OurNonfictionBackend.Helpers
 {
     public static class EmailHelper
     {
-        public static void SendEmail( string userName,string email)
+        public static void SendEmail(string userName, string email)
         {
             var smtpClient = new SmtpClient("smtp.gmail.com")
             {

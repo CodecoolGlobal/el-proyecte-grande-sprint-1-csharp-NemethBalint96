@@ -1,6 +1,4 @@
-using System.Text;
 using ElProyecteGrande.Dal;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -8,6 +6,7 @@ using OurNonfictionBackend.Auth;
 using OurNonfictionBackend.Dal;
 using OurNonfictionBackend.Data;
 using OurNonfictionBackend.Models;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
