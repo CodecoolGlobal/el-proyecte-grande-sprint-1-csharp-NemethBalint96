@@ -155,7 +155,7 @@ const navigate = useNavigate();
           const booking = bookings.filter((booking) => (new Date(formattedDate) >= new Date(booking.arrivalDate.slice(0, 10)) && new Date(formattedDate) <= new Date(booking.departureDate.slice(0, 10)) && booking.room.id === roomId))[0]
 
           let spanSize = 0;
-          if (booking) {
+          if (booking && booking.status === 0) {
             if (formattedDate === booking.arrivalDate.slice(0, 10)) {
               spanSize = booking.nights + i > dayCount ? dayCount - i : booking.nights;
             } else {
@@ -170,7 +170,7 @@ const navigate = useNavigate();
             i += spanSize - 1;
             days.push(
               <td
-                className={booking.status === 0 ? 'bg-success text-white text-truncate table-hover' : 'table-hover bg-danger text-white text-truncate'}
+                className='bg-success text-white text-truncate table-hover'
                 key={booking.id}
                 colSpan={spanSize}
                 style={{cursor: 'pointer'}}
@@ -182,7 +182,6 @@ const navigate = useNavigate();
           } else {
             days.push(
               <td>
-
               </td>
             )
           }
