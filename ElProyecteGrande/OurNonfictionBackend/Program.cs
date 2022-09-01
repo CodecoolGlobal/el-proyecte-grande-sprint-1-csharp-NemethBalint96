@@ -25,6 +25,8 @@ builder.Services.AddScoped<IAccountService, AccountService>();
 
 var tokenKey = builder.Configuration.GetValue<string>("TokenKey");
 var key = Encoding.ASCII.GetBytes(tokenKey);
+var googleAuthNSection = builder.Configuration.GetSection("OurNonfiction:Google");
+var clientId = googleAuthNSection["ClientId"];
 
 builder.Services.AddAuthentication(x =>
     {
@@ -47,7 +49,7 @@ builder.Services.AddAuthentication(x =>
 ServiceProvider serviceProvider = builder.Services.BuildServiceProvider();
 var accountService = serviceProvider.GetService<IAccountService>();
 
-builder.Services.AddSingleton<IJWTAuthenticationManager>(new JWTAuthenticationManager(tokenKey, accountService));
+builder.Services.AddSingleton<IJWTAuthenticationManager>(new JWTAuthenticationManager(tokenKey, accountService, clientId));
 
 var app = builder.Build();
 
