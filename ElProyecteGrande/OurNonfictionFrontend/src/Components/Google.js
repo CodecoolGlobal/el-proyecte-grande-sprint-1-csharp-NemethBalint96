@@ -4,7 +4,7 @@ import { gapi } from 'gapi-script';
 import { useNavigate } from 'react-router-dom';
 import { postApi } from '../Clients/requests';
 
-function Google({ clientId, setName }) {
+function Google({ clientId, setName, setLoading }) {
   const [googleLogin, setGoogleLogin] = useState(false);
   const navigate = useNavigate();
   const id = clientId;
@@ -24,7 +24,7 @@ function Google({ clientId, setName }) {
       setGoogleLogin(true);
       return;
     }
-
+    setLoading(true);
     setName(res.profileObj.name);
     const body = {
       "username":res.profileObj.name,
