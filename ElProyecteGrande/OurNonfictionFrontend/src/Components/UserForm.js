@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getApi, postApi } from "../Clients/requests";
+import { postApi, fetchPlus } from "../Clients/requests";
 import Google from './Google';
 import { Link } from "react-router-dom";
 
@@ -18,8 +18,8 @@ const UserForm = ({ type, setName }) => {
   const emailRegex = /\S+@\S+\.\S+/;
 
   useEffect(() => {
-    getApi('/account/client-id').then(response => {
-      setClientId(response);
+    fetchPlus('/account/client-id', 100).then(response => {
+      setClientId(response.result);
       setLoading(false);
     })
   }, []);
@@ -53,6 +53,7 @@ const UserForm = ({ type, setName }) => {
 
   const submit = (e) => {
     e.preventDefault();
+    setLoading(true);
     if (type === 'login') {
       const body = {
         "username":username,
@@ -89,6 +90,11 @@ const UserForm = ({ type, setName }) => {
   }
 
   return (
+    <>
+    {loading ? <div className="loader-container">
+      	  <div className="spinner"></div>
+        </div>
+    :
     <div className="container form-control" style={{"width":"500px !important"}}>
     <form>
       <div>
@@ -119,12 +125,14 @@ const UserForm = ({ type, setName }) => {
         </div>
         {loading ? <></>
         :
-        <Google clientId={clientId} setName={setName}/>
+        <Google clientId={clientId} setName={setName} setLoading={setLoading}/>
         }
       </div>
     </form>
     {type==='login'?<div><p>If you forgot your password click <Link to="/forgot">here</Link></p></div>:<></>}
     </div>
+    }
+    </>
   )
 }
 

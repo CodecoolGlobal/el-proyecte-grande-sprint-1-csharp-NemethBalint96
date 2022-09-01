@@ -7,8 +7,10 @@ const App = ({ username, setUsername }) => {
         <header>
         <nav className="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-primary border-bottom box-shadow mb-3">
           <div className="container-fluid">
-            <a className="navbar-brand" id="nonfiction" href='/'>Our Nonfiction</a>
+            <a className="navbar-brand" id="nonfiction">Our Nonfiction</a>
             <ul className="navbar-nav flex-grow-1">
+              {username ?
+              <>
               <li className="nav-item">
                 <NavLink className='nav-link' to="/bookings">Bookings</NavLink>
               </li>
@@ -18,6 +20,9 @@ const App = ({ username, setUsername }) => {
               <li className="nav-item">
                 <NavLink className="nav-link " to="/calendar">Calendar</NavLink>
               </li>
+              </>
+              : <></>
+              }
               {role==='Admin'?
               <li className="nav-item">
                 <NavLink className="nav-link " to="/users">Users</NavLink>
