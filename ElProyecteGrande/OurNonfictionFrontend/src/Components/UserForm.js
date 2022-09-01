@@ -95,7 +95,7 @@ const UserForm = ({ type, setName }) => {
       	  <div className="spinner"></div>
         </div>
     :
-    <div className="container form-control">
+    <div className="container form-control" style={{"width":"500px !important"}}>
     <form>
       <div>
         <label className="form-label">Username</label><br/>
@@ -120,7 +120,13 @@ const UserForm = ({ type, setName }) => {
       <br></br>
       <div>
         <button className="form-control btn btn-primary" type="submit" onClick={(e) => submit(e)}>{type!=='registration'?"Login":"Register"}</button>
+        <div class="strike">
+        <span>Or</span>
+        </div>
+        {loading ? <></>
+        :
         <Google clientId={clientId} setName={setName} setLoading={setLoading}/>
+        }
       </div>
     </form>
     {type==='login'?<div><p>If you forgot your password click <Link to="/forgot">here</Link></p></div>:<></>}

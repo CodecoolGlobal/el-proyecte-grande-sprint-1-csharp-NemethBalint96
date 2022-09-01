@@ -56,7 +56,7 @@ class AccountService : IAccountService
         var username = _context.Accounts.FirstOrDefault(user => user.Email == email).Username;
         var encodedUsername = EncodeDecodeHelper.encode(username);
         var link = $"https://localhost:3000/forgot/{encodedUsername}";
-        EmailHelper.CreatePasswordRecoveryEmail(email, link);
+        EmailHelper.CreatePasswordRecoveryEmail(email, link,username);
     }
 
     public async Task ChangePasswordForUser(string username, string password)

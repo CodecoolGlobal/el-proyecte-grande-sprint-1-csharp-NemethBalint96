@@ -13,6 +13,7 @@ const BookingDetails = () => {
   const [roomId, setRoomId] = useState(0);
   const [rooms, setRooms] = useState([]);
   const [loading,setLoading] = useState(false);
+  const[selectRoom,setSelectRoom] = useState(true);
 
   useEffect(() => {
     setLoading(true);
@@ -69,12 +70,10 @@ const BookingDetails = () => {
     })
   }
 
-  function selectRoom() {
-    const element = document.getElementById('roomSelect');
-    element.style.display='';
-    const button = document.getElementById('roomSelectButton');
-    button.style.display='none';
-  }
+ 
+    
+    
+  
 
   function onSubmit(e) {
     setLoading(true);
@@ -88,10 +87,7 @@ const BookingDetails = () => {
                 setRooms(data);
                 setRoomId(data[0].id);
               });
-            const element = document.getElementById('roomSelect');
-            element.style.display = 'none';
-            const button = document.getElementById('roomSelectButton');
-            button.style.display = '';
+            setSelectRoom(true);
           }
       });
   }
@@ -111,8 +107,8 @@ const BookingDetails = () => {
         </div>
         <div className='col'>
           {booking.status !== 1 ? <>
-            <button className="btn btn-primary" id='roomSelectButton' onClick={selectRoom}>Select Room</button>
-            <div className='row' id='roomSelect' style={{display:'none'}}>
+            {selectRoom?<button className="btn btn-primary" id='roomSelectButton' onClick={()=>setSelectRoom(false)}>Select Room</button>:
+            <div className='row' id='roomSelect'>
             <div className='col-md-7'>
                 <select className='form-select' onChange={(e)=>setRoomId(parseInt(e.target.value))}>
                     {rooms.map(room => <option value={room.id} selected={room.id === roomId ? true : false } key={room.id}>Floor:{room.floor} Door:{room.doorNumber} {room.roomType===1?"Apartman":room.roomType===2?"Standard":room.roomType===3?"Superior":""}</option>)}
@@ -121,7 +117,7 @@ const BookingDetails = () => {
               <div className='col'>
               <input type="submit" className="btn btn-primary" onClick={e=>onSubmit(e)}/>
               </div>
-            </div>
+            </div>}
           </> : <></>}
         </div>
       </div>
