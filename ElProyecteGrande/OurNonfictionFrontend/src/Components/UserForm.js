@@ -14,6 +14,7 @@ const UserForm = ({ type, setName }) => {
   const [usernameTaken,setUsernameTaken] = useState(false);
   const [clientId, setClientId] = useState('');
   const [loading, setLoading] = useState(true);
+  const [loginError, setLoginError] = useState(false);
   const navigate = useNavigate();
   const emailRegex = /\S+@\S+\.\S+/;
 
@@ -49,23 +50,45 @@ const UserForm = ({ type, setName }) => {
     if(isPasswordValid&&isUserNameValid&&isEmailValid){
       return true;
     }
+    return false;
   }
 
   const submit = (e) => {
     e.preventDefault();
     setLoading(true);
     if (type === 'login') {
+      setLoginError(false);
       const body = {
         "username":username,
         "email":'',
         "password":password,
         "role":""
       }
-      postApi('/account/login', body).then((response)=>response.json()).then(data => {
+
+      setUserNameError(username === '');
+      setPasswordError(password === '');
+      if (!username || !password) {
+        setLoading(false);
+        return;
+      }
+
+      postApi('/account/login', body)
+      .then((response) => {
+        if (!response.ok) { throw response }
+        return response.json();
+      })
+      .then(data => {
         sessionStorage.setItem('token', data.token);
         sessionStorage.setItem('role',data.role);
         setName(username);
-      }).then(() => navigate('/calendar'))}
+        navigate('/calendar');
+      })
+      .catch(e => {
+        setLoading(false);
+        setLoginError(true);
+      })
+    }
+
     if(type ==='registration'){
       if(validateForm(emailRegex)){
         postApi("/account/checkname",username).then((response)=>response.json()).then((result)=>{
@@ -78,13 +101,17 @@ const UserForm = ({ type, setName }) => {
             }
             postApi("/account/registration", body).then((response)=>{
               if(response.status ===200){
+                setLoading(false);
                 navigate("/");
               }
             })
-          }else{
+          } else {
             setUsernameTaken(true);
+            setLoading(false);
           }
         })
+      } else {
+        setLoading(false);
       }
     }
   }
@@ -100,24 +127,26 @@ const UserForm = ({ type, setName }) => {
       <div>
         <label className="form-label">Username</label><br/>
         <input className="form-control" type="text" onChange={(e) => setUsername(e.target.value)} />
-        {usernameError===true?<p id="userName" style={{'color':'red'}}>Please give a Username!</p>:<></>}
-        {usernameTaken===true?<p id="userName" style={{'color':'red'}}>Username is already taken!</p>:<></>}
+        {loginError ? <p style={{'color':'red'}}>Please provide a valid Username!</p>:
+        usernameError ?<p id="userName" style={{'color':'red'}}>Please give a Username!</p>:
+        usernameTaken ?<p id="userName" style={{'color':'red'}}>Username is already taken!</p>:
+        <br></br>}
       </div>
-      <br></br>
+
       {type === 'registration' ? <>
         <div>
           <label className="form-label">Email</label><br/>
           <input className="form-control" type="email" onChange={(e) => setEmail(e.target.value)}/>
-          {emailError===true?<p style={{'color':'red'}}>Please provide a valid e-mail address!</p>:<></>}
+          {emailError ?<p style={{'color':'red'}}>Please provide a valid e-mail address!</p>:<br></br>}
         </div>
-        <br></br>
       </> : <></> }
       <div>
         <label className="form-label">Password</label><br/>
         <input className="form-control" type="password" onChange={(e) => setPassword(e.target.value)}/>
-        {passwordError===true?<p style={{'color':'red'}}>Please provide a password!</p>:<></>}
+        {loginError ? <p style={{'color':'red'}}>Please provide a valid Password!</p>:
+        passwordError ?<p style={{'color':'red'}}>Please provide a password!</p>:
+        <br></br>}
       </div>
-      <br></br>
       <div>
         <button className="form-control btn btn-primary" type="submit" onClick={(e) => submit(e)}>{type!=='registration'?"Login":"Register"}</button>
         <div class="strike">
