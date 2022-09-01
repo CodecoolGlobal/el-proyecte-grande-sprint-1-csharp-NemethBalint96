@@ -45,6 +45,11 @@ function Google({ clientId, setName }) {
   return (
     <GoogleLogin
       clientId={clientId}
+      render={(renderProps) => (
+        <button className="form-control btn btn-primary" onClick={renderProps.onClick} disabled={renderProps.disabled}>
+          Sign in with Goole
+        </button>
+      )}
       buttonText="Sign in with Google"
       onSuccess={OnSuccess}
       onFailure={OnFailure}

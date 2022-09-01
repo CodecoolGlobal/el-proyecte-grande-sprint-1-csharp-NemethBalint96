@@ -33,7 +33,7 @@ else{
 }
 }
   return (
-    <div>
+    <div className='form-control container' style={{"width":"500px !important"}}>
       {type==='sendemail'?
       <div>
           <label className="form-label">Email</label><br/>
@@ -45,6 +45,7 @@ else{
         <input className="form-control" type="password" onChange={(e) => setPassword(e.target.value)}/>
         {passwordError===true?<p style={{'color':'red'}}>Please give a new password! Don't leave it empty!</p>:<></>}
       </div>}
+      <br></br>
         <div>
         <button className="form-control btn btn-primary" type="submit" onClick={(e) => submit(e)}>Send</button>
       </div>

@@ -42,7 +42,7 @@ namespace OurNonfictionBackend.Helpers
                 From = new MailAddress("Nonfiction@ours.com"),
                 Subject = "Password Change",
                 Body =
-                    $"<h1>Hello!</h1><p>We heard you have problem with your password. Click on this link and change it!<br><a href=\"{link}\">{link}</a> ;)</p><p>Best regard,</p><p>The team</p>",
+                    $"<h1>Hello!</h1><p>We heard you have problem with your password. Click on this <a href=\"{link}\">link</a> and change it! ;)</p><p>Best regard,</p><p>The team</p>",
                 IsBodyHtml = true,
             };
             mailMessage.To.Add(email);

@@ -20,7 +20,6 @@ const BookingForm = () => {
   const [arrivalDate, setArrivalDate] = useState(baseDate);
   const [departureDate, setDepartureDate] = useState(normalDate);
   const [guests, setGuests] = useState([]);
-  // const [total, setTotal] = useState(0);
   const [loading,setLoading] = useState(false);
   const emailRegex = /\S+@\S+\.\S+/;
   const[emailError,setEmailError] = useState({});
@@ -37,8 +36,7 @@ const BookingForm = () => {
     "infants":infants,
     "arrivalDate":arrivalDate,
     "departureDate": departureDate,
-      "guests": guests,
-    // "total":total
+    "guests": guests,
   }
 
   useEffect(() => {
