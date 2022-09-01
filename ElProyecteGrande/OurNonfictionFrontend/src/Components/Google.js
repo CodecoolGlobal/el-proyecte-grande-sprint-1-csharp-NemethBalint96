@@ -7,16 +7,17 @@ import { postApi } from '../Clients/requests';
 function Google({ clientId, setName }) {
   const [googleLogin, setGoogleLogin] = useState(false);
   const navigate = useNavigate();
+  const id = clientId;
 
   useEffect(() => {
     const initClient = () => {
       gapi.auth2.init({
-        clientId: clientId,
+        clientId: id,
         scope: ''
       });
     };
     gapi.load('client:auth2', initClient);
-  }, []);
+  }, [id]);
 
   const OnSuccess = (res) => {
     if (!googleLogin) {

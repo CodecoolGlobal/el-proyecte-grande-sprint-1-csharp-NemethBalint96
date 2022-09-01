@@ -82,16 +82,16 @@ const BookingDetails = () => {
       putApi(`/roomapi/${roomId}/${params.bookingId}`, null).then((response) => {
           if (response.status === 200) {
             setLoading(false);
-              const element = document.getElementById('roomSelect');
-              element.style.display = 'none';
-              const button = document.getElementById('roomSelectButton');
-              button.style.display = '';
               const newRoom = rooms.filter((room) => room.id === roomId);
               setRoom(newRoom[0]);
               getApi(`/roomapi/available/${params.bookingId}`).then(data => {
-                  setRooms(data);
-                  setRoomId(data[0].id);
+                setRooms(data);
+                setRoomId(data[0].id);
               });
+            const element = document.getElementById('roomSelect');
+            element.style.display = 'none';
+            const button = document.getElementById('roomSelectButton');
+            button.style.display = '';
           }
       });
   }

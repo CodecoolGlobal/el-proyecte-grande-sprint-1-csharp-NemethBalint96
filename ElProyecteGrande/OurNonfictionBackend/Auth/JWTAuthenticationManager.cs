@@ -3,6 +3,7 @@ using OurNonfictionBackend.Dal;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using OurNonfictionBackend.Models;
 
 namespace OurNonfictionBackend.Auth;
 

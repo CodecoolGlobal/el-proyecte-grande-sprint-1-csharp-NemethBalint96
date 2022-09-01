@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getApi, postApi } from "../Clients/requests";
 import Google from './Google';
+import { Link } from "react-router-dom";
 
 const UserForm = ({ type, setName }) => {
   const [username, setUsername] = useState('');
