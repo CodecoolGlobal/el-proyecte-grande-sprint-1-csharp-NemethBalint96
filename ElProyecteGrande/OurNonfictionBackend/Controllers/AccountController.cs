@@ -82,8 +82,9 @@ public class AccountController : ControllerBase
     [HttpGet("client-id")]
     public IActionResult GetClientId()
     {
-        return Ok(new {
-            Result= _JWTAuthenticationManager.GetClientId()
+        return Ok(new
+        {
+            Result = _JWTAuthenticationManager.GetClientId()
         });
     }
 }

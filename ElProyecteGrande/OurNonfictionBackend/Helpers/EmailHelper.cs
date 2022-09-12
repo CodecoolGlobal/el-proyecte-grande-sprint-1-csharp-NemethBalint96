@@ -35,7 +35,7 @@ namespace OurNonfictionBackend.Helpers
             CreateMessage(mailMessage);
         }
 
-        public static void CreatePasswordRecoveryEmail(string email, string link,string username)
+        public static void CreatePasswordRecoveryEmail(string email, string link, string username)
         {
             var mailMessage = new MailMessage
             {
