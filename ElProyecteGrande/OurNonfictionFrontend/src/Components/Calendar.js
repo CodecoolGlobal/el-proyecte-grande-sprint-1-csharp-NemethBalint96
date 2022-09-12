@@ -17,18 +17,16 @@ import { getApi } from '../Clients/requests';
 
 const Calendar = () => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
-  const[loading,setLoading] = useState(false);
-const navigate = useNavigate();
+  const [loading,setLoading] = useState(false);
+  const navigate = useNavigate();
   const [rooms, setRooms] = useState([]);
   const [bookings, setBookings] = useState([]);
 
   useEffect(() => {
     setLoading(true);
-    getApi('roomapi').then(data => {
-      console.log(data)
-      setRooms(data);
-      
-    });
+    getApi('roomapi')
+    .then(data => setRooms(data))
+    .catch(e => navigate('/'));
     getApi('bookingapi').then(data => {
       setBookings(data);
       }).then(()=>setLoading(false))

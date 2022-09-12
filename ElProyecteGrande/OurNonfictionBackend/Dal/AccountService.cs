@@ -18,9 +18,9 @@ class AccountService : IAccountService
         return _context.Accounts.ToListAsync();
     }
 
-    public async Task<Account> Get(string username)
+    public async Task<Account?> Get(string username)
     {
-        return await _context.Accounts.FirstAsync(user => user.Username == username);
+        return await _context.Accounts.FirstOrDefaultAsync(user => user.Username == username);
     }
 
     public async Task Registration(Account account)

@@ -70,7 +70,10 @@ public class AccountController : ControllerBase
     [HttpPost("signin-google")]
     public async Task<IActionResult> LoginWithGoogle(Account account)
     {
-        await _accountService.Registration(account);
+        var user = await _accountService.Get(account.Username);
+        if (user is null)
+            await _accountService.Registration(account);
+
         var token = _JWTAuthenticationManager.WriteToken(account);
 
         return Ok(new { Token = token, role = account.Role });
