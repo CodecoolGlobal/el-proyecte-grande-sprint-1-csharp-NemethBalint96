@@ -112,11 +112,11 @@ public class RoomServiceTest
         Assert.That(actual, Is.EqualTo(expected));
     }
 
-    [Test]
+    [Test,Order(1)]
     public void GetLatestGuest_ReturnsGuestWithHighestId()
     {
-        var expected = _context.Guests.Last().FullName;
-        var actual = _guestService.GetLatestGuest().Result.FullName;
+        var expected = _context.Guests.Last().Id;
+        var actual = _guestService.GetLatestGuest().Result.Id;
         Assert.That(actual, Is.EqualTo(expected));
     }
 
