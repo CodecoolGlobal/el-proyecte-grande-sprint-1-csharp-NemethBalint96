@@ -79,7 +79,8 @@ const UserForm = ({ type, setName }) => {
       })
       .then(data => {
         sessionStorage.setItem('token', data.token);
-        sessionStorage.setItem('role',data.role);
+        sessionStorage.setItem('role', data.role);
+        sessionStorage.setItem('name',username);
         setName(username);
         navigate('/calendar');
       })

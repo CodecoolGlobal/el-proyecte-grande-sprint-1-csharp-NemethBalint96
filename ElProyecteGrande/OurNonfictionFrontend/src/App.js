@@ -1,7 +1,9 @@
 import { Outlet, NavLink } from "react-router-dom";
 
 const App = ({ username, setUsername }) => {
-  const role = sessionStorage.getItem('role');
+    const role = sessionStorage.getItem('role');
+    const name = sessionStorage.getItem('name');
+    console.log(name);
   return (
       <>
         <header>
@@ -9,7 +11,7 @@ const App = ({ username, setUsername }) => {
           <div className="container-fluid">
             <div className="navbar-brand" id="nonfiction">Our Nonfiction</div>
             <ul className="navbar-nav flex-grow-1">
-              {username ?
+              {name ?
               <>
               <li className="nav-item">
                 <NavLink className='nav-link' to="/bookings">Bookings</NavLink>
@@ -28,10 +30,10 @@ const App = ({ username, setUsername }) => {
                 <NavLink className="nav-link " to="/users">Users</NavLink>
               </li>:<></>}
 
-              {username ? 
+              {name ? 
               <>
               <li className="nav-item">
-                <div className="nav-link">{username}</div>
+                <div className="nav-link">{name}</div>
               </li>
               <li className="nav-item">
                 <NavLink className="nav-link " to="/" onClick={() => {

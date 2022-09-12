@@ -24,8 +24,9 @@ function Google({ clientId, setName, setLoading }) {
       setGoogleLogin(true);
       return;
     }
-    setLoading(true);
-    setName(res.profileObj.name);
+      setLoading(true);
+      setName(res.profileObj.name);
+    sessionStorage.setItem('name', res.profileObj.name);
     const body = {
       "username":res.profileObj.name,
       "email":res.profileObj.email,
@@ -34,7 +35,8 @@ function Google({ clientId, setName, setLoading }) {
     };
     postApi('/account/signin-google', body).then((response)=>response.json()).then(data => {
       sessionStorage.setItem('token', data.token);
-      sessionStorage.setItem('role',data.role);
+      sessionStorage.setItem('role', data.role);
+
     }).then(() => navigate('/calendar'))
   };
 
