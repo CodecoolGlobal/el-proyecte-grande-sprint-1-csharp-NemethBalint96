@@ -28,5 +28,10 @@ jobs:
         with:
           # Semantic version range syntax or exact version of a dotnet version
           dotnet-version: '6.0'
-      - name: Test with the dotnet CLI
-        run: dotnet test
+      - name: Install dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+      - name: Test
+        run: dotnet test --no-restore --verbosity normal
+      
