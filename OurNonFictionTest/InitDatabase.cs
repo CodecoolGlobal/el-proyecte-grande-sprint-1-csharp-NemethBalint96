@@ -17,7 +17,7 @@ public class InitDatabase
             .Options;
 
         using var context = new NonfictionContext(_contextOptions);
-        var bookingJson = File.ReadAllText(@"Data\newBooking.json");
+        var bookingJson = File.ReadAllText(@"C:\Users\Kiss Bence\Desktop\Codecool_Advanced\el-proyecte-grande-sprint-1-csharp-NemethBalint96\OurNonfictionBackend\Data\newbooking.json");
         var bookings = JsonConvert.DeserializeObject<List<Booking>>(bookingJson);
         context.Database.EnsureDeleted();
         context.Database.EnsureCreated();
