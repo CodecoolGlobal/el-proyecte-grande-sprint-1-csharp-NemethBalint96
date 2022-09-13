@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "OurNonfictionFrontend", "OurNonfictionFrontend.esproj", "{3CCCAB39-719B-4AF6-AA32-3932CEC92500}"
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "OurNonfictionFrontend", "OurNonfictionFrontend\OurNonfictionFrontend.esproj", "{3CCCAB39-719B-4AF6-AA32-3932CEC92500}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OurNonfictionBackend", "OurNonfictionBackend\OurNonfictionBackend.csproj", "{C598FB14-F1C8-41A2-BF8F-E5A3C59A81F8}"
 EndProject
