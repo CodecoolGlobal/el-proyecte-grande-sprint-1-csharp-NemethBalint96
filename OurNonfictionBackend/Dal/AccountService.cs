@@ -28,7 +28,7 @@ public class AccountService : IAccountService
         account.Password = BCrypt.Net.BCrypt.HashPassword(account.Password);
         await _context.Accounts.AddAsync(account);
         await _context.SaveChangesAsync();
-        //EmailHelper.CreateWelcomeMessage(account.Username, account.Email);
+        EmailHelper.CreateWelcomeMessage(account.Username, account.Email);
     }
 
     public async Task<bool> CheckUserName(string username)
