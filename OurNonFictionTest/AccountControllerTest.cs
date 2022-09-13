@@ -41,22 +41,6 @@ public class AccountControllerTest
     }
 
     [Test]
-    public void Registration_AddsAnAccount()
-    {
-        var newAccount = new Account
-        {
-            Email = "test@test.test",
-            Username = "test",
-            Password = BCrypt.Net.BCrypt.HashPassword("test"),
-            Role = "User"
-        };
-        var expected = _context.Accounts.ToListAsync().Result.Count + 1;
-        var _ = _controller.Registration(newAccount).Result;
-        var actual = _context.Accounts.ToListAsync().Result.Count;
-        Assert.That(actual, Is.EqualTo(expected));
-    }
-
-    [Test]
     public void CheckUsername_CheckExistingUsername_ReturnTrue()
     {
         var username = _context.Accounts.FirstAsync().Result.Username;

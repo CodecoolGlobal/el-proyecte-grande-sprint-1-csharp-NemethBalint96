@@ -35,22 +35,6 @@ internal class AccountServiceTest
     }
 
     [Test]
-    public async Task Registration_AddsAnAccount()
-    {
-        var newAccount = new Account
-        {
-            Email = "test@test.test",
-            Username = "test",
-            Password = BCrypt.Net.BCrypt.HashPassword("test"),
-            Role = "User"
-        };
-        var expected = Task.Run(() => _context.Accounts.ToListAsync()).Result.Count + 1;
-        await _accountService.Registration(newAccount);
-        var actual = Task.Run(() => _context.Accounts.ToListAsync()).Result.Count;
-        Assert.That(actual, Is.EqualTo(expected));
-    }
-
-    [Test]
     public async Task CheckUsername_CheckExistingUsername_ReturnTrue()
     {
         var username = Task.Run(() => _context.Accounts.FirstAsync()).Result.Username;
