@@ -1,4 +1,4 @@
-﻿using ElProyecteGrande.Dal;
+using ElProyecteGrande.Dal;
 using ElProyecteGrande.Models;
 using NSubstitute;
 using OurNonfictionBackend.Controllers;
