@@ -11,8 +11,6 @@ public class InitDatabase
     private readonly DbContextOptions<NonfictionContext> _contextOptions;
     public InitDatabase()
     {
-
-
         _contextOptions = new DbContextOptionsBuilder<NonfictionContext>()
         .UseInMemoryDatabase("nonfiction")
             .ConfigureWarnings(b => b.Ignore(InMemoryEventId.TransactionIgnoredWarning))
@@ -30,8 +28,7 @@ public class InitDatabase
             Email = "admin@admin.com",
             Username = "admin",
             Password = BCrypt.Net.BCrypt.HashPassword("admin"),
-            Role =
-                "Admin"
+            Role = "Admin"
         });
 
         context.SaveChanges();
@@ -39,4 +36,3 @@ public class InitDatabase
 
     public NonfictionContext CreateContext() => new(_contextOptions);
 }
-
