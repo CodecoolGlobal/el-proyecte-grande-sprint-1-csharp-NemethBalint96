@@ -1,7 +1,6 @@
-﻿using ElProyecteGrande.Dal;
+using ElProyecteGrande.Dal;
 using ElProyecteGrande.Models;
 using NSubstitute;
-using NUnit.Framework.Constraints;
 using OurNonfictionBackend.Controllers;
 using OurNonfictionBackend.Models;
 
@@ -16,7 +15,7 @@ namespace OurNonFictionTest
         [SetUp]
         public void Setup()
         {
-            _context = new InitDatabase().CreateContext();
+            _context = Substitute.For<InitDatabase>().CreateContext();
             _bookingService = Substitute.For<BookingService>(_context);
             _controller = Substitute.For<BookingApiController>(_bookingService);
         }
@@ -26,7 +25,7 @@ namespace OurNonFictionTest
         {
             var expected = _bookingService.GetAll().Result.Count;
             var actual = _controller.GetAll().Result.Count;
-            Assert.That(actual,Is.EqualTo(expected));
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         [Test]

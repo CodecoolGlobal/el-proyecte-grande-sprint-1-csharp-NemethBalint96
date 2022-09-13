@@ -15,7 +15,7 @@ namespace OurNonFictionTest
         [SetUp]
         public void Setup()
         {
-            _context = new InitDatabase().CreateContext();
+            _context = Substitute.For<InitDatabase>().CreateContext();
             _guestService = Substitute.For<GuestService>(_context);
             _controller = Substitute.For<GuestApiController>(_guestService);
         }
