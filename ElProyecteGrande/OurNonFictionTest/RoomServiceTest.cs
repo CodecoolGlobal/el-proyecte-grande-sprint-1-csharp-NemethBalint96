@@ -2,7 +2,6 @@ using ElProyecteGrande.Dal;
 using ElProyecteGrande.Models;
 using Microsoft.EntityFrameworkCore;
 using NSubstitute;
-using OurNonfictionBackend.Dal;
 using OurNonfictionBackend.Models;
 
 namespace OurNonFictionTest;
@@ -12,12 +11,10 @@ public class RoomServiceTest
 
     private RoomService _roomService;
     private NonfictionContext _context;
-    private GuestService _guestService;
     [SetUp]
     public void Setup()
     {
         _roomService = Substitute.For<RoomService>(new InitDatabase().CreateContext());
-        _guestService = Substitute.For<GuestService>(new InitDatabase().CreateContext());
         _context = new InitDatabase().CreateContext();
     }
 
