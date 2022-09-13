@@ -14,8 +14,9 @@ public class GuestServiceTest
     [SetUp]
     public void Setup()
     {
-        _guestService = Substitute.For<GuestService>(new InitDatabase().CreateContext());
-        _context = new InitDatabase().CreateContext();
+        _context = Substitute.For<InitDatabase>().CreateContext();
+        _guestService = Substitute.For<GuestService>(_context);
+        
     }
 
     [Test, Order(2)]
@@ -37,7 +38,7 @@ public class GuestServiceTest
         Assert.That(actual, Is.EqualTo(expected));
     }
 
-    [Test]
+    [Test,Order(1)]
     public void AddNewGuestToBooking_AddNewGuestToBooking()
     {
         var bookingId = 1;
@@ -57,7 +58,10 @@ public class GuestServiceTest
         };
         _guestService.AddNewGuestToBooking(1, newGuest);
         var expected = newGuest.FullName;
-        var actual = _context.Bookings.Include(booking => booking.Guests).First().Guests.Last().FullName;
+        var actual = _context.Bookings.Include(booking => booking.Guests).First(booking => booking.Id == bookingId)
+            .Guests.Last().FullName;
+        var guests = _context.Bookings.Include(booking => booking.Guests).First(booking => booking.Id == bookingId)
+            .Guests;
         Assert.That(actual, Is.EqualTo(expected));
     }
 
