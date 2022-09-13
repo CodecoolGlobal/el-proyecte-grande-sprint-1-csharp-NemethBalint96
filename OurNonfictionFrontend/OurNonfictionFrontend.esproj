@@ -4,11 +4,11 @@
   </PropertyGroup>
   <PropertyGroup>
     <StartupCommand>set BROWSER=none&amp;&amp;npm start</StartupCommand>
-    <Target Name="VSTest" >
-        <Message Text="No tests because this is a React project" />
-    </Target>
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="src\Fonts\" />
   </ItemGroup>
+  <Target Name="VSTest" >
+        <Message Text="No tests because this is a React project" />
+    </Target>
 </Project>
