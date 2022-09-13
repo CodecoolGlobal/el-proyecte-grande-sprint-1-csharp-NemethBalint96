@@ -1,5 +1,4 @@
 using ElProyecteGrande.Dal;
-using ElProyecteGrande.Models;
 using Microsoft.EntityFrameworkCore;
 using NSubstitute;
 using OurNonfictionBackend.Models;
@@ -8,9 +7,9 @@ namespace OurNonFictionTest;
 
 public class RoomServiceTest
 {
-
     private RoomService _roomService;
     private NonfictionContext _context;
+
     [SetUp]
     public void Setup()
     {
@@ -22,7 +21,6 @@ public class RoomServiceTest
     [Test]
     public void GetAll_ReturnsCountOfRooms()
     {
-
         var expected = Task.Run(() => _context.Rooms.ToListAsync()).Result.Count;
         var actual = Task.Run(() => _roomService.GetAll()).Result.Count;
         Assert.That(actual, Is.EqualTo(expected));
@@ -44,5 +42,15 @@ public class RoomServiceTest
         var actual = _context.Bookings.Include(Booking => Booking.Room).First().Room!.Id;
         Assert.That(actual, Is.EqualTo(expected));
     }
-};
 
+    [Test]
+    public async Task FilterRoomsByBookingDate_DoNotReturnsNotAvailableRoom()
+    {
+        const int roomId = 1;
+        const int bookingId = 1;
+        await _roomService.AddRoomToBooking(roomId, bookingId);
+        var room = await _roomService.Get(roomId);
+        var availableRooms = await _roomService.FilterRoomsByBookingDate(bookingId);
+        Assert.That(availableRooms, Is.Not.Contains(room));
+    }
+}

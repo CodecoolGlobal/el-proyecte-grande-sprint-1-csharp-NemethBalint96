@@ -4,7 +4,7 @@ using OurNonfictionBackend.Models;
 
 namespace OurNonfictionBackend.Dal;
 
-class AccountService : IAccountService
+public class AccountService : IAccountService
 {
     private readonly NonfictionContext _context;
 
