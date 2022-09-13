@@ -1,4 +1,5 @@
 ﻿using ElProyecteGrande.Models;
+using NSubstitute;
 using OurNonfictionBackend.Controllers;
 using OurNonfictionBackend.Dal;
 using OurNonfictionBackend.Models;
@@ -15,8 +16,8 @@ namespace OurNonFictionTest
         public void Setup()
         {
             _context = new InitDatabase().CreateContext();
-            _guestService = new GuestService(_context);
-            _controller = new GuestApiController(_guestService);
+            _guestService = Substitute.For<GuestService>(_context);
+            _controller = Substitute.For<GuestApiController>(_guestService);
         }
 
         [Test]
