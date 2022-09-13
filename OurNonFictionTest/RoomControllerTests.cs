@@ -44,9 +44,9 @@ namespace OurNonFictionTest
         [Test]
         public void RoomController_AddNewRoomToBooking_AddsTheNewRoomToBooking()
         {
-            var expected = _roomService.Get(3).Result.Id;
-            var bookingId = 7;
-            _controller.AddRoomToBooking(3, bookingId);
+            var expected = _roomService.Get(1).Result.Id;
+            var bookingId = 1;
+            _controller.AddRoomToBooking(1, bookingId);
             var actual = _context.Bookings.Include(x => x.Room).First(x => x.Id == bookingId).Room.Id;
             Assert.That(actual, Is.EqualTo(expected));
         }

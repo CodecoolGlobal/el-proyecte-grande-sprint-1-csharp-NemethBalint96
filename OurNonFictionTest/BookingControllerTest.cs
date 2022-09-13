@@ -31,8 +31,8 @@ namespace OurNonFictionTest
         [Test]
         public void BookingController_GetBooking_ReturnsTheBooking()
         {
-            var expected = _bookingService.Get(5).Result.Id;
-            var actual = _controller.GetBooking(5).Result.Id;
+            var expected = _bookingService.Get(1).Result.Id;
+            var actual = _controller.GetBooking(1).Result.Id;
             Assert.That(actual, Is.EqualTo(expected));
         }
 
@@ -64,8 +64,8 @@ namespace OurNonFictionTest
         public void BookingController_SetStatusToCancelled_SetBookingStatusToCancelled()
         {
             var expected = Status.Cancelled;
-            var booking = _controller.SetStatusToCancelled(6);
-            var actual = _bookingService.Get(6).Result.Status;
+            var booking = _controller.SetStatusToCancelled(1);
+            var actual = _bookingService.Get(1).Result.Status;
             Assert.That(actual, Is.EqualTo(expected));
         }
     }

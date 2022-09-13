@@ -24,9 +24,30 @@ public class InitDatabase
         var booking = new Booking
         {
             BookersName = "Kiss Bence",
-            Guests = null,
+            Guests =new List<Guest>(){ new Guest(Age.Adult)
+            {
+                FullName = "Kiss Bence",
+                Address = "",
+                PostalCode = 3443,
+                BirthDate = DateTime.Now,
+                BirthPlace = "Miskolc",
+                Citizenship = "Hun",
+                City = "Haha",
+                Comment = "",
+                Country = "Hun",
+                Email = "kiss@kiss.com",
+                Phone = "",
+            }},
             Email = "kissbence19@gmail.com",
-            Room = null,
+            Room = new Room
+            {
+                
+                DoorNumber = 1,
+                Price = 80,
+                RoomType = (RoomType)0,
+                Floor = 1,
+                Comment = ""
+            },
             Adults = 0,
             Children = 0,
             Infants = 0,

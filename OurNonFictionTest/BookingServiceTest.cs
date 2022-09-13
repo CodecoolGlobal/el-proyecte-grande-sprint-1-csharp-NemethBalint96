@@ -28,7 +28,7 @@ namespace OurNonFictionTest
         [Test]
         public void BookingService_Get_ReturnsBookingById()
         {
-            var bookingId = 9;
+            var bookingId = 1;
             var expected = _context.Bookings.First(booking => booking.Id == bookingId).Id;
             var actual = _bookingService.Get(bookingId).Result.Id;
             Assert.That(actual, Is.EqualTo(expected));
@@ -62,7 +62,7 @@ namespace OurNonFictionTest
         [Test]
         public void BookingService_Update_UpdatesBooking()
         {
-            var bookingId = 10;
+            var bookingId = 1;
             var booking = _context.Bookings.First(booking => booking.Id == bookingId);
             booking.BookersName = "Kiss Bence";
             _bookingService.Update(booking, bookingId);
@@ -74,7 +74,7 @@ namespace OurNonFictionTest
         [Test]
         public void BookingService_SetStatusCancelled_SetBookingStatusCancelled()
         {
-            var bookingId = 4;
+            var bookingId = 1;
             var expected = Status.Cancelled;
             _bookingService.SetStatusCancelled(bookingId);
             var actual = _bookingService.Get(bookingId).Result.Status;

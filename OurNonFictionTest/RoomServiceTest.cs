@@ -37,8 +37,8 @@ public class RoomServiceTest
     [Test]
     public void AddRoomToBookingReturnsTheSameRoom()
     {
-        _roomService.AddRoomToBooking(3, 1);
-        var expected = 3;
+        _roomService.AddRoomToBooking(1, 1);
+        var expected = 1;
         var actual = _context.Bookings.Include(Booking => Booking.Room).First().Room!.Id;
         Assert.That(actual, Is.EqualTo(expected));
     }
