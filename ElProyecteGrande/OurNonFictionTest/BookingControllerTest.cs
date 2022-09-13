@@ -1,5 +1,6 @@
 ﻿using ElProyecteGrande.Dal;
 using ElProyecteGrande.Models;
+using NSubstitute;
 using NUnit.Framework.Constraints;
 using OurNonfictionBackend.Controllers;
 using OurNonfictionBackend.Models;
@@ -16,8 +17,8 @@ namespace OurNonFictionTest
         public void Setup()
         {
             _context = new InitDatabase().CreateContext();
-            _bookingService = new BookingService(_context);
-            _controller = new BookingApiController(_bookingService);
+            _bookingService = Substitute.For<BookingService>(_context);
+            _controller = Substitute.For<BookingApiController>(_bookingService);
         }
 
         [Test]
