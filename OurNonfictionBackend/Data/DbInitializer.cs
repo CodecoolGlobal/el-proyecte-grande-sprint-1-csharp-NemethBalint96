@@ -21,7 +21,7 @@ namespace OurNonfictionBackend.Data
                 return; //DB has been seeded
             }
 
-            CreateBookings(context);
+            //CreateBookings(context);
             CreateAccount(context);
         }
 
