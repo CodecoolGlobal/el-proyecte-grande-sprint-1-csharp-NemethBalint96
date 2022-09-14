@@ -6,7 +6,7 @@ module.exports = function (app) {
   const appProxy = createProxyMiddleware(context, {
     target: 'https://nonfiction-backend.herokuapp.com/',
     secure: false,
-    changeOrigin: true,
+    changeOrigin: true
   })
 
   app.use(appProxy)
