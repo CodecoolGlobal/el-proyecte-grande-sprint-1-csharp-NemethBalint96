@@ -34,7 +34,4 @@ jobs:
         run: dotnet build --configuration Release --no-restore
       - name: Test
         run: dotnet test --no-restore --verbosity normal
-
-      - name: Lint
-        run: npm run lint
-        working-directory: OurNonfictionFrontend
+ 
