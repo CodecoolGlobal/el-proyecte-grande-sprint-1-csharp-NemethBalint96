@@ -6,8 +6,8 @@ COPY ["OurNonfictionBackend/OurNonfictionBackend.csproj", "OurNonfictionBackend/
 RUN dotnet restore "OurNonfictionBackend/OurNonfictionBackend.csproj"
 COPY . .
 WORKDIR "/src/OurNonfictionBackend"
-RUN dotnet build "OurNonfictionBackend/OurNonfictionBackend.csproj" -c Release -o /app/build
-RUN dotnet publish "OurNonfictionBackend/OurNonfictionBackend.csproj" -c Release -o /app/publish
+RUN dotnet build "OurNonfictionBackend.csproj" -c Release -o /app/build
+RUN dotnet publish "OurNonfictionBackend.csproj" -c Release -o /app/publish
 
 FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
