@@ -8,7 +8,17 @@ using OurNonfictionBackend.Data;
 using OurNonfictionBackend.Models;
 using System.Text;
 
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+        policy => {
+            policy.WithOrigins("https://our-nonfiction.herokuapp.com/", "https://our-nonfiction.herokuapp.com/registration").AllowAnyHeader().AllowAnyMethod();
+        });
+});
 
 // Add services to the container.
 builder.Services.AddDbContext<NonfictionContext>(options =>
@@ -62,6 +72,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCors(MyAllowSpecificOrigins);
+
 app.UseAuthentication();
 
 app.UseAuthorization();
@@ -70,4 +82,4 @@ app.MapControllers();
 
 app.CreateDbIfNotExists();
 
-app.Run();
+app.Run($"http://0.0.0.0:{Environment.GetEnvironmentVariable("PORT")}");

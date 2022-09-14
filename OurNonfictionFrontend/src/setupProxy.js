@@ -4,8 +4,9 @@ const context = ['/bookingapi', '/roomapi', '/guestapi', '/account']
 
 module.exports = function (app) {
   const appProxy = createProxyMiddleware(context, {
-    target: '[::]:80',
-    secure: false
+    target: 'https://nonfiction-backend.herokuapp.com/',
+    secure: false,
+    changeOrigin: true,
   })
 
   app.use(appProxy)

@@ -92,3 +92,76 @@ jobs:
             echo "runing the docker image"
             echo "Testing the nodejs  app endpoints"
             echo ${{ steps.docker_build.outputs.digest }}
+            
+  deploy_to_Heroku:
+    name: Deploy to Heroku
+    runs-on: ubuntu-latest
+    # only run this after deploying to docker
+    needs: [push_to_DockerHub_Dotnet_Core]
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v2
+      # more info on deploy to Heroku:
+      # https://github.com/marketplace/actions/deploy-to-heroku
+      - name: deploy to Heroku
+        uses: akhileshns/heroku-deploy@v3.12.12 
+        with:
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
+          heroku_email: ${{ secrets.HEROKU_EMAIL }}
+          # build the app docker image using the Dockerfile
+          # and run that image in a container that's pushed to Heroku
+          usedocker: true
+          justlogin: true
+
+      - name: "Login to heroku registry"
+        run: heroku container:login
+        
+      - name: "Pull docker container" 
+        run: docker pull ${{ secrets.DOCKERHUB_USERNAME }}/el-proyecte-grande-backend:latest
+
+      - name: "push to heroku registry"
+        run: docker tag ${{ secrets.DOCKERHUB_USERNAME }}/el-proyecte-grande-backend:latest registry.heroku.com/${{ secrets.HEROKU_APP_NAME }}/web
+
+      - name: "Push the container"
+        run: docker push registry.heroku.com/${{ secrets.HEROKU_APP_NAME }}/web
+        
+      - name: "Releases the container"
+        run: heroku container:release web -a ${{ secrets.HEROKU_APP_NAME }}
+
+
+  deploy_to_Heroku_React:
+    name: Deploy to Heroku React
+    runs-on: ubuntu-latest
+    # only run this after deploying to docker
+    needs: [push_to_DockerHub_React]
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v2
+      # more info on deploy to Heroku:
+      # https://github.com/marketplace/actions/deploy-to-heroku
+      - name: deploy to Heroku
+        uses: akhileshns/heroku-deploy@v3.12.12 
+        with:
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: ${{ secrets.HEROKU_REACT_APP_NAME }}
+          heroku_email: ${{ secrets.HEROKU_EMAIL }}
+          # build the app docker image using the Dockerfile
+          # and run that image in a container that's pushed to Heroku
+          usedocker: true
+          justlogin: true
+
+      - name: "Login to heroku registry"
+        run: heroku container:login
+        
+      - name: "Pull docker container" 
+        run: docker pull ${{ secrets.DOCKERHUB_USERNAME }}/el-proyecte-grande:latest
+
+      - name: "Build and push to heroku registry"
+        run: docker tag ${{ secrets.DOCKERHUB_USERNAME }}/el-proyecte-grande:latest registry.heroku.com/${{ secrets.HEROKU_REACT_APP_NAME }}/web
+
+      - name: "Push the container"
+        run: docker push registry.heroku.com/${{ secrets.HEROKU_REACT_APP_NAME }}/web
+        
+      - name: "Releases the container"
+        run: heroku container:release web -a ${{ secrets.HEROKU_REACT_APP_NAME }}
