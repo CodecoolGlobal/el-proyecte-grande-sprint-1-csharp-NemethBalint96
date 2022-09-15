@@ -15,8 +15,11 @@ const BookingForm = () => {
   const [email, setEmail] = useState('')
   const [country, setCountry] = useState('')
   const [adults, setAdults] = useState(0)
+  const [minAdults, setMinAdults] = useState(0)
   const [children, setChildren] = useState(0)
+  const [minChildren, setMinChildren] = useState(0)
   const [infants, setInfants] = useState(0)
+  const [minInfants, setMinInfants] = useState(0)
   const [arrivalDate, setArrivalDate] = useState(baseDate)
   const [departureDate, setDepartureDate] = useState(normalDate)
   const [guests, setGuests] = useState([])
@@ -47,8 +50,11 @@ const BookingForm = () => {
         setEmail(data.email)
         setCountry(data.country)
         setAdults(data.adults)
+        setMinAdults(data.adults)
         setChildren(data.children)
+        setMinChildren(data.children)
         setInfants(data.infants)
+        setMinInfants(data.infants)
         setArrivalDate(data.arrivalDate.slice(0, 10))
         setDepartureDate(data.departureDate.slice(0, 10))
         setGuests(data.guests)
@@ -162,6 +168,7 @@ const BookingForm = () => {
                 <input
                   className="form-control"
                   type="number"
+                  min={minAdults}
                   value={adults}
                   onChange={(e) => setAdults(e.target.value)}
                 />
@@ -172,6 +179,7 @@ const BookingForm = () => {
                 <input
                   className="form-control"
                   type="number"
+                  min={minChildren}
                   value={children}
                   onChange={(e) => setChildren(e.target.value)}
                 />
@@ -182,6 +190,7 @@ const BookingForm = () => {
                 <input
                   className="form-control"
                   type="number"
+                  min={minInfants}
                   value={infants}
                   onChange={(e) => setInfants(e.target.value)}
                 />
