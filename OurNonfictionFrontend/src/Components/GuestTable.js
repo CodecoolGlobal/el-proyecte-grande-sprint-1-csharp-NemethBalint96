@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { getApi } from '../Clients/requests'
 import Table from './Table'
 
 const GuestTable = () => {
+  const navigate = useNavigate()
   const url = 'guestapi'
   const [guests, setGuests] = useState([])
   const [loading, setLoading] = useState(false)
