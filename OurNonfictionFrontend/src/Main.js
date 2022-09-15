@@ -13,6 +13,7 @@ import UserForm from './Components/UserForm'
 import Users from './Components/Users'
 import ForgottenPassword from './Components/ForgottenPassword'
 import ErrorPage from './Components/ErrorPage'
+import HealthCheck from './Components/HealthCheck'
 
 function Main() {
   const [username, setUsername] = useState('')
@@ -30,6 +31,7 @@ function Main() {
           <Route path="/guest/:guestId" element={<GuestForm />} />
           <Route path="/editbooking/:bookingId" element={<BookingForm />} />
           <Route path="/calendar" element={<Calendar />} />
+          <Route path="/health-check" element={<HealthCheck/>}/>
           <Route
             path="/registration"
             element={<UserForm type="registration" setName={setUsername} />}
