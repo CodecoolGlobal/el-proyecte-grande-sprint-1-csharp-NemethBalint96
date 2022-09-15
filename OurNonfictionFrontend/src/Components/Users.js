@@ -8,10 +8,14 @@ function Users() {
 
   useEffect(() => {
     setLoading(true)
-    getApi(url).then((data) => {
-      setAccounts(data)
-      setLoading(false)
-    })
+    getApi(url)
+      .then((data) => {
+        setAccounts(data)
+        setLoading(false)
+      })
+      .catch(() => {
+        navigate('/error')
+      })
   }, [url])
 
   return (

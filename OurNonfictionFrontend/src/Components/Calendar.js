@@ -26,12 +26,15 @@ const Calendar = () => {
     setLoading(true)
     getApi('roomapi')
       .then((data) => setRooms(data))
-      .catch(() => navigate('/'))
+      .catch(() => navigate('/error'))
     getApi('bookingapi')
       .then((data) => {
         setBookings(data)
       })
       .then(() => setLoading(false))
+      .catch(() => {
+        navigate('/error')
+      })
   }, [])
 
   const changeMonthHandle = (btnType) => {

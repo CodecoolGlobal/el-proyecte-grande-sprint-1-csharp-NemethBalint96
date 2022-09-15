@@ -9,10 +9,14 @@ const GuestTable = () => {
 
   useEffect(() => {
     setLoading(true)
-    getApi(url).then((data) => {
-      setGuests(data)
-      setLoading(false)
-    })
+    getApi(url)
+      .then((data) => {
+        setGuests(data)
+        setLoading(false)
+      })
+      .catch(() => {
+        navigate('/error')
+      })
   }, [url])
 
   return (

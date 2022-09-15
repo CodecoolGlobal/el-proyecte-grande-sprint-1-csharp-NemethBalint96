@@ -40,6 +40,9 @@ function Google({ clientId, setName, setLoading }) {
         sessionStorage.setItem('role', data.role)
       })
       .then(() => navigate('/calendar'))
+      .catch(() => {
+        navigate('/error')
+      })
   }
 
   const OnFailure = (err) => {

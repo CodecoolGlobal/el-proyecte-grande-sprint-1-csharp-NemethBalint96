@@ -21,14 +21,25 @@ function ForgottenPassword({ type }) {
             setEmailError(true)
           } else {
             setEmailError(false)
-            postApi('/account/passwordchange', email).then(navigate('/'))
+            postApi('/account/passwordchange', email)
+              .then(navigate('/'))
+              .catch(() => {
+                navigate('/error')
+              })
           }
+        })
+        .catch(() => {
+          navigate('/error')
         })
     } else {
       if (password === '' || password === null) {
         setPasswordError(true)
       } else {
-        postApi(`/account/passwordchange/${username}`, password).then(navigate('/'))
+        postApi(`/account/passwordchange/${username}`, password)
+          .then(navigate('/'))
+          .catch(() => {
+            navigate('/error')
+          })
       }
     }
   }

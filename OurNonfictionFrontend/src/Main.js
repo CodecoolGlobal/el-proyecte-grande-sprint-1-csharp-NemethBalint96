@@ -12,6 +12,7 @@ import Calendar from './Components/Calendar'
 import UserForm from './Components/UserForm'
 import Users from './Components/Users'
 import ForgottenPassword from './Components/ForgottenPassword'
+import ErrorPage from './Components/ErrorPage'
 
 function Main() {
   const [username, setUsername] = useState('')
@@ -20,6 +21,7 @@ function Main() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App username={username} setUsername={setUsername} />}>
+          <Route path="*" element={<ErrorPage />} />
           <Route path="/bookings" element={<MainPage />} />
           <Route path="/guests" element={<GuestTable />} />
           <Route path="/booking/:bookingId" element={<BookingDetails />} />

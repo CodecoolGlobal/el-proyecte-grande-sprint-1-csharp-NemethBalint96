@@ -168,9 +168,13 @@ const BookingTable = ({ data, type, OnClick, guests }) => {
                   <button
                     className="btn btn-outline-danger"
                     onClick={() => {
-                      deleteApi(`/guestapi/${item.id}`).then(() => {
-                        OnClick()
-                      })
+                      deleteApi(`/guestapi/${item.id}`)
+                        .then(() => {
+                          OnClick()
+                        })
+                        .catch(() => {
+                          navigate('/error')
+                        })
                     }}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
