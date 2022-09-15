@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react'
 import { getApi } from '../Clients/requests'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Table from './Table'
 
 const MainPage = () => {
+  const navigate = useNavigate()
   const url = 'bookingapi'
   const [firstBooking, setFirstBookings] = useState([])
   const [bookings, setBookings] = useState([])

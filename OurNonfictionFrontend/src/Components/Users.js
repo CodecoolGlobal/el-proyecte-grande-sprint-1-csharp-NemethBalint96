@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { getApi } from '../Clients/requests'
 
 function Users() {
+  const navigate = useNavigate()
   const url = '/account'
   const [accounts, setAccounts] = useState([])
   const [loading, setLoading] = useState(false)
