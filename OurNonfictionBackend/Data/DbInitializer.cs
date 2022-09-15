@@ -33,7 +33,8 @@ namespace OurNonfictionBackend.Data
                     DoorNumber = i,
                     Floor = 1,
                     RoomType = RoomType.Standard,
-                    Price = 80
+                    Price = 80,
+                    Comment = ""
                 };
                 context.Rooms.Add(room);
             }
@@ -44,7 +45,8 @@ namespace OurNonfictionBackend.Data
                     DoorNumber = i,
                     Floor = 2,
                     RoomType = RoomType.Superior,
-                    Price = 100
+                    Price = 100,
+                    Comment = ""
                 };
                 context.Rooms.Add(room);
             }
@@ -55,7 +57,8 @@ namespace OurNonfictionBackend.Data
                     DoorNumber = i,
                     Floor = 3,
                     RoomType = RoomType.Apartman,
-                    Price = 150
+                    Price = 150,
+                    Comment = ""
                 };
                 context.Rooms.Add(room);
                 
