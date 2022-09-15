@@ -1,4 +1,4 @@
-FROM microsoft/aspnetcore:6.0 AS base
+FROM microsoft/aspnetcore:2.0 AS base
 RUN apt-get update && \
     apt-get install -y wget && \
     apt-get install -y gnupg2 && \
