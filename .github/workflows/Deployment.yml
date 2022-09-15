@@ -44,8 +44,8 @@ jobs:
           secrets: |
             "nonfictionuser=${{ secrets.SOMNIAEMAIL }}"
             "nonfictionpassword=${{ secrets.SOMNIAPASSWORD }}"
-            "TokenKey = ${{ secrets.TOKENKEY }}"
-            "ClientId = ${{ secrets.CLIENTID }}"
+            "TokenKey=${{ secrets.TOKENKEY }}"
+            "ClientId=${{ secrets.CLIENTID }}"
           
 
       - name: Run the image in a container
