@@ -1,9 +1,9 @@
 name: Lint
 on:
-  workflow_run:
-    workflows: ["Test"]
-    types:
-      - completed
+  # workflow_run:
+  #   workflows: ["Test"]
+  #   types:
+  #     - completed
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:

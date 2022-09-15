@@ -1,10 +1,12 @@
 name: Deployment
 
 on:
-  workflow_run:
-    workflows: ["Lint"]
-    types:
-      - completed
+  # workflow_run:
+  #   workflows: ["Lint"]
+  #   types:
+  #     - completed
+  push:
+    branches: [ "development" ]
 
   workflow_dispatch:
 
