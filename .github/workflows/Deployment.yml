@@ -1,12 +1,10 @@
 name: Deployment
 
 on:
-
-  # SKIP
-  # workflow_run:
-  #   workflows: ["Lint"]
-  #   types:
-  #     - completed
+  workflow_run:
+    workflows: ["Lint"]
+    types:
+      - completed
 
   push:
     branches: [ "development" ]
@@ -21,9 +19,7 @@ jobs:
     # build Docker image and push to docker hub
     
     # only if the app build and test successfully
-
-    # SKIP
-    # if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     
     steps:
       - name: checkout repo
@@ -71,8 +67,7 @@ jobs:
     # build Docker image and push to docker hub
     
     # only if the app build and test successfully
-    # SKIP
-    # if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
 
     steps:
       - name: checkout repo

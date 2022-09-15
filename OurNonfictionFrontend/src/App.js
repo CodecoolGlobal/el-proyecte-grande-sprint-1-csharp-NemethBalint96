@@ -81,10 +81,11 @@ const App = ({ username, setUsername }) => {
       </header>
       <Outlet />
       <footer className="footer mt-auto py-3 bg-ligh border-top text-muted">
-        <div className="container text-center">&copy; 2022 - El Proyecte Grande - Nonfiction<br/>
-        <NavLink to="/health-check">Health-Check</NavLink>
+        <div className="container text-center">
+          &copy; 2022 - El Proyecte Grande - Nonfiction
+          <br />
+          <NavLink to="/health-check">Health-Check</NavLink>
         </div>
-        
       </footer>
     </>
   )
