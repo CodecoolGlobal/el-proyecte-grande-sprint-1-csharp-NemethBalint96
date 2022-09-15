@@ -33,10 +33,9 @@ builder.Services.AddScoped<IBookingService, BookingService>();
 builder.Services.AddScoped<IRoomService, RoomService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 
-var tokenKey = builder.Configuration.GetValue<string>("TokenKey");
+var tokenKey = Environment.GetEnvironmentVariable("TokenKey");
 var key = Encoding.ASCII.GetBytes(tokenKey);
-var googleAuthNSection = builder.Configuration.GetSection("OurNonfiction:Google");
-var clientId = googleAuthNSection["ClientId"];
+var clientId = Environment.GetEnvironmentVariable("ClientId");
 
 builder.Services.AddAuthentication(x =>
     {
