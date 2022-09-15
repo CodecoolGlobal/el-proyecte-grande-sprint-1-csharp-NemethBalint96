@@ -22,13 +22,17 @@ const MainPage = () => {
 
   useEffect(() => {
     setLoading(true)
-    getApi(url).then((data) => {
-      data = data.map((booking) => (booking = { ...booking, total: `${booking.total} $` }))
-      console.log(data)
-      setFirstBookings(data)
-      setLoading(false)
-      setBookings(data)
-    })
+    getApi(url)
+      .then((data) => {
+        data = data.map((booking) => (booking = { ...booking, total: `${booking.total} $` }))
+        console.log(data)
+        setFirstBookings(data)
+        setLoading(false)
+        setBookings(data)
+      })
+      .catch(() => {
+        navigate('/error')
+      })
   }, [url])
 
   return (

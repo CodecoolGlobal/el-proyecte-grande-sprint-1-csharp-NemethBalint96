@@ -45,21 +45,25 @@ const BookingForm = () => {
   useEffect(() => {
     if (bookingId) {
       setLoading(true)
-      getApi(`/bookingapi/${bookingId}`).then((data) => {
-        setBookersName(data.bookersName)
-        setEmail(data.email)
-        setCountry(data.country)
-        setAdults(data.adults)
-        setMinAdults(data.adults)
-        setChildren(data.children)
-        setMinChildren(data.children)
-        setInfants(data.infants)
-        setMinInfants(data.infants)
-        setArrivalDate(data.arrivalDate.slice(0, 10))
-        setDepartureDate(data.departureDate.slice(0, 10))
-        setGuests(data.guests)
-        setLoading(false)
-      })
+      getApi(`/bookingapi/${bookingId}`)
+        .then((data) => {
+          setBookersName(data.bookersName)
+          setEmail(data.email)
+          setCountry(data.country)
+          setAdults(data.adults)
+          setMinAdults(data.adults)
+          setChildren(data.children)
+          setMinChildren(data.children)
+          setInfants(data.infants)
+          setMinInfants(data.infants)
+          setArrivalDate(data.arrivalDate.slice(0, 10))
+          setDepartureDate(data.departureDate.slice(0, 10))
+          setGuests(data.guests)
+          setLoading(false)
+        })
+        .catch(() => {
+          navigate('/error')
+        })
     }
   }, [bookingId])
 
@@ -74,13 +78,20 @@ const BookingForm = () => {
           setLoading(false)
           navigate(`/available/${data.id}`)
         })
+        .catch(() => {
+          navigate('/error')
+        })
     } else if (isValidEmail) {
-      putApi(`/bookingapi/${bookingId}`, body).then((response) => {
-        if (response.status === 200) {
-          setLoading(false)
-          navigate(`/booking/${bookingId}`)
-        }
-      })
+      putApi(`/bookingapi/${bookingId}`, body)
+        .then((response) => {
+          if (response.status === 200) {
+            setLoading(false)
+            navigate(`/booking/${bookingId}`)
+          }
+        })
+        .catch(() => {
+          navigate('/error')
+        })
     }
 
     function validateEmail() {

@@ -13,17 +13,23 @@ const SelectRoom = () => {
   const [loading, setLoading] = useState(false)
   useEffect(() => {
     setLoading(true)
-    getApi(url).then((data) => {
-      setRooms(data)
-      setLoading(false)
-      setRoomId(data[0].id)
-    })
+    getApi(url)
+      .then((data) => {
+        setRooms(data)
+        setLoading(false)
+        setRoomId(data[0].id)
+      })
+      .catch(() => {
+        navigate('/error')
+      })
   }, [url])
 
   function onClick(e) {
     setLoading(true)
     e.preventDefault()
-    putApi(urlGet + '/' + roomId + '/' + id, null)
+    putApi(urlGet + '/' + roomId + '/' + id, null).catch(() => {
+      navigate('/error')
+    })
     setLoading(false)
     navigate(`/booking/${id}`)
   }

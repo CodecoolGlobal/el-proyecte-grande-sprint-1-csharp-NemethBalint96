@@ -1,9 +1,10 @@
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { deleteApi, getApi, postApi, putApi } from '../Clients/requests'
 import BookingTable from './Table'
 
 const BookingDetails = () => {
+  const navigate = useNavigate()
   const params = useParams()
   const url = `/bookingapi/${params.bookingId}`
   const [booking, setBooking] = useState({})
@@ -17,27 +18,39 @@ const BookingDetails = () => {
 
   useEffect(() => {
     setLoading(true)
-    getApi(`/roomapi/available/${params.bookingId}`).then((data) => {
-      setLoading(false)
-      setRooms(data)
-      setRoomId(data[0].id)
-    })
-    getApi(url).then((data) => {
-      setLoading(false)
-      setBooking(data)
-      setGuests(data.guests)
-      setRoom(data.room)
-    })
+    getApi(`/roomapi/available/${params.bookingId}`)
+      .then((data) => {
+        setLoading(false)
+        setRooms(data)
+        setRoomId(data[0].id)
+      })
+      .catch(() => {
+        navigate('/error')
+      })
+    getApi(url)
+      .then((data) => {
+        setLoading(false)
+        setBooking(data)
+        setGuests(data.guests)
+        setRoom(data.room)
+      })
+      .catch(() => {
+        navigate('/error')
+      })
   }, [url, params.bookingId])
 
   function OnClick() {
     setLoading(true)
-    getApi(url).then((data) => {
-      setLoading(false)
-      setBooking(data)
-      setGuests(data.guests)
-      setRoom(data.room)
-    })
+    getApi(url)
+      .then((data) => {
+        setLoading(false)
+        setBooking(data)
+        setGuests(data.guests)
+        setRoom(data.room)
+      })
+      .catch(() => {
+        navigate('/error')
+      })
   }
 
   function onClick() {
@@ -57,35 +70,51 @@ const BookingDetails = () => {
       comment: ''
     }
     postApi(`/guestapi/${params.bookingId}/addnew`, body).then(() => {
-      getApi(url).then((data) => {
-        setLoading(false)
-        setBooking(data)
-        setGuests(data.guests)
-      })
+      getApi(url)
+        .then((data) => {
+          setLoading(false)
+          setBooking(data)
+          setGuests(data.guests)
+        })
+        .catch(() => {
+          navigate('/error')
+        })
     })
   }
 
   function cancelBooking() {
-    deleteApi(`${url}`).then(() => {
-      OnClick()
-    })
+    deleteApi(`${url}`)
+      .then(() => {
+        OnClick()
+      })
+      .catch(() => {
+        navigate('/error')
+      })
   }
 
   function onSubmit(e) {
     setLoading(true)
     e.preventDefault()
-    putApi(`/roomapi/${roomId}/${params.bookingId}`, null).then((response) => {
-      if (response.status === 200) {
-        setLoading(false)
-        const newRoom = rooms.filter((room) => room.id === roomId)
-        setRoom(newRoom[0])
-        getApi(`/roomapi/available/${params.bookingId}`).then((data) => {
-          setRooms(data)
-          setRoomId(data[0].id)
-        })
-        setSelectRoom(true)
-      }
-    })
+    putApi(`/roomapi/${roomId}/${params.bookingId}`, null)
+      .then((response) => {
+        if (response.status === 200) {
+          setLoading(false)
+          const newRoom = rooms.filter((room) => room.id === roomId)
+          setRoom(newRoom[0])
+          getApi(`/roomapi/available/${params.bookingId}`)
+            .then((data) => {
+              setRooms(data)
+              setRoomId(data[0].id)
+            })
+            .catch(() => {
+              navigate('/error')
+            })
+          setSelectRoom(true)
+        }
+      })
+      .catch(() => {
+        navigate('/error')
+      })
   }
 
   return (
