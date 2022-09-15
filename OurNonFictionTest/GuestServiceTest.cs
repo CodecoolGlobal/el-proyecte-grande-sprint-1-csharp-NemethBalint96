@@ -16,7 +16,7 @@ public class GuestServiceTest
     {
         _context = Substitute.For<InitDatabase>().CreateContext();
         _guestService = Substitute.For<GuestService>(_context);
-        
+
     }
 
     [Test, Order(2)]
@@ -38,7 +38,7 @@ public class GuestServiceTest
         Assert.That(actual, Is.EqualTo(expected));
     }
 
-    [Test,Order(1)]
+    [Test, Order(1)]
     public void AddNewGuestToBooking_AddNewGuestToBooking()
     {
         var bookingId = 1;

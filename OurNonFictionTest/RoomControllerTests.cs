@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ElProyecteGrande.Dal;
+﻿using ElProyecteGrande.Dal;
 using Microsoft.EntityFrameworkCore;
 using NSubstitute;
 using OurNonfictionBackend.Controllers;
@@ -30,7 +25,7 @@ namespace OurNonFictionTest
         {
             var expected = _roomService.GetAll().Result.Count;
             var actual = _controller.GetAll().Result.Count;
-            Assert.That(actual,Is.EqualTo(expected));
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         [Test]

@@ -15,7 +15,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: MyAllowSpecificOrigins,
-        policy => {
+        policy =>
+        {
             policy.WithOrigins("https://our-nonfiction.herokuapp.com/", "https://our-nonfiction.herokuapp.com/registration").AllowAnyHeader().AllowAnyMethod();
         });
 });
@@ -37,28 +38,28 @@ var tokenKey = Environment.GetEnvironmentVariable("TokenKey");
 var key = Encoding.ASCII.GetBytes(tokenKey);
 var clientId = Environment.GetEnvironmentVariable("ClientId");
 
-    builder.Services.AddAuthentication(x =>
+builder.Services.AddAuthentication(x =>
+    {
+        x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+    .AddJwtBearer(x =>
+    {
+        x.RequireHttpsMetadata = false;
+        x.SaveToken = true;
+        x.TokenValidationParameters = new TokenValidationParameters
         {
-            x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-        })
-        .AddJwtBearer(x =>
-        {
-            x.RequireHttpsMetadata = false;
-            x.SaveToken = true;
-            x.TokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(key),
-                ValidateIssuer = false,
-                ValidateAudience = false
-            };
-        });
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(key),
+            ValidateIssuer = false,
+            ValidateAudience = false
+        };
+    });
 
-    ServiceProvider serviceProvider = builder.Services.BuildServiceProvider();
-    var accountService = serviceProvider.GetService<IAccountService>();
+ServiceProvider serviceProvider = builder.Services.BuildServiceProvider();
+var accountService = serviceProvider.GetService<IAccountService>();
 
-    builder.Services.AddSingleton<IJWTAuthenticationManager>(new JWTAuthenticationManager(tokenKey, accountService, clientId));
+builder.Services.AddSingleton<IJWTAuthenticationManager>(new JWTAuthenticationManager(tokenKey, accountService, clientId));
 
 var app = builder.Build();
 
