@@ -59,7 +59,7 @@ public class GuestService : IGuestService
 
     public async Task AddNewGuestToBooking(long bookingId, Guest guest)
     {
-        var booking = _context.Bookings.Include(booking=>booking.Guests).First(b => b.Id == bookingId);
+        var booking = _context.Bookings.Include(booking => booking.Guests).First(b => b.Id == bookingId);
         switch (guest.Age)
         {
             case Age.Adult:

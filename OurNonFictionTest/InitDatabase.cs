@@ -1,7 +1,6 @@
 ﻿using ElProyecteGrande.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
-using Newtonsoft.Json;
 using OurNonfictionBackend.Models;
 
 namespace OurNonFictionTest;
@@ -24,7 +23,7 @@ public class InitDatabase
         var booking = new Booking
         {
             BookersName = "Kiss Bence",
-            Guests =new List<Guest>(){ new Guest(Age.Adult)
+            Guests = new List<Guest>(){ new Guest(Age.Adult)
             {
                 FullName = "Kiss Bence",
                 Address = "",
@@ -41,7 +40,7 @@ public class InitDatabase
             Email = "kissbence19@gmail.com",
             Room = new Room
             {
-                
+
                 DoorNumber = 1,
                 Price = 80,
                 RoomType = (RoomType)0,

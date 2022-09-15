@@ -15,7 +15,7 @@ public class RoomServiceTest
     {
         _context = Substitute.For<InitDatabase>().CreateContext();
         _roomService = Substitute.For<RoomService>(_context);
-        
+
     }
 
     [Test]
