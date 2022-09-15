@@ -41,6 +41,12 @@ jobs:
           file: OurNonfictionBackend/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/el-proyecte-grande-backend:latest
+          secrets: |
+            "nonfictionuser=${{ secrets.SOMNIAEMAIL }}"
+            "nonfictionpassword=${{ secrets.SOMNIAPASSWORD }}"
+            "TokenKey = ${{ secrets.TOKENKEY }}"
+            "ClientId = ${{ secrets.CLIENTID }}"
+          
 
       - name: Run the image in a container
         uses: addnab/docker-run-action@v3
