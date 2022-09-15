@@ -208,13 +208,23 @@ const BookingDetails = () => {
               <ul className="list-group list-group-flush">
                 <li className="list-group-item">
                   Room Type:{' '}
-                  {room.roomType === 1 ? 'Apartman' : room.roomType === 3 ? 'Superior' : 'Standard'}
+                  {room !== null
+                    ? room.roomType === 1
+                      ? 'Apartman'
+                      : room.roomType === 3
+                      ? 'Superior'
+                      : 'Standard'
+                    : 'Empty'}
                 </li>
-                <li className="list-group-item">Floor: {room.floor}</li>
-                <li className="list-group-item">DoorNumber: {room.doorNumber}</li>
-                <li className="list-group-item">Comment: {room.comment}</li>
-                <li className="list-group-item">Room Price: {room.price}$</li>
-                <li className="list-group-item">Total Price: {room.price * booking.nights}$</li>
+                <li className="list-group-item">Floor: {room === null ? '' : room.floor}</li>
+                <li className="list-group-item">
+                  DoorNumber: {room === null ? '' : room.doorNumber}
+                </li>
+                <li className="list-group-item">Comment: {room === null ? '' : room.comment}</li>
+                <li className="list-group-item">Room Price: {room === null ? '0' : room.price}$</li>
+                <li className="list-group-item">
+                  Total Price: {room === null ? '0' : room.price * booking.nights}$
+                </li>
               </ul>
             </div>
           </div>
