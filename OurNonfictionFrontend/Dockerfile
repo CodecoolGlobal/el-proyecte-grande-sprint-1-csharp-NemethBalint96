@@ -1,4 +1,9 @@
-FROM node
+FROM microsoft/aspnetcore:6.0 AS base
+RUN apt-get update && \
+    apt-get install -y wget && \
+    apt-get install -y gnupg2 && \
+    wget -qO- https://deb.nodesource.com/setup_6.x | bash - && \
+    apt-get install -y build-essential nodejs
 
 # set working directory
 WORKDIR /app
@@ -14,8 +19,6 @@ RUN npm install --force
 
 # add app
 COPY OurNonfictionFrontend/. ./
-
-EXPOSE 3000
 
 # start app
 CMD ["npm", "start"]
