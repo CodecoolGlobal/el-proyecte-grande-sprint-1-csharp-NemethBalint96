@@ -34,10 +34,10 @@ builder.Services.AddScoped<IRoomService, RoomService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 
 var tokenKey = Environment.GetEnvironmentVariable("TokenKey");
-if (tokenKey != null)
-{
-    var key = Encoding.ASCII.GetBytes(tokenKey);
-    var clientId = Environment.GetEnvironmentVariable("ClientId");
+Console.WriteLine($"My token key is: {tokenKey}");
+var key = Encoding.ASCII.GetBytes(tokenKey);
+var clientId = Environment.GetEnvironmentVariable("ClientId");
+Console.WriteLine($" My clientID is: {clientId}");
 
     builder.Services.AddAuthentication(x =>
         {
@@ -61,7 +61,6 @@ if (tokenKey != null)
     var accountService = serviceProvider.GetService<IAccountService>();
 
     builder.Services.AddSingleton<IJWTAuthenticationManager>(new JWTAuthenticationManager(tokenKey, accountService, clientId));
-}
 
 var app = builder.Build();
 
