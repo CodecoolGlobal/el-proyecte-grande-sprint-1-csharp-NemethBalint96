@@ -6,6 +6,7 @@ namespace OurNonfictionBackend.Data
     public static class DbInitializer
     {
 
+        //./Data/newBooking.json relative path to newbooking.json
 
         public static void Initialize(NonfictionContext context)
         {
