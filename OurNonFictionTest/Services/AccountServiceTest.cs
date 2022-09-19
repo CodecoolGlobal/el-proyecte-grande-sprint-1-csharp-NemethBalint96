@@ -4,7 +4,7 @@ using OurNonfictionBackend.Dal;
 using OurNonfictionBackend.Helpers;
 using OurNonfictionBackend.Models;
 
-namespace OurNonFictionTest;
+namespace OurNonFictionTest.Services;
 
 internal class AccountServiceTest
 {

@@ -1,4 +1,5 @@
 ﻿using ElProyecteGrande.Models;
+using Newtonsoft.Json;
 using OurNonfictionBackend.Models;
 
 namespace OurNonfictionBackend.Data
@@ -14,8 +15,17 @@ namespace OurNonfictionBackend.Data
             {
                 return; //DB has been seeded
             }
+            CreateBookings(context);
             CreateAccount(context);
             CreateRooms(context);
+        }
+
+        private static void CreateBookings(NonfictionContext context)
+        {
+            string json = File.ReadAllText(@"./Data/newBooking.json");
+            List<Booking> bookings = JsonConvert.DeserializeObject<List<Booking>>(json);
+            context.Bookings.AddRange(bookings);
+            context.SaveChanges();
         }
 
         private static void CreateAccount(NonfictionContext context)

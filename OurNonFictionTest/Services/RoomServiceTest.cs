@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using NSubstitute;
 using OurNonfictionBackend.Models;
 
-namespace OurNonFictionTest;
+namespace OurNonFictionTest.Services;
 
 public class RoomServiceTest
 {

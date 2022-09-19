@@ -4,7 +4,7 @@ using NSubstitute;
 using OurNonfictionBackend.Controllers;
 using OurNonfictionBackend.Models;
 
-namespace OurNonFictionTest
+namespace OurNonFictionTest.Controllers
 {
     public class BookingControllerTest
     {

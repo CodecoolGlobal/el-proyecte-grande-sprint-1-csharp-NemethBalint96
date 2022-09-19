@@ -4,7 +4,7 @@ using OurNonfictionBackend.Controllers;
 using OurNonfictionBackend.Dal;
 using OurNonfictionBackend.Models;
 
-namespace OurNonFictionTest
+namespace OurNonFictionTest.Controllers
 {
     public class GuestControllerTest
     {

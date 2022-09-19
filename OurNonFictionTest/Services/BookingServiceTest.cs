@@ -3,7 +3,7 @@ using ElProyecteGrande.Models;
 using NSubstitute;
 using OurNonfictionBackend.Models;
 
-namespace OurNonFictionTest
+namespace OurNonFictionTest.Services
 {
     public class BookingServiceTest
     {

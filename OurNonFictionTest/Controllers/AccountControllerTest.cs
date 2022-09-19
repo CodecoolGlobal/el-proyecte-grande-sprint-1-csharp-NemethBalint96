@@ -6,7 +6,7 @@ using OurNonfictionBackend.Dal;
 using OurNonfictionBackend.Helpers;
 using OurNonfictionBackend.Models;
 
-namespace OurNonFictionTest;
+namespace OurNonFictionTest.Controllers;
 
 public class AccountControllerTest
 {
@@ -31,6 +31,7 @@ public class AccountControllerTest
         var actual = _controller.GetAccounts().Result.Count;
         Assert.That(actual, Is.EqualTo(expected));
     }
+
 
     [Test]
     public void CheckUsername_CheckExistingUsername_ReturnTrue()

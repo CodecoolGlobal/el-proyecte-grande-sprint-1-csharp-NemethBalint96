@@ -4,7 +4,7 @@ using NSubstitute;
 using OurNonfictionBackend.Dal;
 using OurNonfictionBackend.Models;
 
-namespace OurNonFictionTest;
+namespace OurNonFictionTest.Services;
 
 public class GuestServiceTest
 {
